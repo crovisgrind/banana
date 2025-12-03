@@ -4,7 +4,11 @@ import { type Race } from '@/types/races';
 
 async function getRaces(): Promise<Race[]> {
   try {
-    const res = await fetch(`/api/races`, {
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}`
+      : 'http://localhost:3000';
+    
+    const res = await fetch(`${baseUrl}/api/races`, {
       next: { revalidate: 3600 },
     });
 

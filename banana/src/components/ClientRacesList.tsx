@@ -50,9 +50,9 @@ export default function ClientRacesList({ initialRaces }: { initialRaces: Race[]
               <p className="text-2xl font-bold text-black mb-8">
                 {race.location || 'Local não informado'}
               </p>
-              {race.link && (
+              {race.url && (
                 <a
-                  href={race.link}
+                  href={race.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block bg-black text-white px-10 py-6 text-3xl font-black hover:bg-white hover:text-black transition-all border-4 border-black"
