@@ -35,7 +35,7 @@ export default function ClientRacesList({ initialRaces }: { initialRaces: Race[]
           filtered.map((race, i) => (
             <article
               key={race.title + race.date}
-              className={`${colors[i % 4]} ${rotates[i % 4]} border-8 border-black p-10 shadow-[30px_30px_0_black] transition-all hover:rotate-0 hover:scale-105`}
+              className={`${colors[i % 4]} ${rotates[i % 4]} border-8 border-black p-10 shadow-[30px_30px_0_black] transition-all hover:rotate-0 hover:scale-105 md:hover:animate-none animate-float-mobile`}
             >
               <h2 className="text-5xl font-black text-black mb-4 leading-tight">
                 {race.title}

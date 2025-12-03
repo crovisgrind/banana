@@ -12,6 +12,27 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Animação de flutuação para mobile */
+@keyframes float-mobile {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float-mobile {
+  animation: float-mobile 3s ease-in-out infinite;
+}
+
+/* Desativa no desktop */
+@media (min-width: 768px) {
+  .animate-float-mobile {
+    animation: none !important;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
