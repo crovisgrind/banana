@@ -1,17 +1,14 @@
 // src/app/page.tsx
+// src/app/page.tsx
 import ClientRacesList from '@/components/ClientRacesList';
 import { type Race } from '@/types/races';
 
 async function getRaces(): Promise<Race[]> {
   try {
-    // Endereço de loopback mais robusto para chamadas internas na Vercel
-    const internalApiUrl = 'http://127.0.0.1:3000/api/races';
-
-    // 🚨 CORREÇÃO CRÍTICA: cache: 'no-store'
-    // Isso garante que o fetch NÃO seja resolvido estaticamente no build
-    // e força a execução da função Serverless em tempo de renderização/requisição.
-    const res = await fetch(internalApiUrl, {
-      cache: 'no-store', // <--- NOVO
+    // 🚨 ÚLTIMA CORREÇÃO DE URL: Usar caminho relativo.
+    // Isso força o Next.js a interceptar a chamada internamente.
+    const res = await fetch('/api/races', { 
+      cache: 'no-store', 
       next: { revalidate: 3600 },
     });
 
@@ -27,6 +24,8 @@ async function getRaces(): Promise<Race[]> {
     return [];
   }
 }
+
+// ... (restante do componente Home)
 
 export default async function Home() {
   const races = await getRaces();
