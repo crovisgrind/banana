@@ -4,15 +4,21 @@ import { type Race } from '@/types/races';
 
 async function getRaces(): Promise<Race[]> {
   try {
-    // 🚨 CORREÇÃO PARA VERCEL: 
-    // Em Server Components, a forma mais robusta de chamar uma API Route 
-    // interna é usando o endereço de loopback (127.0.0.1:3000), 
-    // garantindo que a requisição não tente sair para a internet durante o build/SSR.
-    const res = await fetch('http://127.0.0.1:3000/api/races', {
+    // Endereço de loopback mais robusto para chamadas internas na Vercel
+    const internalApiUrl = 'http://127.0.0.1:3000/api/races';
+
+    // 🚨 CORREÇÃO CRÍTICA: cache: 'no-store'
+    // Isso garante que o fetch NÃO seja resolvido estaticamente no build
+    // e força a execução da função Serverless em tempo de renderização/requisição.
+    const res = await fetch(internalApiUrl, {
+      cache: 'no-store', // <--- NOVO
       next: { revalidate: 3600 },
     });
 
-    if (!res.ok) return [];
+    if (!res.ok) {
+        console.error(`Falha no fetch (Server Component): ${res.status} ${res.statusText}`);
+        return [];
+    }
     const data: Race[] = await res.json();
     data.sort((a, b) => a.date.localeCompare(b.date));
     return data;
