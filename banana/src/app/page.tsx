@@ -4,11 +4,11 @@ import { type Race } from '@/types/races';
 
 async function getRaces(): Promise<Race[]> {
   try {
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}`
-      : 'http://localhost:3000';
-    
-    const res = await fetch(`${baseUrl}/api/races`, {
+    // 🚨 CORREÇÃO PARA VERCEL: 
+    // Em Server Components, a forma mais robusta de chamar uma API Route 
+    // interna é usando o endereço de loopback (127.0.0.1:3000), 
+    // garantindo que a requisição não tente sair para a internet durante o build/SSR.
+    const res = await fetch('http://127.0.0.1:3000/api/races', {
       next: { revalidate: 3600 },
     });
 
@@ -40,4 +40,3 @@ export default async function Home() {
     </main>
   );
 }
-
