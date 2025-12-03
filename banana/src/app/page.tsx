@@ -4,9 +4,7 @@ import { type Race } from '@/types/races';
 
 async function getRaces(): Promise<Race[]> {
   try {
-    // Em Server Component, use URL absoluta ou chamada direta
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/races`, {
+    const res = await fetch(`/api/races`, {
       next: { revalidate: 3600 },
     });
 
