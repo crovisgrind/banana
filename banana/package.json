@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "build": "npm run generate-races && next build",
+    "start": "next start",
     "generate-races": "ts-node --project tsconfig.script.json scripts/generate-races.ts"
   },
   "dependencies": {
