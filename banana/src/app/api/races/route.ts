@@ -1,5 +1,7 @@
 // app/api/races/route.ts
 
+export const runtime = 'nodejs';
+
 import { NextResponse } from 'next/server';
 import crawlTvComRunning from '@/crawlers/tvcomrunning';
 import { type Race } from '@/types/races'; 

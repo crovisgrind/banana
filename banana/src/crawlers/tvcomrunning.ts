@@ -1,6 +1,7 @@
 // src/crawlers/tvcomrunning.ts
 
-import * as cheerio from 'cheerio';
+import cheerio from 'cheerio'; // Use esta forma
+
 import { type Race } from '@/types/races'; 
 import { URL } from 'url';
 
