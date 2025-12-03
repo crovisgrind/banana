@@ -1,0 +1,297 @@
+[
+  {
+    "id": "4ª_CORRIDA_PEDESTRE_DE_FLORÍNEA-05_DE_DEZEMBRO_DE_2025-SP",
+    "title": "4ª CORRIDA PEDESTRE DE FLORÍNEA",
+    "location": "FLORÍNEA",
+    "date": "2025-12-05",
+    "distances": [
+      "CORRIDA 5 K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/4-corrida-pedestre-de-florinea",
+    "state": "SP"
+  },
+  {
+    "id": "5ª_CORRIDA_E_CAMINHADA_DE_CHAVANTES_SP-06_DE_DEZEMBRO_DE_2025-SP",
+    "title": "5ª CORRIDA E CAMINHADA DE CHAVANTES SP",
+    "location": "CHAVANTES",
+    "date": "2025-12-06",
+    "distances": [
+      "CORRIDA 5K",
+      "CAMINHADA",
+      "KIDS"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/5-corrida-e-caminhada-de-chavantes-sp",
+    "state": "SP"
+  },
+  {
+    "id": "2ª_CORRIDA_E_CAMINHADA_CIDADE_MILAGRE_DRACENA_SP-07_DE_DEZEMBRO_DE_2025-SP",
+    "title": "2ª CORRIDA E CAMINHADA CIDADE MILAGRE DRACENA SP",
+    "location": "DRACENA",
+    "date": "2025-12-07",
+    "distances": [
+      "CORRIDA 6KM E CAMINHADA 3K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/2-corrida-e-caminhada-cidade-milagre-dracena-sp",
+    "state": "SP"
+  },
+  {
+    "id": "2ª_CORRIDA_SANTA_FEST-07_DE_DEZEMBRO_DE_2025-PR",
+    "title": "2ª CORRIDA SANTA FEST",
+    "location": "SANTA FÉ",
+    "date": "2025-12-07",
+    "distances": [
+      "CORRIDA 5K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/2-corrida-santa-fest",
+    "state": "PR"
+  },
+  {
+    "id": "SUPER_5KMAIS_PENÁPOLIS_SP-07_DE_DEZEMBRO_DE_2025-SP",
+    "title": "SUPER 5KMAIS PENÁPOLIS SP",
+    "location": "PENÁPOLIS",
+    "date": "2025-12-07",
+    "distances": [
+      "CORRIDA 5K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/super-5kmais-penapolis-sp",
+    "state": "SP"
+  },
+  {
+    "id": "CORRIDA_PEDESTRE_DE_KALORÉ_PR-07_DE_DEZEMBRO_DE_2025-PR",
+    "title": "CORRIDA PEDESTRE DE KALORÉ PR",
+    "location": "KALORÉ",
+    "date": "2025-12-07",
+    "distances": [
+      "CORRIDA 5 K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/corrida-pedestre-de-kalore-pr",
+    "state": "PR"
+  },
+  {
+    "id": "4ª_CORRIDA_E_CAMINHADA_EQUIPE_BAITAPASSO-14_DE_DEZEMBRO_DE_2025-MS",
+    "title": "4ª CORRIDA E CAMINHADA EQUIPE BAITAPASSO",
+    "location": "BATAGUASSU",
+    "date": "2025-12-14",
+    "distances": [
+      "CORRIDA 5KM E CAMINHADA 3K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/4-corrida-e-caminhada-equipe-baitapasso",
+    "state": "MS"
+  },
+  {
+    "id": "1ª_CORRIDA_BALNEÁRIO_EM_MOVIMENTO-14_DE_DEZEMBRO_DE_2025-SP",
+    "title": "1ª CORRIDA BALNEÁRIO EM MOVIMENTO",
+    "location": "RANCHARIA",
+    "date": "2025-12-14",
+    "distances": [
+      "CORRIDA 5K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/1-corrida-balneario-em-movimento",
+    "state": "SP"
+  },
+  {
+    "id": "4ª_CORRIDA_HISTÓRICA_DE_GUARARAPES_RUMO_AO_CENTENÁRIO-14_DE_DEZEMBRO_DE_2025-SP",
+    "title": "4ª CORRIDA HISTÓRICA DE GUARARAPES RUMO AO CENTENÁRIO",
+    "location": "GUARARAPES",
+    "date": "2025-12-14",
+    "distances": [
+      "CORRIDA 5 K",
+      "KIDS"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/4-corrida-historica-de-guararapes-rumo-ao-centenario",
+    "state": "SP"
+  },
+  {
+    "id": "62ª_CORRIDA_PEDESTRE_DE_PARAPUÃ_SP-20_DE_DEZEMBRO_DE_2025-SP",
+    "title": "62ª CORRIDA PEDESTRE DE PARAPUÃ SP",
+    "location": "PARAPUÃ",
+    "date": "2025-12-20",
+    "distances": [
+      "CORRIDA 5K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/62-corrida-pedestre-de-parapua-sp",
+    "state": "SP"
+  },
+  {
+    "id": "LAKE_RUN_5KM_CORRENDO_PARA_O_ALVO_ASSIS_SP-21_DE_DEZEMBRO_DE_2025-SP",
+    "title": "LAKE RUN 5KM CORRENDO PARA O ALVO ASSIS SP",
+    "location": "ASSIS",
+    "date": "2025-12-21",
+    "distances": [
+      "CORRIDA 5K",
+      "CAMINHADA 3K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/lake-run-5km-correndo-para-o-alvo-assis-sp",
+    "state": "SP"
+  },
+  {
+    "id": "2ª_CORRIDA_PEDESTRE_DE_CAIABU-21_DE_DEZEMBRO_DE_2025-SP",
+    "title": "2ª CORRIDA PEDESTRE DE CAIABU",
+    "location": "CAIABU",
+    "date": "2025-12-21",
+    "distances": [
+      "CORRIDA 7K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/2-corrida-pedestre-de-caiabu",
+    "state": "SP"
+  },
+  {
+    "id": "5°_DEZEMBER_FEST_RUN_JAPURÁ-28_DE_DEZEMBRO_DE_2025-PR",
+    "title": "5° DEZEMBER FEST RUN JAPURÁ",
+    "location": "JAPURÁ",
+    "date": "2025-12-28",
+    "distances": [
+      "CORRIDA 6K",
+      "KIDS"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/5-dezember-fest-run-japura",
+    "state": "PR"
+  },
+  {
+    "id": "CORRIDA_DA_VIRADA_2ª_CORRIDA_DE_IBIRAREMA_SP-31_DE_DEZEMBRO_DE_2025-SP",
+    "title": "CORRIDA DA VIRADA 2ª CORRIDA DE IBIRAREMA SP",
+    "location": "IBIRAREMA",
+    "date": "2025-12-31",
+    "distances": [
+      "CORRIDA 5 K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/corrida-da-virada-2-corrida-de-ibirarema-sp",
+    "state": "SP"
+  },
+  {
+    "id": "1ª_CORRIDA_OFF_ROAD_DE_VARPA-04_DE_JANEIRO_DE_2026-SP",
+    "title": "1ª CORRIDA OFF ROAD DE VARPA",
+    "location": "VARPA",
+    "date": "2026-01-04",
+    "distances": [
+      "CORRIDA 5 K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/1-corrida-off-road-de-varpa",
+    "state": "SP"
+  },
+  {
+    "id": "19ª_CORRIDA_DA_PAZ_DE_GAUCHINHA_PLANALTINA_DO_PARANÁ_PR-18_DE_JANEIRO_DE_2026-PR",
+    "title": "19ª CORRIDA DA PAZ DE GAUCHINHA PLANALTINA DO PARANÁ PR",
+    "location": "PLANALTINA DO PARANÁ",
+    "date": "2026-01-18",
+    "distances": [
+      "CORRIDA 8KM MASCULINO E CORRIDA 5KM FEMININO"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/19-corrida-da-paz-de-gauchinha-planaltina-do-parana-pr",
+    "state": "PR"
+  },
+  {
+    "id": "9ª_CORRIDA_DA_FLORESTA_ETAPA_ASSIS_SP-25_DE_JANEIRO_DE_2026-SP",
+    "title": "9ª CORRIDA DA FLORESTA ETAPA ASSIS SP",
+    "location": "ASSIS",
+    "date": "2026-01-25",
+    "distances": [
+      "CORRIDA 7K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/9-corrida-da-floresta-etapa-assis-sp",
+    "state": "SP"
+  },
+  {
+    "id": "4ª_CAMINHADA_DO_CORAÇÃO_3KM-25_DE_JANEIRO_DE_2026-SP",
+    "title": "4ª CAMINHADA DO CORAÇÃO 3KM",
+    "location": "ASSIS",
+    "date": "2026-01-25",
+    "distances": [
+      "CAMINHADA 3 K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/4-caminhada-do-coracao-3km",
+    "state": "SP"
+  },
+  {
+    "id": "CORRIDA_DO_URUCUM_1ª_CORRIDA_PEDESTRE_DE_PARANACITY_PR-08_DE_FEVEREIRO_DE_2026-PR",
+    "title": "CORRIDA DO URUCUM 1ª CORRIDA PEDESTRE DE PARANACITY PR",
+    "location": "PARANACITY",
+    "date": "2026-02-08",
+    "distances": [
+      "CORRIDA 5 K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/corrida-do-urucum-1-corrida-pedestre-de-paranacity-pr",
+    "state": "PR"
+  },
+  {
+    "id": "1ª_CORRIDA_DO_MICO-01_DE_MARÇO_DE_2026-SP",
+    "title": "1ª CORRIDA DO MICO",
+    "location": "TEODORO SAMPAIO",
+    "date": "2026-03-01",
+    "distances": [
+      "CORRIDA 5 K",
+      "CAMINHADA 3K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/1-corrida-do-mico",
+    "state": "SP"
+  },
+  {
+    "id": "3º_TRIUNFO_FEST_RUN_SUPER_5K_TEODORO_SAMPAIO_SP-26_DE_ABRIL_DE_2026-SP",
+    "title": "3º TRIUNFO FEST RUN SUPER 5K TEODORO SAMPAIO SP",
+    "location": "TEODORO SAMPAIO",
+    "date": "2026-04-26",
+    "distances": [
+      "CORRIDA 5K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/3-triunfo-fest-run-super-5k-teodoro-sampaio-sp",
+    "state": "SP"
+  },
+  {
+    "id": "1ª_KIRIDONAS_RUNNING-09_DE_MAIO_DE_2026-SP",
+    "title": "1ª KIRIDONAS RUNNING",
+    "location": "GUARARAPES",
+    "date": "2026-05-09",
+    "distances": [
+      "CORRIDA  5 K",
+      "CAMINHADA 3 K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/1-kiridonas-running",
+    "state": "SP"
+  },
+  {
+    "id": "1ª_CORRIDA_PEDESTRE_OAB_TEODORO_SAMPAIO-24_DE_MAIO_DE_2026-SP",
+    "title": "1ª CORRIDA PEDESTRE OAB TEODORO SAMPAIO",
+    "location": "TEODORO SAMPAIO",
+    "date": "2026-05-24",
+    "distances": [
+      "CORRIDA 5K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/1-corrida-pedestre-oab-teodoro-sampaio",
+    "state": "SP"
+  },
+  {
+    "id": "4ª_CORRIDA_DA_FLORESTA_ETAPA_TEODORO_SAMPAIO_2026-11_DE_OUTUBRO_DE_2026-SP",
+    "title": "4ª CORRIDA DA FLORESTA ETAPA TEODORO SAMPAIO 2026",
+    "location": "TEODORO SAMPAIO",
+    "date": "2026-10-11",
+    "distances": [
+      "CORRIDA 8 K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/4-corrida-da-floresta-etapa-teodoro-sampaio-2026",
+    "state": "SP"
+  }
+]

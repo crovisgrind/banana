@@ -1,23 +1,25 @@
 // src/app/page.tsx
 import ClientRacesList from '@/components/ClientRacesList';
 import { type Race } from '@/types/races';
+import * as fs from 'fs';
+import * as path from 'path';
 
 async function getRaces(): Promise<Race[]> {
   try {
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}`
-      : 'http://localhost:3000'; // URL localhost para desenvolvimento
+    // Tentar carregar JSON estático
+    const jsonPath = path.join(process.cwd(), 'public', 'data', 'races.json');
     
-    const res = await fetch(`${baseUrl}/api/races`, {
-      next: { revalidate: 3600 },
-    });
-
-    if (!res.ok) return [];
-    const data: Race[] = await res.json();
-    data.sort((a, b) => a.date.localeCompare(b.date));
-    return data;
+    if (fs.existsSync(jsonPath)) {
+      const data = fs.readFileSync(jsonPath, 'utf-8');
+      const races: Race[] = JSON.parse(data);
+      console.log(`✅ Carregado ${races.length} eventos do arquivo estático`);
+      return races;
+    }
+    
+    console.warn('⚠️ Arquivo races.json não encontrado');
+    return [];
   } catch (error) {
-    console.error('Erro ao buscar races:', error);
+    console.error('❌ Erro ao carregar races.json:', error);
     return [];
   }
 }
@@ -32,7 +34,7 @@ export default async function Home() {
           BORA BORA BORA
         </h1>
         <p className="text-5xl md:text-6xl font-black text-black mb-16 drop-shadow-[8px_8px_0_white] rotate-[2deg]">
-          acha tua corrida, bora!
+          acha tua corrida!
         </p>
 
         <ClientRacesList initialRaces={races} />
