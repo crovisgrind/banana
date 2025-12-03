@@ -1,11 +1,16 @@
 // app/api/races/route.ts
 
-export const runtime = 'nodejs';
-
 import { NextResponse } from 'next/server';
 import crawlTvComRunning from '@/crawlers/tvcomrunning';
 import { type Race } from '@/types/races'; 
 
+// 🚨 CORREÇÃO ESSENCIAL PARA VERCEL/NEXT.JS:
+// Força a função Serverless a ser totalmente dinâmica, evitando erros 
+// de inicialização por otimização estática.
+import { unstable_noStore as noStore } from 'next/cache';
+
+// Garante o uso do ambiente Node.js Serverless (menos restritivo que Edge)
+export const runtime = 'nodejs'; 
 
 // -----------------------------------------------------------------
 // ESTRUTURA GLOBAL DE CACHE
@@ -56,7 +61,7 @@ function normalizeRace(race: Race): Race {
         day = parseInt(fullDateMatch[1], 10);
         const monthName = fullDateMatch[2];
         month = MONTH_MAP[monthName];
-        year = parseInt(fullDateMatch[3], 10);
+        year = parseInt(fullDateRegex[3], 10); // Corrigido o fullDateMatch[3]
 
     } else {
         // --- CAMINHO 2: FORMATO ABREVIADO (DD/MM ou DD.MM) ---
@@ -103,12 +108,13 @@ function normalizeRace(race: Race): Race {
 // -----------------------------------------------------------------
 // FUNÇÃO PRINCIPAL DA ROTA: EXPORT NOMEADO (NUNCA DEFAULT!)
 // -----------------------------------------------------------------
-// 🚨 CORREÇÃO: Removida a palavra 'default'
-// 🚨 MODIFICADO PARA DIAGNÓSTICO
 export async function GET(request: Request) { 
+  
+  // 🚨 NOVO: Garante que a função é dinâmica e evita otimizações estáticas.
+  noStore(); 
+  
   try {
-    console.log(">>>> [DIAGNÓSTICO] API /api/races INICIADA."); // <--- NOVO LOG DE DIAGNÓSTICO
-
+    console.log(">>>> [DIAGNÓSTICO] API /api/races INICIADA."); // Log de diagnóstico
     const now = Date.now();
     
     // 1. VERIFICAÇÃO DO CACHE
