@@ -1,11 +1,12 @@
 // app/api/races/route.ts
 
-// 🚨 CORREÇÕES CRÍTICAS PARA VERCEL
+// Mantido para compatibilidade com Vercel/Next.js
 import { unstable_noStore as noStore } from 'next/cache';
 export const runtime = 'nodejs'; 
 
 import { NextResponse } from 'next/server';
-import crawlTvComRunning from '@/crawlers/tvcomrunning';
+// 🚨 CORREÇÃO: Importação nomeada
+import { crawlTvComRunning } from '@/crawlers/tvcomrunning'; 
 import { type Race } from '@/types/races'; 
 
 
@@ -22,18 +23,9 @@ const CACHE_DURATION_MS = 1000 * 60 * 60 * 24; // 24 horas
 
 // Mapeamento dos meses para normalização do formato brasileiro
 const MONTH_MAP: { [key: string]: number } = {
-    'JANEIRO': 0,
-    'FEVEREIRO': 1,
-    'MARÇO': 2,
-    'ABRIL': 3,
-    'MAIO': 4,
-    'JUNHO': 5,
-    'JULHO': 6,
-    'AGOSTO': 7,
-    'SETEMBRO': 8,
-    'OUTUBRO': 9,
-    'NOVEMBRO': 10,
-    'DEZEMBRO': 11,
+    'JANEIRO': 0, 'FEVEREIRO': 1, 'MARÇO': 2, 'ABRIL': 3,
+    'MAIO': 4, 'JUNHO': 5, 'JULHO': 6, 'AGOSTO': 7,
+    'SETEMBRO': 8, 'OUTUBRO': 9, 'NOVEMBRO': 10, 'DEZEMBRO': 11,
 };
 
 function normalizeRace(race: Race): Race {
@@ -45,11 +37,9 @@ function normalizeRace(race: Race): Race {
     const currentYear = now.getFullYear();
     
     let day: number | undefined;
-    let month: number | undefined; // Mês baseado em 0 (Janeiro = 0, Dezembro = 11)
+    let month: number | undefined; 
     let year: number | undefined;
 
-    // --- CAMINHO 1: FORMATO BRASILEIRO COMPLETO (TVCom Running) ---
-    // Ex: "05 DE DEZEMBRO DE 2025"
     const cleanedString = rawDate.toUpperCase().replace(/\s+/g, ' ');
     const fullDateRegex = /(\d{1,2})\s+DE\s+([A-ZÇ]+)\s+DE\s+(\d{4})/;
     const fullDateMatch = cleanedString.match(fullDateRegex);
@@ -58,39 +48,29 @@ function normalizeRace(race: Race): Race {
         day = parseInt(fullDateMatch[1], 10);
         const monthName = fullDateMatch[2];
         month = MONTH_MAP[monthName];
-        // 🚨 CORREÇÃO DO ERRO DE TYPESCRIPT: Usando fullDateMatch (resultado)
         year = parseInt(fullDateMatch[3], 10); 
 
     } else {
-        // --- CAMINHO 2: FORMATO ABREVIADO (DD/MM ou DD.MM) ---
-        // Ex: "20/03"
         const shortDateRegex = rawDate.match(/(\d{1,2})[./](\d{1,2})/); 
         if (shortDateRegex) {
             day = parseInt(shortDateRegex[1], 10);
-            // O mês no formato curto é baseado em 1, então subtraímos 1.
             month = parseInt(shortDateRegex[2], 10) - 1; 
             year = currentYear;
         }
     }
 
-    // Se não conseguimos extrair Dia, Mês ou Ano, alertamos e pulamos.
     if (day === undefined || month === undefined || isNaN(day) || isNaN(month) || month < 0 || month > 11) {
         console.warn(`Erro ao normalizar data: Formato inesperado. Valor: ${rawDate} para ${race.title}.`);
         return race;
     }
 
-    // 1. Tenta usar o ano extraído (se disponível) ou o ano atual.
     let dateObject = new Date(year || currentYear, month, day);
 
-    // 2. Se a data for no passado ou se estivermos usando o ano atual para o formato DD/MM.
-    // E se o mês da corrida for anterior ao mês atual, avança o ano.
-    // Isso resolve o problema de corridas de Dezembro/2025 que aparecem em Janeiro/2026.
     if ((!year || dateObject < now) && month < now.getMonth()) {
         const targetYear = (year || currentYear) + 1;
         dateObject = new Date(targetYear, month, day);
     }
 
-    // 3. Verificação de Sanidade
     if (isNaN(dateObject.getTime())) {
       console.error(`Erro fatal: Data não pôde ser normalizada. Valor: ${rawDate}`);
       return race; 
@@ -98,7 +78,6 @@ function normalizeRace(race: Race): Race {
 
     return {
       ...race,
-      // Retorna a data no formato ISO padrão (AAAA-MM-DD)
       date: dateObject.toISOString().split('T')[0],
     };
 }
@@ -108,7 +87,6 @@ function normalizeRace(race: Race): Race {
 // -----------------------------------------------------------------
 export async function GET(request: Request) { 
   
-  // Garante que a função é dinâmica e evita otimizações estáticas.
   noStore(); 
   
   try {
@@ -143,7 +121,6 @@ export async function GET(request: Request) {
   } catch (error) {
     console.error("Erro na rota /api/races:", error);
 
-    // Retorna cache expirado como fallback
     if (dataCache) {
          console.warn("Erro no scraping. Retornando cache expirado como fallback.");
          return NextResponse.json(dataCache.data, { 

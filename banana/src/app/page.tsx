@@ -1,21 +1,18 @@
 // src/app/page.tsx
-// src/app/page.tsx
 import ClientRacesList from '@/components/ClientRacesList';
 import { type Race } from '@/types/races';
 
 async function getRaces(): Promise<Race[]> {
   try {
-    // 🚨 ÚLTIMA CORREÇÃO DE URL: Usar caminho relativo.
-    // Isso força o Next.js a interceptar a chamada internamente.
-    const res = await fetch('/api/races', { 
-      cache: 'no-store', 
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}`
+      : 'http://localhost:3000'; // URL localhost para desenvolvimento
+    
+    const res = await fetch(`${baseUrl}/api/races`, {
       next: { revalidate: 3600 },
     });
 
-    if (!res.ok) {
-        console.error(`Falha no fetch (Server Component): ${res.status} ${res.statusText}`);
-        return [];
-    }
+    if (!res.ok) return [];
     const data: Race[] = await res.json();
     data.sort((a, b) => a.date.localeCompare(b.date));
     return data;
@@ -24,8 +21,6 @@ async function getRaces(): Promise<Race[]> {
     return [];
   }
 }
-
-// ... (restante do componente Home)
 
 export default async function Home() {
   const races = await getRaces();
@@ -37,7 +32,7 @@ export default async function Home() {
           BORA BORA BORA
         </h1>
         <p className="text-5xl md:text-6xl font-black text-black mb-16 drop-shadow-[8px_8px_0_white] rotate-[2deg]">
-          acha tua corrida, porra!
+          acha tua corrida, bora!
         </p>
 
         <ClientRacesList initialRaces={races} />
