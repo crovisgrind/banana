@@ -102,8 +102,11 @@ function normalizeRace(race: Race): Race {
 // FUNÇÃO PRINCIPAL DA ROTA: EXPORT NOMEADO (NUNCA DEFAULT!)
 // -----------------------------------------------------------------
 // 🚨 CORREÇÃO: Removida a palavra 'default'
+// 🚨 MODIFICADO PARA DIAGNÓSTICO
 export async function GET(request: Request) { 
   try {
+    console.log(">>>> [DIAGNÓSTICO] API /api/races INICIADA."); // <--- NOVO LOG DE DIAGNÓSTICO
+
     const now = Date.now();
     
     // 1. VERIFICAÇÃO DO CACHE

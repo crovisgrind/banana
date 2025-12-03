@@ -35,7 +35,12 @@ export default async function crawlTvComRunning(): Promise<Race[]> {
     const allRaces: Race[] = [];
 
     try {
-        const response = await fetch(BASE_URL);
+        const response = await fetch(BASE_URL, {
+            // 🚨 CORREÇÃO: Adicionando User-Agent para evitar bloqueios do site alvo.
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (compatible; NextjsRaceCrawler/1.0)',
+            },
+        });
         
         if (!response.ok) {
             console.error(`[ERRO] Falha ao carregar ${BASE_URL}: ${response.statusText}.`);
