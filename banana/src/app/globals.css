@@ -15,50 +15,6 @@
   --foreground: #171717;
 }
 
-
-/* Para telas muito grandes */
-@media (min-width: 1600px) {
-  .title-hero {
-    font-size: clamp(10rem, 25vw, 20rem);
-  }
-}
-
-/* Ajuste para mobile */
-@media (max-width: 768px) {
-  .title-hero {
-    font-size: clamp(4rem, 15vw, 8rem);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) rotate(4deg);
-  }
-  50% {
-    transform: translateY(-20px) rotate(4deg);
-  }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-/* Adicione no seu arquivo CSS global */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) rotate(4deg);
-  }
-  50% {
-    transform: translateY(-20px) rotate(4deg);
-  }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-/* Ajuste para o título ficar bem grande */
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -66,7 +22,163 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* Tipografia */
+/* ============ ANIMAÇÕES ============ */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes float-medium {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes float-fast {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  33% {
+    transform: translateY(-15px);
+  }
+  66% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(50px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes float-mobile {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes pulse-badge {
+  0%, 100% {
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    box-shadow: 6px 6px 0 rgba(255, 122, 41, 0.4);
+  }
+}
+
+@keyframes bounce-btn {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes shake-card {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-2px, -1px);
+  }
+  50% {
+    transform: translate(2px, 1px);
+  }
+  75% {
+    transform: translate(-1px, 2px);
+  }
+}
+
+@keyframes glow-card {
+  0%, 100% {
+    box-shadow: 16px 16px 0 rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 16px 16px 0 rgba(255, 122, 41, 0.5), 0 0 20px rgba(255, 122, 41, 0.3);
+  }
+}
+
+@keyframes pop-icon {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Classes de animação */
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float-fast 4s ease-in-out infinite;
+}
+
+.animate-drift {
+  animation: drift 15s ease-in-out infinite;
+}
+
+.animate-float-mobile {
+  animation: float-mobile 4s ease-in-out infinite;
+}
+
+.animate-pulse-badge {
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+.animate-shake:hover {
+  animation: shake-card 0.4s ease-in-out;
+}
+
+.animate-glow {
+  animation: glow-card 3s ease-in-out infinite;
+}
+
+.animate-pop-hover:hover {
+  animation: pop-icon 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.group:hover .animate-bounce-hover {
+  animation: bounce-btn 0.6s ease-in-out infinite;
+}
+
+/* ============ TIPOGRAFIA ============ */
 .font-anton {
   font-family: 'Anton', sans-serif;
   letter-spacing: -0.02em;
@@ -88,22 +200,20 @@
   text-transform: uppercase;
   letter-spacing: -0.03em;
   line-height: 0.95;
-  text-align: left;
-  display: block;
-  width: 100%;
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) rotate(4deg);
-  }
-  50% {
-    transform: translateY(-20px) rotate(4deg);
+/* Para telas muito grandes */
+@media (min-width: 1600px) {
+  .title-hero {
+    font-size: clamp(10rem, 25vw, 20rem);
   }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+/* Ajuste para mobile */
+@media (max-width: 768px) {
+  .title-hero {
+    font-size: clamp(4rem, 15vw, 8rem);
+  }
 }
 
 .title-section {
@@ -119,6 +229,14 @@
   font-size: clamp(1.5rem, 3vw, 2.5rem);
 }
 
+.empty-state-text {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  text-transform: uppercase;
+  color: var(--black-pure);
+}
+
+/* ============ COMPONENTES ============ */
 /* Botão Principal - Brutalista */
 .btn-primary {
   background-color: var(--black-pure);
@@ -280,105 +398,10 @@
   transform: translate(-2px, -2px);
 }
 
-/* ============ ANIMAÇÕES ============ */
-
-/* Flutuação mobile */
-@keyframes float-mobile {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-15px) rotate(1deg);
-  }
-}
-
-.animate-float-mobile {
-  animation: float-mobile 4s ease-in-out infinite;
-}
-
 @media (min-width: 768px) {
   .animate-float-mobile {
     animation: none !important;
   }
-}
-
-/* Pulse para badges */
-@keyframes pulse-badge {
-  0%, 100% {
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
-  }
-  50% {
-    box-shadow: 6px 6px 0 rgba(255, 122, 41, 0.4);
-  }
-}
-
-.animate-pulse-badge {
-  animation: pulse-badge 2s ease-in-out infinite;
-}
-
-/* Bounce para botões */
-@keyframes bounce-btn {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-4px);
-  }
-}
-
-.group:hover .animate-bounce-hover {
-  animation: bounce-btn 0.6s ease-in-out infinite;
-}
-
-/* Shake para destaque */
-@keyframes shake-card {
-  0%, 100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  25% {
-    transform: translate(-2px, -1px) rotate(-0.5deg);
-  }
-  50% {
-    transform: translate(2px, 1px) rotate(0.5deg);
-  }
-  75% {
-    transform: translate(-1px, 2px) rotate(-0.5deg);
-  }
-}
-
-.animate-shake:hover {
-  animation: shake-card 0.4s ease-in-out;
-}
-
-/* Glow para cards destaque */
-@keyframes glow-card {
-  0%, 100% {
-    box-shadow: 16px 16px 0 rgba(0, 0, 0, 0.3);
-  }
-  50% {
-    box-shadow: 16px 16px 0 rgba(255, 122, 41, 0.5), 0 0 20px rgba(255, 122, 41, 0.3);
-  }
-}
-
-.animate-glow {
-  animation: glow-card 3s ease-in-out infinite;
-}
-
-/* Pop para ícones */
-@keyframes pop-icon {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.15);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.animate-pop-hover:hover {
-  animation: pop-icon 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* Gradiente Hero */
@@ -386,12 +409,10 @@
   background: linear-gradient(135deg, #FFE55C 0%, #FF7A29 50%, #FF9ECF 100%);
 }
 
-/* Empty State */
-.empty-state-text {
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(2rem, 5vw, 4rem);
-  text-transform: uppercase;
-  color: var(--black-pure);
+/* Pattern de banana */
+.banana-pattern-bg {
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40,100 C40,60 80,40 120,40 C160,40 180,80 170,120 C160,160 120,170 80,160 C50,150 40,130 40,100 Z' fill='%23FFD700' opacity='0.05'/%3E%3C/svg%3E");
+  background-size: 400px;
 }
 
 /* Breakpoints responsivos */
@@ -408,4 +429,17 @@ body {
   font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
+}
+/* Adicione ao seu global.css se quiser animar o ícone da lupa */
+@keyframes search-pulse {
+  0%, 100% {
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.1);
+  }
+}
+
+input:focus + div {
+  animation: search-pulse 0.6s ease-in-out;
 }
