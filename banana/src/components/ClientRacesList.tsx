@@ -14,8 +14,6 @@ type DistanceFilter = 'all' | '5k' | '10k' | '21k' | '42k';
 export default function ClientRacesList({ initialRaces }: { initialRaces: Race[] }) {
   const [search, setSearch] = useState('');
   const [activeFilter, setActiveFilter] = useState<DistanceFilter>('all');
-
-  // 👉 NOVO: filtro por estado
   const [selectedEstado, setSelectedEstado] = useState('');
 
   const estadosBrasil = [
@@ -24,7 +22,22 @@ export default function ClientRacesList({ initialRaces }: { initialRaces: Race[]
     "RS","RO","RR","SC","SP","SE","TO"
   ];
 
-  // Detecta distância pela string
+  // -----------------------------------
+  //  🔥 ORDENAR POR DATA (mais próximas -> mais distantes)
+  // -----------------------------------
+  const sortByDate = (list: Race[]) => {
+    return [...list].sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
+  };
+
+  // -----------------------------------
+  //  🧹 Ocultar corridas que já passaram
+  // -----------------------------------
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Detecta distância pelo nome
   const detectDistance = (title: string): string | null => {
     const t = title.toLowerCase();
     if (t.includes('5k')) return '5k';
@@ -34,16 +47,22 @@ export default function ClientRacesList({ initialRaces }: { initialRaces: Race[]
     return null;
   };
 
-  // ---------------------------------------
-  //   🔍 FILTRO PRINCIPAL (busca + UF + distância)
-  // ---------------------------------------
-  const filtered = initialRaces.filter((race) => {
+  // -----------------------------------
+  //  🔍 FILTRO PRINCIPAL:
+  //     busca + distância + estado + remover passadas
+  // -----------------------------------
+  const filtered = sortByDate(initialRaces).filter((race) => {
+    const raceDate = new Date(race.date);
+    raceDate.setHours(0, 0, 0, 0);
+
+    // ❌ Oculta corridas passadas
+    if (raceDate < today) return false;
+
     const matchesSearch =
       race.title.toLowerCase().includes(search.toLowerCase()) ||
       race.location?.toLowerCase().includes(search.toLowerCase());
 
     const raceDistance = detectDistance(race.title);
-
     const matchesDistance =
       activeFilter === 'all' || raceDistance === activeFilter;
 
@@ -54,7 +73,7 @@ export default function ClientRacesList({ initialRaces }: { initialRaces: Race[]
     return matchesSearch && matchesDistance && matchesEstado;
   });
 
-  // Destaque + outras corridas
+  // Destaque e demais corridas
   const featuredRace = filtered.length > 0 ? filtered[0] : null;
   const otherRaces = filtered.slice(1);
 
@@ -84,7 +103,7 @@ export default function ClientRacesList({ initialRaces }: { initialRaces: Race[]
           </button>
         ))}
 
-        {/* 👉 NOVO: Filtro de Estado */}
+        {/* 👉 Filtro de Estado */}
         <select
           value={selectedEstado}
           onChange={(e) => setSelectedEstado(e.target.value)}

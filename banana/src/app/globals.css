@@ -15,6 +15,50 @@
   --foreground: #171717;
 }
 
+
+/* Para telas muito grandes */
+@media (min-width: 1600px) {
+  .title-hero {
+    font-size: clamp(10rem, 25vw, 20rem);
+  }
+}
+
+/* Ajuste para mobile */
+@media (max-width: 768px) {
+  .title-hero {
+    font-size: clamp(4rem, 15vw, 8rem);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(4deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(4deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Adicione no seu arquivo CSS global */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(4deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(4deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Ajuste para o título ficar bem grande */
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -44,6 +88,22 @@
   text-transform: uppercase;
   letter-spacing: -0.03em;
   line-height: 0.95;
+  text-align: left;
+  display: block;
+  width: 100%;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(4deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(4deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
 
 .title-section {
