@@ -8,6 +8,7 @@ import {
   CalendarIcon, 
   LocationIcon 
 } from './RaceIcons';
+import { parseLocalDate } from '@/utils/dateUtils';
 
 type DistanceFilter = 'all' | '5k' | '10k' | '21k' | '42k';
 
@@ -27,7 +28,7 @@ export default function ClientRacesList({ initialRaces }: { initialRaces: Race[]
   // -----------------------------------
   const sortByDate = (list: Race[]) => {
     return [...list].sort((a, b) => {
-      return new Date(a.date).getTime() - new Date(b.date).getTime();
+      return parseLocalDate(a.date).getTime() - parseLocalDate(b.date).getTime();
     });
   };
 
@@ -52,7 +53,7 @@ export default function ClientRacesList({ initialRaces }: { initialRaces: Race[]
   //     busca + distância + estado + remover passadas
   // -----------------------------------
   const filtered = sortByDate(initialRaces).filter((race) => {
-    const raceDate = new Date(race.date);
+    const raceDate = parseLocalDate(race.date);
     raceDate.setHours(0, 0, 0, 0);
 
     // ❌ Oculta corridas passadas
@@ -80,6 +81,15 @@ export default function ClientRacesList({ initialRaces }: { initialRaces: Race[]
   // Cores rotativas
   const colors = ['bg-yellow-300', 'bg-pink-300', 'bg-cyan-300', 'bg-green-300'];
   const getColor = (i: number) => colors[i % colors.length];
+
+  // Helper para formatar data CORRETAMENTE
+  const formatRaceDate = (dateString: string) => {
+    return parseLocalDate(dateString).toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    });
+  };
 
   return (
     <>
@@ -134,11 +144,7 @@ export default function ClientRacesList({ initialRaces }: { initialRaces: Race[]
               <div className="flex items-center gap-3 text-lg md:text-xl font-montserrat font-bold text-black">
                 <CalendarIcon className="w-6 h-6 md:w-7 md:h-7 text-black animate-pop-hover" />
                 <time>
-                  {new Date(featuredRace.date).toLocaleDateString('pt-BR', {
-                    day: '2-digit',
-                    month: 'long',
-                    year: 'numeric',
-                  })}
+                  {formatRaceDate(featuredRace.date)}
                 </time>
               </div>
 
@@ -186,11 +192,7 @@ export default function ClientRacesList({ initialRaces }: { initialRaces: Race[]
                 <div className="flex items-center gap-2 text-lg font-montserrat font-bold text-black">
                   <CalendarIcon className="w-5 h-5 text-black animate-pop-hover" />
                   <time>
-                    {new Date(race.date).toLocaleDateString('pt-BR', {
-                      day: '2-digit',
-                      month: 'long',
-                      year: 'numeric',
-                    })}
+                    {formatRaceDate(race.date)}
                   </time>
                 </div>
 

@@ -1,141 +1,58 @@
-// app/api/races/route.ts
+// app/api/races/route.ts - VERSÃO SIMPLIFICADA (apenas lê JSON estático)
 
-// Mantido para compatibilidade com Vercel/Next.js
 import { unstable_noStore as noStore } from 'next/cache';
-export const runtime = 'nodejs'; 
+export const runtime = 'nodejs';
 
 import { NextResponse } from 'next/server';
-// 🚨 CORREÇÃO: Importação nomeada
-import { crawlTvComRunning } from '@/crawlers/tvcomrunning'; 
-import { type Race } from '@/types/races'; 
-
-
-// -----------------------------------------------------------------
-// ESTRUTURA GLOBAL DE CACHE
-// -----------------------------------------------------------------
-interface CacheEntry {
-    data: Race[];
-    timestamp: number;
-}
-
-let dataCache: CacheEntry | null = null;
-const CACHE_DURATION_MS = 1000 * 60 * 60 * 24; // 24 horas
-
-// Mapeamento dos meses para normalização do formato brasileiro
-const MONTH_MAP: { [key: string]: number } = {
-    'JANEIRO': 0, 'FEVEREIRO': 1, 'MARÇO': 2, 'ABRIL': 3,
-    'MAIO': 4, 'JUNHO': 5, 'JULHO': 6, 'AGOSTO': 7,
-    'SETEMBRO': 8, 'OUTUBRO': 9, 'NOVEMBRO': 10, 'DEZEMBRO': 11,
-};
-
-function normalizeRace(race: Race): Race {
-    const rawDate = race.date; 
-    if (!rawDate || typeof rawDate !== 'string') { return race; }
-      
-    const now = new Date();
-    now.setHours(0, 0, 0, 0); 
-    const currentYear = now.getFullYear();
-    
-    let day: number | undefined;
-    let month: number | undefined; 
-    let year: number | undefined;
-
-    const cleanedString = rawDate.toUpperCase().replace(/\s+/g, ' ');
-    const fullDateRegex = /(\d{1,2})\s+DE\s+([A-ZÇ]+)\s+DE\s+(\d{4})/;
-    const fullDateMatch = cleanedString.match(fullDateRegex);
-
-    if (fullDateMatch) {
-        day = parseInt(fullDateMatch[1], 10);
-        const monthName = fullDateMatch[2];
-        month = MONTH_MAP[monthName];
-        year = parseInt(fullDateMatch[3], 10); 
-
-    } else {
-        const shortDateRegex = rawDate.match(/(\d{1,2})[./](\d{1,2})/); 
-        if (shortDateRegex) {
-            day = parseInt(shortDateRegex[1], 10);
-            month = parseInt(shortDateRegex[2], 10) - 1; 
-            year = currentYear;
-        }
-    }
-
-    if (day === undefined || month === undefined || isNaN(day) || isNaN(month) || month < 0 || month > 11) {
-        console.warn(`Erro ao normalizar data: Formato inesperado. Valor: ${rawDate} para ${race.title}.`);
-        return race;
-    }
-
-    let dateObject = new Date(year || currentYear, month, day);
-
-    if ((!year || dateObject < now) && month < now.getMonth()) {
-        const targetYear = (year || currentYear) + 1;
-        dateObject = new Date(targetYear, month, day);
-    }
-
-    if (isNaN(dateObject.getTime())) {
-      console.error(`Erro fatal: Data não pôde ser normalizada. Valor: ${rawDate}`);
-      return race; 
-    }
-
-    return {
-      ...race,
-      date: dateObject.toISOString().split('T')[0],
-    };
-}
+import * as fs from 'fs';
+import * as path from 'path';
+import { type Race } from '@/types/races';
 
 // -----------------------------------------------------------------
-// FUNÇÃO PRINCIPAL DA ROTA
+// FUNÇÃO PRINCIPAL - Lê JSON estático
 // -----------------------------------------------------------------
-export async function GET(request: Request) { 
-  
-  noStore(); 
-  
+export async function GET(request: Request) {
+  noStore();
+
   try {
-    console.log(">>>> [DIAGNÓSTICO] API /api/races INICIADA.");
-    const now = Date.now();
+    console.log(">>>> [API] GET /api/races iniciada");
     
-    // 1. VERIFICAÇÃO DO CACHE
-    if (dataCache && now - dataCache.timestamp < CACHE_DURATION_MS) {
-        const remainingMinutes = Math.round((dataCache.timestamp + CACHE_DURATION_MS - now) / 60000);
-        console.log(`[CACHE HIT] Retornando dados do cache. Tempo de vida restante: ${remainingMinutes} minutos.`);
-        return NextResponse.json(dataCache.data);
+    // Tenta ler o JSON estático
+    const jsonPath = path.join(process.cwd(), 'public', 'data', 'races.json');
+    
+    if (!fs.existsSync(jsonPath)) {
+      console.warn("[API] races.json não encontrado. Execute: npm run generate-races");
+      return NextResponse.json(
+        { 
+          message: "races.json não gerado ainda. Execute o cron job.",
+          races: []
+        },
+        { status: 202 }
+      );
     }
-    
-    // 2. CACHE MISS
-    console.log("Iniciando pipeline de crawl & normalize (CACHE MISS)...");
-    
-    // Chamada do Crawler Sequencial (com delay de 5s)
-    const rawRaces = await crawlTvComRunning();
 
-    const normalizedRaces = rawRaces.map(normalizeRace);
+    // Lê e retorna o JSON
+    const data = fs.readFileSync(jsonPath, 'utf-8');
+    const races: Race[] = JSON.parse(data);
 
-    console.log(`Pipeline concluída. ${normalizedRaces.length} eventos prontos.`);
+    console.log(`[API] ✅ Retornando ${races.length} eventos do races.json`);
 
-    // 3. ATUALIZAÇÃO DO CACHE
-    dataCache = {
-        data: normalizedRaces,
-        timestamp: now,
-    };
-    
-    return NextResponse.json(normalizedRaces);
+    return NextResponse.json(races);
 
   } catch (error) {
-    console.error("Erro na rota /api/races:", error);
+    console.error("[API] ❌ Erro ao ler races.json:", error);
 
-    if (dataCache) {
-         console.warn("Erro no scraping. Retornando cache expirado como fallback.");
-         return NextResponse.json(dataCache.data, { 
-             status: 200 
-         });
-    }
-
-    return new Response(JSON.stringify({ 
-        message: "Erro ao processar as corridas", 
-        details: error instanceof Error ? error.message : "Erro desconhecido" 
-    }), {
+    return new Response(
+      JSON.stringify({
+        message: "Erro ao processar as corridas",
+        details: error instanceof Error ? error.message : "Erro desconhecido",
+      }),
+      {
         status: 500,
         headers: {
-            'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
         },
-    });
+      }
+    );
   }
 }
