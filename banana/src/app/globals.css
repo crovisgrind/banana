@@ -1,6 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
+  /* Paleta Oficial BoraBoraBora */
+  --orange-race: #FF7A29;
+  --pink-finish: #FF9ECF;
+  --yellow-banana: #FFE55C;
+  --yellow-medal: #F6C700;
+  --black-pure: #000000;
+  --gray-light: #F3F3F3;
+  --white: #FFFFFF;
+  
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -12,27 +22,319 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* Animação de flutuação para mobile */
+/* Tipografia */
+.font-anton {
+  font-family: 'Anton', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Estilos de Títulos */
+.title-hero {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(3rem, 10vw, 9rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+.title-section {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 4rem);
+  text-transform: uppercase;
+}
+
+.title-card {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* Botão Principal - Brutalista */
+.btn-primary {
+  background-color: var(--black-pure);
+  color: var(--white);
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  font-size: clamp(0.875rem, 2vw, 1.125rem);
+  border: 3px solid var(--black-pure);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--white);
+  color: var(--black-pure);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+  transform: translateX(-2px) translateY(-2px);
+}
+
+.btn-primary:active {
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+  transform: translateX(2px) translateY(2px);
+}
+
+/* Badge/Tag - Próxima Corrida */
+.badge-next-race {
+  background-color: var(--yellow-banana);
+  color: var(--black-pure);
+  padding: 0.5rem 1rem;
+  font-weight: 800;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  border: 2px solid var(--black-pure);
+  display: inline-block;
+  margin-bottom: 1rem;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Badge - Filtro Ativo */
+.badge-filter-active {
+  background-color: var(--orange-race);
+  color: var(--white);
+  border: 3px solid var(--black-pure);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.badge-filter-inactive {
+  background-color: var(--gray-light);
+  color: var(--black-pure);
+  border: 2px solid var(--black-pure);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Cards com Brutalismo */
+.card-race {
+  border: 4px solid var(--black-pure);
+  box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.25);
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.card-race:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 14px 14px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* Card Destaque - Primeira Corrida */
+.card-featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  background: linear-gradient(135deg, var(--orange-race) 0%, var(--pink-finish) 100%);
+  border: 6px solid var(--black-pure);
+  box-shadow: 16px 16px 0 rgba(0, 0, 0, 0.3);
+  padding: 2.5rem;
+  position: relative;
+}
+
+.card-featured-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.card-featured-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .card-featured {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .card-featured-visual {
+    font-size: 3rem;
+  }
+}
+
+/* Barra de Filtros */
+.filter-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filter-btn {
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  border: 2px solid var(--black-pure);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: var(--gray-light);
+  color: var(--black-pure);
+}
+
+.filter-btn.active {
+  background-color: var(--orange-race);
+  color: var(--white);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.filter-btn:hover:not(.active) {
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Search Input */
+.search-input {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  border: 4px solid var(--black-pure);
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.15);
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.25);
+  transform: translate(-2px, -2px);
+}
+
+/* ============ ANIMAÇÕES ============ */
+
+/* Flutuação mobile */
 @keyframes float-mobile {
   0%, 100% {
-    transform: translateY(0px);
+    transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-20px);
+    transform: translateY(-15px) rotate(1deg);
   }
 }
 
 .animate-float-mobile {
-  animation: float-mobile 3s ease-in-out infinite;
+  animation: float-mobile 4s ease-in-out infinite;
 }
 
-/* Desativa no desktop */
 @media (min-width: 768px) {
   .animate-float-mobile {
     animation: none !important;
   }
 }
 
+/* Pulse para badges */
+@keyframes pulse-badge {
+  0%, 100% {
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    box-shadow: 6px 6px 0 rgba(255, 122, 41, 0.4);
+  }
+}
+
+.animate-pulse-badge {
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+/* Bounce para botões */
+@keyframes bounce-btn {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.group:hover .animate-bounce-hover {
+  animation: bounce-btn 0.6s ease-in-out infinite;
+}
+
+/* Shake para destaque */
+@keyframes shake-card {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(-2px, -1px) rotate(-0.5deg);
+  }
+  50% {
+    transform: translate(2px, 1px) rotate(0.5deg);
+  }
+  75% {
+    transform: translate(-1px, 2px) rotate(-0.5deg);
+  }
+}
+
+.animate-shake:hover {
+  animation: shake-card 0.4s ease-in-out;
+}
+
+/* Glow para cards destaque */
+@keyframes glow-card {
+  0%, 100% {
+    box-shadow: 16px 16px 0 rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 16px 16px 0 rgba(255, 122, 41, 0.5), 0 0 20px rgba(255, 122, 41, 0.3);
+  }
+}
+
+.animate-glow {
+  animation: glow-card 3s ease-in-out infinite;
+}
+
+/* Pop para ícones */
+@keyframes pop-icon {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-pop-hover:hover {
+  animation: pop-icon 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Gradiente Hero */
+.gradient-hero {
+  background: linear-gradient(135deg, #FFE55C 0%, #FF7A29 50%, #FF9ECF 100%);
+}
+
+/* Empty State */
+.empty-state-text {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  text-transform: uppercase;
+  color: var(--black-pure);
+}
+
+/* Breakpoints responsivos */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -43,5 +345,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
 }

@@ -2,68 +2,208 @@
 
 import { useState } from 'react';
 import { type Race } from '@/types/races';
+import { 
+  MedalIcon, 
+  BananaIcon, 
+  CalendarIcon, 
+  LocationIcon 
+} from './RaceIcons';
+
+type DistanceFilter = 'all' | '5k' | '10k' | '21k' | '42k';
 
 export default function ClientRacesList({ initialRaces }: { initialRaces: Race[] }) {
   const [search, setSearch] = useState('');
+  const [activeFilter, setActiveFilter] = useState<DistanceFilter>('all');
 
-  const filtered = initialRaces.filter((race) =>
-    race.title.toLowerCase().includes(search.toLowerCase()) ||
-    race.location?.toLowerCase().includes(search.toLowerCase())
-  );
+  // 👉 NOVO: filtro por estado
+  const [selectedEstado, setSelectedEstado] = useState('');
 
-  const rotates = ['rotate-6', '-rotate-6', 'rotate-3', '-rotate-3'];
-  const colors = ['bg-pink-600', 'bg-yellow-400', 'bg-cyan-600', 'bg-lime-500'];
+  const estadosBrasil = [
+    "AC","AL","AP","AM","BA","CE","DF","ES","GO","MA",
+    "MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN",
+    "RS","RO","RR","SC","SP","SE","TO"
+  ];
+
+  // Detecta distância pela string
+  const detectDistance = (title: string): string | null => {
+    const t = title.toLowerCase();
+    if (t.includes('5k')) return '5k';
+    if (t.includes('10k')) return '10k';
+    if (t.includes('meia') || t.includes('21k') || t.includes('21 km')) return '21k';
+    if (t.includes('maratona') || t.includes('42k') || t.includes('42 km')) return '42k';
+    return null;
+  };
+
+  // ---------------------------------------
+  //   🔍 FILTRO PRINCIPAL (busca + UF + distância)
+  // ---------------------------------------
+  const filtered = initialRaces.filter((race) => {
+    const matchesSearch =
+      race.title.toLowerCase().includes(search.toLowerCase()) ||
+      race.location?.toLowerCase().includes(search.toLowerCase());
+
+    const raceDistance = detectDistance(race.title);
+
+    const matchesDistance =
+      activeFilter === 'all' || raceDistance === activeFilter;
+
+    const raceUF = race.state?.toUpperCase() || '';
+    const matchesEstado =
+      selectedEstado === '' || raceUF === selectedEstado;
+
+    return matchesSearch && matchesDistance && matchesEstado;
+  });
+
+  // Destaque + outras corridas
+  const featuredRace = filtered.length > 0 ? filtered[0] : null;
+  const otherRaces = filtered.slice(1);
+
+  // Cores rotativas
+  const colors = ['bg-yellow-300', 'bg-pink-300', 'bg-cyan-300', 'bg-green-300'];
+  const getColor = (i: number) => colors[i % colors.length];
 
   return (
     <>
-      {/* Campo de busca brutal */}
-      <input
-        type="text"
-        placeholder="busca por prova, cidade, estado..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="w-full p-10 text-4xl font-black placeholder-gray-600 bg-white border-8 border-black shadow-[25px_25px_0_black] mb-20 focus:outline-none"
-      />
+      {/* ------------------------------ */}
+      {/* 🔥 FILTROS */}
+      {/* ------------------------------ */}
+      <div className="filter-bar flex flex-wrap gap-3 items-center mb-10">
 
-      {/* Grid das corridas */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-        {filtered.length === 0 ? (
-          <p className="col-span-full text-7xl font-black text-black text-center rotate-[-4deg]">
-            nada encontrado, irmão...
-          </p>
-        ) : (
-          filtered.map((race, i) => (
+        <span className="font-montserrat font-bold text-black text-lg hidden md:inline">
+          Filtrar:
+        </span>
+
+        {/* Filtro por distância */}
+        {(['all', '5k', '10k', '21k', '42k'] as const).map((filter) => (
+          <button
+            key={filter}
+            onClick={() => setActiveFilter(filter)}
+            className={`filter-btn ${activeFilter === filter ? 'active' : ''}`}
+          >
+            {filter === 'all' ? 'Todas' : filter.toUpperCase()}
+          </button>
+        ))}
+
+        {/* 👉 NOVO: Filtro de Estado */}
+        <select
+          value={selectedEstado}
+          onChange={(e) => setSelectedEstado(e.target.value)}
+          className="border border-black px-3 py-2 font-bold rounded-md bg-white"
+        >
+          <option value="">Todos os Estados</option>
+          {estadosBrasil.map((uf) => (
+            <option key={uf} value={uf}>
+              {uf}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* ------------------------------ */}
+      {/* 🥇 CARD DESTAQUE */}
+      {/* ------------------------------ */}
+      {featuredRace && (
+        <article className="card-featured mb-12 md:mb-20 animate-glow animate-shake group">
+          <div className="card-featured-content">
+            <div className="badge-next-race font-montserrat animate-pulse-badge">
+              🏁 PRÓXIMA CORRIDA
+            </div>
+
+            <h2 className="title-card text-black">{featuredRace.title}</h2>
+
+            <div className="space-y-3">
+              <div className="flex items-center gap-3 text-lg md:text-xl font-montserrat font-bold text-black">
+                <CalendarIcon className="w-6 h-6 md:w-7 md:h-7 text-black animate-pop-hover" />
+                <time>
+                  {new Date(featuredRace.date).toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric',
+                  })}
+                </time>
+              </div>
+
+              <div className="flex items-center gap-3 text-lg md:text-xl font-montserrat font-bold text-black">
+                <LocationIcon className="w-6 h-6 md:w-7 md:h-7 text-black animate-pop-hover" />
+                <p>{featuredRace.location || 'Local não informado'}</p>
+              </div>
+            </div>
+
+            {featuredRace.url && (
+              <a
+                href={featuredRace.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary mt-4 inline-block w-fit hover:scale-110 group"
+              >
+                <span className="flex items-center gap-2">
+                  <BananaIcon className="w-5 h-5 animate-bounce-hover" />
+                  INSCREVE LOGO
+                  <MedalIcon className="w-5 h-5 animate-bounce-hover" />
+                </span>
+              </a>
+            )}
+          </div>
+
+          <div className="card-featured-visual">
+            <div className="text-6xl md:text-7xl">🏃‍♂️</div>
+          </div>
+        </article>
+      )}
+
+      {/* ------------------------------ */}
+      {/* 🏁 GRID DE OUTRAS CORRIDAS */}
+      {/* ------------------------------ */}
+      {otherRaces.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+          {otherRaces.map((race, i) => (
             <article
               key={race.title + race.date}
-              className={`${colors[i % 4]} ${rotates[i % 4]} border-8 border-black p-10 shadow-[30px_30px_0_black] transition-all hover:rotate-0 hover:scale-105 md:hover:animate-none animate-float-mobile`}
+              className={`${getColor(i)} card-race animate-float-mobile`}
             >
-              <h2 className="text-5xl font-black text-black mb-4 leading-tight">
-                {race.title}
-              </h2>
-              <time className="block text-3xl font-bold text-black mb-4">
-                {new Date(race.date).toLocaleDateString('pt-BR', {
-                  day: '2-digit',
-                  month: 'long',
-                  year: 'numeric',
-                })}
-              </time>
-              <p className="text-2xl font-bold text-black mb-8">
-                {race.location || 'Local não informado'}
-              </p>
+              <h2 className="title-card text-black mb-4">{race.title}</h2>
+
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center gap-2 text-lg font-montserrat font-bold text-black">
+                  <CalendarIcon className="w-5 h-5 text-black animate-pop-hover" />
+                  <time>
+                    {new Date(race.date).toLocaleDateString('pt-BR', {
+                      day: '2-digit',
+                      month: 'long',
+                      year: 'numeric',
+                    })}
+                  </time>
+                </div>
+
+                <div className="flex items-center gap-2 text-lg font-montserrat font-bold text-black">
+                  <LocationIcon className="w-5 h-5 text-black animate-pop-hover" />
+                  <p>{race.location || 'Local não informado'}</p>
+                </div>
+              </div>
+
               {race.url && (
                 <a
                   href={race.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block bg-black text-white px-10 py-6 text-3xl font-black hover:bg-white hover:text-black transition-all border-4 border-black"
+                  className="btn-primary block text-center w-full"
                 >
-                  INSCREVE LOGO
+                  INSCREVE
                 </a>
               )}
             </article>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center py-20 text-center">
+          <p className="empty-state-text mb-4">
+            sem bananas por aqui,<br />irmão...
+          </p>
+          <p className="text-2xl font-montserrat font-bold text-gray-600">
+            tenta outra busca aí 🔍
+          </p>
+        </div>
+      )}
     </>
   );
 }
