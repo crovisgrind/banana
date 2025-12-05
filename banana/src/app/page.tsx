@@ -8,19 +8,39 @@ import * as path from 'path';
 
 async function getRaces(): Promise<Race[]> {
   try {
+    // ✅ Tenta chamar a API primeiro (em produção ela serve do arquivo)
+    try {
+      const baseUrl = process.env.VERCEL_URL 
+        ? `https://${process.env.VERCEL_URL}`
+        : 'http://localhost:3000';
+      
+      const response = await fetch(`${baseUrl}/api/races`, {
+        cache: 'no-store',
+      });
+      
+      if (response.ok) {
+        const races = await response.json();
+        console.log(`✅ Carregado ${races.length} eventos da API`);
+        return races;
+      }
+    } catch (apiError) {
+      console.warn('⚠️ Falha na API, tentando arquivo local...');
+    }
+
+    // Fallback: arquivo local
     const jsonPath = path.join(process.cwd(), 'public', 'data', 'races.json');
     
     if (fs.existsSync(jsonPath)) {
       const data = fs.readFileSync(jsonPath, 'utf-8');
       const races: Race[] = JSON.parse(data);
-      console.log(`✅ Carregado ${races.length} eventos do arquivo estático`);
+      console.log(`✅ Carregado ${races.length} eventos do arquivo local`);
       return races;
     }
-    
-    console.warn('⚠️ Arquivo races.json não encontrado');
+
+    console.warn('⚠️ Nenhuma fonte de dados disponível');
     return [];
   } catch (error) {
-    console.error('❌ Erro ao carregar races.json:', error);
+    console.error('❌ Erro ao carregar races:', error);
     return [];
   }
 }
@@ -65,7 +85,7 @@ export default async function Home() {
           </p>
 
           <div className="inline-block badge-next-race font-montserrat">
-            🍌 tem uma banana e uma medalha esperando por você 🏅
+            🌟 tem uma banana e uma medalha esperando por você 🥇
           </div>
 
           {/* Search Input com Botão */}
@@ -80,7 +100,7 @@ export default async function Home() {
                   className="w-full search-input text-base md:text-xl font-montserrat font-bold placeholder-gray-600 bg-white/95 backdrop-blur-sm focus:outline-none pl-12 pr-4 py-3 md:py-4"
                 />
                 <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-xl md:text-2xl pointer-events-none">
-                  
+                  🔍
                 </div>
               </div>
               
@@ -91,14 +111,9 @@ export default async function Home() {
               >
                 <span className="hidden md:inline">BORA!</span>
                 <span className="md:hidden">GO!</span>
-                <span className="text-lg md:text-xl">🍌</span>
+                <span className="text-lg md:text-xl">🌟</span>
               </button>
             </div>
-
-            {/* Dica subtle para o usuário */}
-            <p className="text-xs md:text-sm font-montserrat text-gray-500 mt-3 text-center md:text-left">
-              
-            </p>
           </div>
         </div>
       </section>
@@ -191,7 +206,7 @@ export default async function Home() {
       <footer className="relative py-8 bg-gradient-to-b from-white to-yellow-50 z-10">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <p className="text-gray-600 font-montserrat font-bold">
-            🍌 BoraBoraBora - tem uma banana e uma medalha esperando por você
+            🌟 BoraBoraBora - tem uma banana e uma medalha esperando por você
           </p>
         </div>
       </footer>
@@ -205,7 +220,6 @@ export default async function Home() {
               if (searchValue) {
                 console.log('🔍 Buscando:', searchValue);
                 input.value = '';
-                // Aqui você pode adicionar lógica de filtro real
               }
             });
 
