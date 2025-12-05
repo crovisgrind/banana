@@ -4,7 +4,9 @@ import path from 'path';
 
 export async function GET() {
   try {
+    // Caminho 100% correto
     const filePath = path.join(process.cwd(), 'public', 'races.json');
+
     const data = await fs.readFile(filePath, 'utf8');
     const races = JSON.parse(data);
 
