@@ -9,6 +9,9 @@ import { crawlTvComRunning } from '@/crawlers/tvcomrunning';
 import { crawlAtivo } from '@/crawlers/ativo';
 import { type Race } from '@/types/races';
 
+// ✅ Importa função para salvar no KV
+import { saveRacesToKV } from '@/lib/storage';
+
 // ✅ Tipos necessários para normalização
 const MONTH_MAP: { [key: string]: number } = {
   'JANEIRO': 0, 'FEVEREIRO': 1, 'MARÇO': 2, 'ABRIL': 3,
@@ -119,7 +122,6 @@ function normalizeRace(race: any) {
 // ✅ Rota do cron
 export async function GET(request: Request) {
   try {
-    // Verificar se é chamada pela Vercel (Authorization opcional para cron)
     console.log('\n🚀 ========== INICIANDO CRON GENERATE-RACES ==========');
     console.log(`⏰ Horário: ${new Date().toLocaleString('pt-BR')}`);
 
@@ -162,20 +164,27 @@ export async function GET(request: Request) {
     
     console.log(`🔮 Corridas futuras: ${futureRaces.length} eventos\n`);
     
-    // Ordenar
+    // Ordenar por data
     futureRaces.sort((a, b) => a.date.localeCompare(b.date));
     
-    // Salvar JSON em /tmp (Vercel permite escrita em /tmp)
-    const tmpDir = '/tmp/races-data';
-    if (!fs.existsSync(tmpDir)) {
-      fs.mkdirSync(tmpDir, { recursive: true });
+    // ✅ SALVAR NO VERCEL KV (IMPORTANTE!)
+    console.log('💾 Salvando no Vercel KV...');
+    await saveRacesToKV(futureRaces);
+    console.log(`✅ ${futureRaces.length} corridas salvas no KV!\n`);
+    
+    // Também salvar localmente em /tmp para backup (Vercel permite isso)
+    try {
+      const tmpDir = '/tmp/races-data';
+      if (!fs.existsSync(tmpDir)) {
+        fs.mkdirSync(tmpDir, { recursive: true });
+      }
+      
+      const tmpPath = path.join(tmpDir, 'races.json');
+      fs.writeFileSync(tmpPath, JSON.stringify(futureRaces, null, 2), 'utf-8');
+      console.log(`📦 Backup salvo em: ${tmpPath}`);
+    } catch (tmpError) {
+      console.warn('⚠️ Não foi possível salvar backup em /tmp (isso é normal)', tmpError);
     }
-    
-    const tmpPath = path.join(tmpDir, 'races.json');
-    fs.writeFileSync(tmpPath, JSON.stringify(futureRaces, null, 2), 'utf-8');
-    
-    console.log(`💾 Arquivo salvo temporariamente em: ${tmpPath}`);
-    console.log(`📊 Total: ${futureRaces.length} corridas`);
     
     if (futureRaces.length > 0) {
       console.log('\n📌 Primeiras 5 corridas:');
