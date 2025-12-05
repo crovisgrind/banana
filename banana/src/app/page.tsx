@@ -7,22 +7,23 @@ import { type Race } from '@/types/races';
 
 async function getRaces(): Promise<Race[]> {
   try {
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : 'http://localhost:3000';
+    // Base URL confiável para SSR + produção
+    const baseUrl =
+      process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
     const response = await fetch(`${baseUrl}/api/races`, {
       cache: 'no-store',
     });
 
     if (!response.ok) {
-      console.error('Erro ao buscar API /api/races:', response.status);
+      console.error('❌ Erro ao buscar /api/races:', response.status);
       return [];
     }
 
-    return await response.json();
+    const data = await response.json();
+    return Array.isArray(data) ? data : [];
   } catch (error) {
-    console.error('Erro em getRaces():', error);
+    console.error('❌ Erro em getRaces():', error);
     return [];
   }
 }
@@ -47,9 +48,11 @@ export default async function Home() {
 
         <div className="max-w-7xl mx-auto relative z-20">
           <div className="mb-8 md:mb-12">
-            <h1 className="title-hero font-black text-black 
+            <h1
+              className="title-hero font-black text-black 
                           drop-shadow-[8px_8px_0_rgba(255,255,255,0.9)] 
-                          leading-[0.85] md:leading-[0.8] text-left">
+                          leading-[0.85] md:leading-[0.8] text-left"
+            >
               <span className="block">BORA</span>
               <span className="block">BORA</span>
               <span className="block">BORA</span>
@@ -106,14 +109,15 @@ export default async function Home() {
         </div>
       </footer>
 
+      {/* SEARCH SCRIPT */}
       <script
         dangerouslySetInnerHTML={{
           __html: `
             document.getElementById('searchBtn')?.addEventListener('click', function() {
               const input = document.getElementById('searchInput');
-              const searchValue = input.value.trim();
-              if (searchValue) {
-                console.log('🔍 Buscando:', searchValue);
+              const value = input.value.trim();
+              if (value) {
+                console.log('🔍 Buscando:', value);
                 input.value = '';
               }
             });

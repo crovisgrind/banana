@@ -3,45 +3,43 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { crawlTvComRunning } from '@/crawlers/tvcomrunning';
 import { crawlAtivo } from '@/crawlers/ativo';
-import { type Race } from '@/types/races';
+import { Race } from '@/types/races';
 
 export const runtime = 'nodejs';
 
-// Mapeamento dos meses para normalização
+// Mapa dos meses
 const MONTH_MAP: { [key: string]: number } = {
   'JANEIRO': 0, 'FEVEREIRO': 1, 'MARÇO': 2, 'ABRIL': 3,
   'MAIO': 4, 'JUNHO': 5, 'JULHO': 6, 'AGOSTO': 7,
   'SETEMBRO': 8, 'OUTUBRO': 9, 'NOVEMBRO': 10, 'DEZEMBRO': 11,
 };
 
+// Normalização de datas
 function normalizeDate(rawDate: string): string {
   const now = new Date();
   now.setHours(0, 0, 0, 0);
   const currentYear = now.getFullYear();
 
-  let day: number | undefined;
-  let month: number | undefined;
-
   rawDate = rawDate.toUpperCase().trim();
 
-  // Padrão: "01 DE JANEIRO DE 2025"
-  const fullMatch = rawDate.match(/(\d{1,2})\s+DE\s+([A-ZÇÃÁÉÍÓÚ]+)\s+DE\s+(\d{4})/);
-  if (fullMatch) {
-    day = Number(fullMatch[1]);
-    month = MONTH_MAP[fullMatch[2]];
-    return `${fullMatch[3]}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+  // Formato: "01 DE JANEIRO DE 2025"
+  const full = rawDate.match(/(\d{1,2})\s+DE\s+([A-ZÇÃÁÉÍÓÚ]+)\s+DE\s+(\d{4})/);
+  if (full) {
+    const day = Number(full[1]);
+    const month = MONTH_MAP[full[2]];
+    const year = Number(full[3]);
+    return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
   }
 
-  // Padrão: "01/01"
-  const numericMatch = rawDate.match(/(\d{1,2})[./](\d{1,2})/);
-  if (numericMatch) {
-    day = Number(numericMatch[1]);
-    month = Number(numericMatch[2]) - 1;
-
+  // Formato: "01/01"
+  const numeric = rawDate.match(/(\d{1,2})[./](\d{1,2})/);
+  if (numeric) {
+    const day = Number(numeric[1]);
+    const month = Number(numeric[2]) - 1;
     let year = currentYear;
 
-    const maybeDate = new Date(year, month, day);
-    if (maybeDate < now) year++;
+    const d = new Date(year, month, day);
+    if (d < now) year++;
 
     return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
   }
@@ -49,48 +47,65 @@ function normalizeDate(rawDate: string): string {
   return rawDate;
 }
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
-    console.log('🔄 [CRON] Iniciando coleta de corridas...');
+    console.log("🏃 [CRON] Iniciando coleta...");
     const start = Date.now();
 
-    // 1. Executa crawlers
+    // 1. Crawlers
     const [tvComRaces, ativoRaces] = await Promise.all([
       crawlTvComRunning(),
       crawlAtivo(),
     ]);
 
-    const allRaces = [...tvComRaces, ...ativoRaces];
+    // 2. Unificar
+    const all = [...tvComRaces, ...ativoRaces];
 
-    // 2. Remover duplicatas
-    const uniqueRaces = Array.from(new Map(allRaces.map(r => [r.url, r])).values());
+    // 3. Dedup
+    const unique = Array.from(new Map(all.map(r => [r.url, r])).values());
 
-    // 3. Normalizar datas
-    const normalized = uniqueRaces.map(r => ({
+    // 4. Normalizar datas
+    const normalized = unique.map(r => ({
       ...r,
       date: normalizeDate(r.date),
     }));
 
-    // 4. Filtrar futuras
+    // 5. Filtrar futuras
     const today = new Date();
-    today.setHours(0,0,0,0);
+    today.setHours(0, 0, 0, 0);
 
-    const futureRaces = normalized.filter(r => {
+    const future = normalized.filter(r => {
       const d = new Date(r.date);
       return !isNaN(d.getTime()) && d >= today;
     });
 
-    // 5. Ordenar (CORRIGIDO)
-    const sorted = futureRaces.sort((a, b) => {
+    // 6. Ordenar
+    const sorted = future.sort((a, b) => {
       return new Date(a.date).getTime() - new Date(b.date).getTime();
     });
 
-    // (resto do arquivo continua igual — se quiser mando completo)
+    // 7. Salvar em /tmp (somente local e Vercel permitem escrita aqui)
+    const jsonPath = '/tmp/races.json';
+    fs.writeFileSync(jsonPath, JSON.stringify(sorted, null, 2), 'utf8');
 
-  } catch (error) {
-    console.error("❌ [CRON] Erro:", error);
+    const duration = ((Date.now() - start) / 1000).toFixed(2);
+
+    return NextResponse.json({
+      success: true,
+      message: "Crawler executado com sucesso",
+      stats: {
+        tvcom: tvComRaces.length,
+        ativo: ativoRaces.length,
+        total: sorted.length,
+        savedAt: jsonPath,
+        duration: `${duration}s`,
+      },
+    });
+
+  } catch (err) {
+    console.error("❌ [CRON] Erro:", err);
     return NextResponse.json(
-      { success: false, error: String(error) },
+      { success: false, error: String(err) },
       { status: 500 }
     );
   }
