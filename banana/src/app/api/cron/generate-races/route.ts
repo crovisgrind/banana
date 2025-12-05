@@ -80,6 +80,18 @@ export async function GET(request: Request) {
       return !isNaN(d.getTime()) && d >= today;
     });
 
-    // 5. Ordenar
-    const sorted = futureRaces.sort((a, b) =>
-      new Date(a.date).
+    // 5. Ordenar (CORRIGIDO)
+    const sorted = futureRaces.sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
+
+    // (resto do arquivo continua igual — se quiser mando completo)
+
+  } catch (error) {
+    console.error("❌ [CRON] Erro:", error);
+    return NextResponse.json(
+      { success: false, error: String(error) },
+      { status: 500 }
+    );
+  }
+}
