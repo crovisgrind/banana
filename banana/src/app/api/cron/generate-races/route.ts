@@ -1,11 +1,14 @@
+// src/app/api/cron/route.ts (ou onde seu crawler está)
 import { NextResponse } from 'next/server';
-import * as fs from 'fs';
-import * as path from 'path';
+// ⚠️ REMOVIDOS: import * as fs from 'fs'; import * as path from 'path';
+import { put } from '@vercel/blob'; // 🎯 NOVO: Importa a função de escrita do Blob
+
 import { crawlTvComRunning } from '@/crawlers/tvcomrunning';
 import { crawlAtivo } from '@/crawlers/ativo';
 import { Race } from '@/types/races';
 
 export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic'; // Garante que a função não seja cacheada (boa prática)
 
 // Mapa dos meses
 const MONTH_MAP: { [key: string]: number } = {
@@ -84,21 +87,25 @@ export async function GET() {
       return new Date(a.date).getTime() - new Date(b.date).getTime();
     });
 
-    // 7. Salvar em /tmp (somente local e Vercel permitem escrita aqui)
-    const jsonPath = '/tmp/races.json';
-    fs.writeFileSync(jsonPath, JSON.stringify(sorted, null, 2), 'utf8');
+    // 7. SALVAMENTO CORRIGIDO: Salva no Vercel Blob (Armazenamento Persistente)
+    const jsonContent = JSON.stringify(sorted, null, 2);
+    const blob = await put('races/races.json', jsonContent, { 
+        access: 'public',
+        contentType: 'application/json'
+    });
 
     const duration = ((Date.now() - start) / 1000).toFixed(2);
 
     return NextResponse.json({
       success: true,
-      message: "Crawler executado com sucesso",
+      message: "Crawler executado e JSON salvo no Vercel Blob com sucesso!",
       stats: {
         tvcom: tvComRaces.length,
         ativo: ativoRaces.length,
         total: sorted.length,
-        savedAt: jsonPath,
+        savedAt: blob.url, // Agora mostra o URL do Blob
         duration: `${duration}s`,
+        timestamp: new Date().toISOString(), // Adicionado para confirmação
       },
     });
 

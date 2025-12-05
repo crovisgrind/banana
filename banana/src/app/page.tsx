@@ -11,14 +11,17 @@ import { type Race } from '@/types/races';
 async function getRaces(): Promise<Race[]> {
   try {
     // Base URL confiável para SSR + produção
+    // O Next.js resolverá o fetch interno (Server Component -> API Route)
     const baseUrl =
       process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
-    const response = await fetch(`${baseUrl}/api/races`); // Não precisa de cache: 'no-store' aqui, pois a página já força a revalidação
+    // A chamada 'fetch' no Server Component usa o novo cache 'no-store'
+    const response = await fetch(`${baseUrl}/api/races`); 
 
     if (!response.ok) {
       console.error('❌ Erro ao buscar /api/races:', response.status);
-      return [];
+      // Retorna vazio em caso de erro
+      return []; 
     }
 
     const data = await response.json();
