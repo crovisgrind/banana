@@ -1,5 +1,8 @@
 // src/app/page.tsx
 
+// FORÇA A RENDERIZAÇÃO DINÂMICA (SSR) PARA GARANTIR OS DADOS MAIS RECENTES
+export const dynamic = 'force-dynamic'; 
+
 import ClientRacesList from '@/components/ClientRacesList';
 import BananaHero from '@/components/BananaHero';
 import BananaPattern from '@/components/BananaPattern';
@@ -11,9 +14,7 @@ async function getRaces(): Promise<Race[]> {
     const baseUrl =
       process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
-    const response = await fetch(`${baseUrl}/api/races`, {
-      cache: 'no-store',
-    });
+    const response = await fetch(`${baseUrl}/api/races`); // Não precisa de cache: 'no-store' aqui, pois a página já força a revalidação
 
     if (!response.ok) {
       console.error('❌ Erro ao buscar /api/races:', response.status);
