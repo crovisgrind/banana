@@ -1,10 +1,8 @@
 // src/crawlers/ativo.ts
+import * as cheerio from 'cheerio';
 import { type Race } from '@/types/races';
-import puppeteer from 'puppeteer-core';
-import chromium from '@sparticuz/chromium';
 
 const CALENDAR_URL = "https://www.ativo.com/calendario/";
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 function parseDistances(distancesRaw: string): string[] {
   if (!distancesRaw || distancesRaw === '#' || distancesRaw === '') return [];
@@ -33,218 +31,155 @@ function extractState(location: string): string {
 }
 
 export async function crawlAtivo(): Promise<Race[]> {
-  console.log("\n🚀 [ATIVO] ===== INICIANDO CRAWL =====");
+  console.log("[ATIVO] Tentando crawler sem Puppeteer (HTML estático)...");
   const start = Date.now();
   const allRaces: Race[] = [];
-  let browser;
 
   try {
-    console.log("[ATIVO] Step 1: Verificando ambiente...");
-    const isVercel = !!process.env.VERCEL;
-    console.log(`[ATIVO] Environment: ${isVercel ? '☁️  VERCEL' : '💻 LOCAL'}`);
-
-    console.log("[ATIVO] Step 2: Configurando Puppeteer...");
-    let launchConfig: any = {
-      headless: true,
-      defaultViewport: { width: 1280, height: 720 },
-    };
-
-    if (isVercel) {
-      console.log("[ATIVO] Step 2a: Usando Chromium do Vercel...");
-      const chromiumPath = await chromium.executablePath();
-      console.log(`[ATIVO] Chromium path: ${chromiumPath}`);
-      
-      launchConfig = {
-        ...launchConfig,
-        args: [
-          ...chromium.args,
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-gpu',
-          '--disable-web-security',
-        ],
-        executablePath: chromiumPath,
-      };
-    } else {
-      console.log("[ATIVO] Step 2b: Usando Chromium local...");
-      launchConfig = {
-        ...launchConfig,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      };
-    }
-
-    console.log("[ATIVO] Step 3: Lançando navegador...");
-    try {
-      browser = await puppeteer.launch(launchConfig);
-      console.log("[ATIVO] ✅ Navegador lançado com sucesso");
-    } catch (launchErr) {
-      console.error("[ATIVO] ❌ FALHA ao lançar navegador:", launchErr instanceof Error ? launchErr.message : String(launchErr));
-      return [];
-    }
-
-    console.log("[ATIVO] Step 4: Criando página...");
-    const page = await browser.newPage();
-    console.log("[ATIVO] ✅ Página criada");
-    
-    console.log("[ATIVO] Step 5: Configurando user agent...");
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
-    console.log("[ATIVO] ✅ User agent configurado");
-
-    console.log("[ATIVO] Step 6: Navegando para URL...");
-    try {
-      const response = await page.goto(CALENDAR_URL, { 
-        waitUntil: 'networkidle2', 
-        timeout: 60000
-      });
-      console.log(`[ATIVO] ✅ Página navegada (status: ${response?.status()})`);
-    } catch (gotoErr) {
-      console.error("[ATIVO] ❌ FALHA ao navegar:", gotoErr instanceof Error ? gotoErr.message : String(gotoErr));
-      return [];
-    }
-
-    console.log("[ATIVO] Step 7: Aguardando renderização JS (8s)...");
-    await delay(8000);
-    console.log("[ATIVO] ✅ Aguarde concluído");
-
-    console.log("[ATIVO] Step 8: Rolando página para lazy-loading...");
-    try {
-      await page.evaluate(() => {
-        window.scrollBy(0, window.innerHeight);
-      });
-      await delay(2000);
-      await page.evaluate(() => {
-        window.scrollBy(0, window.innerHeight);
-      });
-      await delay(2000);
-      console.log("[ATIVO] ✅ Página rolada");
-    } catch (scrollErr) {
-      console.error("[ATIVO] ⚠️  Erro ao rolar (continuando):", scrollErr);
-    }
-
-    console.log("[ATIVO] Step 9: Extraindo eventos com page.evaluate...");
-    let events: any[] = [];
-    try {
-      events = await page.evaluate(() => {
-        const results: any[] = [];
-        
-        // Log no console do navegador
-        console.log('[BROWSER] Iniciando extração...');
-        
-        let cards = document.querySelectorAll('article.card.card-event');
-        console.log(`[BROWSER] article.card.card-event: ${cards.length}`);
-        
-        if (cards.length === 0) {
-          cards = document.querySelectorAll('[class*="card"]');
-          console.log(`[BROWSER] [class*="card"]: ${cards.length}`);
-        }
-
-        if (cards.length === 0) {
-          cards = document.querySelectorAll('div[class*="col"]');
-          console.log(`[BROWSER] div[class*="col"]: ${cards.length}`);
-        }
-
-        cards.forEach((card, idx) => {
-          try {
-            const title = card.querySelector('h3')?.textContent?.trim() || '';
-            const day = card.querySelector('[class*="day"]')?.textContent?.trim() || '';
-            const month = card.querySelector('[class*="month"]')?.textContent?.trim() || '';
-            const location = card.querySelector('[class*="place"]')?.textContent?.trim() || '';
-            const distances = card.querySelector('[class*="distance"]')?.textContent?.trim() || '';
-            const link = card.querySelector('a[href]')?.getAttribute('href') || '';
-
-            if (title && title !== 'Imagem Evento' && day && link) {
-              results.push({ title, day, month, location, distances, link });
-              console.log(`[BROWSER] Card ${idx}: ${title}`);
-            }
-          } catch (e) {
-            console.log(`[BROWSER] Erro card ${idx}`);
-          }
-        });
-
-        console.log(`[BROWSER] Total: ${results.length}`);
-        return results;
-      });
-      console.log(`[ATIVO] ✅ Extração concluída: ${events.length} eventos`);
-    } catch (evalErr) {
-      console.error("[ATIVO] ❌ FALHA na extração:", evalErr instanceof Error ? evalErr.message : String(evalErr));
-      return [];
-    }
-
-    console.log("[ATIVO] Step 10: Processando eventos...");
-    if (events.length === 0) {
-      console.warn("[ATIVO] ⚠️  Nenhum evento encontrado!");
-      
-      // Log do HTML para debug
-      const html = await page.content();
-      console.log(`[ATIVO] HTML length: ${html.length}`);
-      console.log(`[ATIVO] Has 'Imagem Evento': ${html.includes('Imagem Evento')}`);
-      console.log(`[ATIVO] Has placeholder: ${html.includes('via.placeholder.com')}`);
-      
-      return [];
-    }
-
-    events.forEach((event, idx) => {
-      try {
-        const { title, day, month, location, distances, link } = event;
-
-        if (!title || !day || !link) {
-          console.log(`[ATIVO] ⏭️  Evento ${idx} inválido (faltam campos)`);
-          return;
-        }
-
-        const state = extractState(location);
-        if (!state || state === 'ND') {
-          console.log(`[ATIVO] ⏭️  Evento ${idx} sem estado: "${location}"`);
-          return;
-        }
-
-        let fullUrl = link;
-        if (!fullUrl.startsWith('http')) {
-          fullUrl = 'https://www.ativo.com' + (fullUrl.startsWith('/') ? '' : '/') + fullUrl;
-        }
-
-        const dateRaw = `${day} DE ${month.toUpperCase()}`;
-        const type: 'road' | 'trail' = title.toLowerCase().includes('trilha') ? 'trail' : 'road';
-
-        const newRace: Race = {
-          id: `ativo-${title.replace(/\s/g, '_')}-${day}-${month}`,
-          title,
-          location: location.replace(/\([A-Z]{2}\)/, '').replace(/[\s-][A-Z]{2}$/, '').trim(),
-          date: dateRaw,
-          distances: parseDistances(distances),
-          type,
-          url: fullUrl,
-          state,
-        };
-
-        allRaces.push(newRace);
-        console.log(`[ATIVO] ✅ Processado: ${title}`);
-
-      } catch (error) {
-        console.error(`[ATIVO] ❌ Erro ao processar evento ${idx}:`, error instanceof Error ? error.message : String(error));
-      }
+    console.log("[ATIVO] Fetching HTML...");
+    const response = await fetch(CALENDAR_URL, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'pt-BR,pt;q=0.9',
+      },
     });
 
-    console.log(`[ATIVO] Step 11: Total de corridas: ${allRaces.length}`);
+    if (!response.ok) {
+      console.error(`[ATIVO] Erro HTTP: ${response.status}`);
+      return [];
+    }
+
+    const html = await response.text();
+    console.log(`[ATIVO] HTML obtido (${html.length} chars)`);
+
+    // ✅ TENTA EXTRAIR JSON EMBUTIDO NA PÁGINA
+    console.log("[ATIVO] Procurando por JSON embutido...");
+    
+    // Procura por padrões comuns de JSON com dados de eventos
+    const jsonPatterns = [
+      /window\.__INITIAL_STATE__\s*=\s*(\{.*?\});/s,
+      /window\.__data__\s*=\s*(\{.*?\});/s,
+      /"events"\s*:\s*(\[.*?\])/s,
+      /eventos\s*=\s*(\[.*?\])/s,
+    ];
+
+    let eventsData: any = null;
+    for (const pattern of jsonPatterns) {
+      const match = html.match(pattern);
+      if (match) {
+        console.log("[ATIVO] ✅ JSON encontrado!");
+        try {
+          eventsData = JSON.parse(match[1]);
+          break;
+        } catch (e) {
+          console.log("[ATIVO] ⚠️  JSON inválido neste padrão");
+        }
+      }
+    }
+
+    // Se não achou JSON, tenta parsing do HTML
+    if (!eventsData) {
+      console.log("[ATIVO] Nenhum JSON encontrado, parseando HTML...");
+      
+      const $ = cheerio.load(html);
+
+      // Tenta TODOS os seletores possíveis
+      const selectors = [
+        'article.card.card-event',
+        '[class*="card"][class*="event"]',
+        'div[class*="evento"]',
+        'div[data-event]',
+        '[role="article"]',
+      ];
+
+      let cards = $();
+      for (const selector of selectors) {
+        cards = $(selector);
+        if (cards.length > 0) {
+          console.log(`[ATIVO] ✅ Cards encontrados com "${selector}": ${cards.length}`);
+          break;
+        }
+      }
+
+      if (cards.length === 0) {
+        console.log("[ATIVO] ⚠️  Nenhum card encontrado");
+        // Log para debug
+        console.log("[ATIVO] Procurando por h3 com títulos...");
+        const titles = $('h3');
+        console.log(`[ATIVO] H3 encontrados: ${titles.length}`);
+        titles.slice(0, 3).each((i, el) => {
+          const text = $(el).text().trim();
+          if (text && text !== 'Fechar' && text.length > 3) {
+            console.log(`[ATIVO] Título ${i}: ${text}`);
+          }
+        });
+        
+        return [];
+      }
+
+      // Processa cards
+      cards.each((i, element) => {
+        try {
+          const $card = $(element);
+
+          // Múltiplas formas de extrair dados
+          const title = $card.find('h3').text().trim() ||
+                       $card.find('[class*="title"]').text().trim() ||
+                       $card.attr('title') || '';
+
+          const dayElement = $card.find('span.date-square-day, [class*="day"]').first().text().trim();
+          const monthElement = $card.find('span.date-square-month, [class*="month"]').first().text().trim();
+          const locationRaw = $card.find('span.place-input, [class*="place"], [class*="location"]').first().text().trim();
+          const distancesText = $card.find('span.distances, [class*="distance"]').first().text().trim();
+          let fullUrl = $card.find('a[href]').first().attr('href') || '';
+
+          // Validações
+          if (!title || title === 'Imagem Evento' || title.length < 3) return;
+          if (!dayElement || isNaN(parseInt(dayElement))) return;
+          if (!fullUrl) return;
+
+          if (!fullUrl.startsWith('http')) {
+            fullUrl = 'https://www.ativo.com' + (fullUrl.startsWith('/') ? '' : '/') + fullUrl;
+          }
+
+          const dateRaw = `${dayElement} DE ${monthElement.toUpperCase()}`;
+          const distances = parseDistances(distancesText);
+          const state = extractState(locationRaw);
+          const location = locationRaw.replace(/\([A-Z]{2}\)/, '').replace(/[\s-][A-Z]{2}$/, '').trim();
+
+          if (!state || state === 'ND') return;
+
+          const typeTag = $card.find('span.tag, [class*="tag"]').first().text().trim().toLowerCase();
+          const type: 'road' | 'trail' = typeTag.includes('trilha') ? 'trail' : 'road';
+
+          const newRace: Race = {
+            id: `ativo-${title.replace(/\s/g, '_')}-${dayElement}-${monthElement}`,
+            title,
+            location,
+            date: dateRaw,
+            distances,
+            type,
+            url: fullUrl,
+            state,
+          };
+
+          allRaces.push(newRace);
+          console.log(`[ATIVO] ✅ ${title}`);
+
+        } catch (error) {
+          console.error(`[ATIVO] Erro no card ${i}:`, error instanceof Error ? error.message : '');
+        }
+      });
+    }
+
     return allRaces;
 
   } catch (error) {
-    console.error("[ATIVO] ❌ ERRO FATAL:", error instanceof Error ? error.message : String(error));
-    console.error("[ATIVO] Stack:", error instanceof Error ? error.stack : '');
+    console.error("[ATIVO] ❌ Erro:", error instanceof Error ? error.message : String(error));
     return [];
   } finally {
-    console.log("[ATIVO] Step 12: Fechando navegador...");
-    if (browser) {
-      try {
-        await browser.close();
-        console.log("[ATIVO] ✅ Navegador fechado");
-      } catch (closeError) {
-        console.error("[ATIVO] ⚠️  Erro ao fechar:", closeError);
-      }
-    }
     const duration = ((Date.now() - start) / 1000).toFixed(2);
-    console.log(`[ATIVO] ===== CRAWL COMPLETO =====`);
-    console.log(`[ATIVO] Duração: ${duration}s`);
-    console.log(`[ATIVO] Corridas: ${allRaces.length}\n`);
+    console.log(`[ATIVO] Completo em ${duration}s. ${allRaces.length} eventos.\n`);
   }
 }
