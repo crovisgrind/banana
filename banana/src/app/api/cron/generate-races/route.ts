@@ -102,14 +102,16 @@ export async function GET(request: NextRequest) {
 
     // 1. CRAWLERS (com timeout para Vercel)
     console.log("[CRON] 🔄 Executando crawlers em paralelo...");
-    const tvComRaces = await crawlTvComRunning().catch(err => {
-      console.error("[CRON] ❌ Erro TVCom:", err);
-      return [];
-    });
-    
-    // ⏸️ TEMPORÁRIO: Ativo desabilitado para debug
-    console.log("[CRON] ⏸️  Ativo desabilitado temporariamente (debug)");
-    const ativoRaces: any[] = [];
+    const [tvComRaces, ativoRaces] = await Promise.all([
+      crawlTvComRunning().catch(err => {
+        console.error("[CRON] ❌ Erro TVCom:", err);
+        return [];
+      }),
+      crawlAtivo().catch(err => {
+        console.error("[CRON] ❌ Erro Ativo:", err);
+        return [];
+      }),
+    ]);
 
     console.log(`[CRON] ✅ TVCom: ${tvComRaces.length} | Ativo: ${ativoRaces.length}`);
 
