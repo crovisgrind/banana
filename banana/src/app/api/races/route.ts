@@ -1,7 +1,7 @@
 // src/app/api/races/route.ts
 
 import { NextResponse } from 'next/server';
-import { get } from '@vercel/blob';
+import { list } from '@vercel/blob';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,23 +10,35 @@ export async function GET() {
     console.log('\n🔍 ========== API /races ==========');
     console.log(`⏰ ${new Date().toISOString()}`);
 
-    // ✅ Usar 'get' ao invés de 'list' - mais direto e confiável
+    // Buscar o arquivo races.json
     console.log('📥 Buscando races.json do Blob...');
     
-    const blob = await get('races/races.json');
+    const { blobs } = await list({ prefix: 'races/races.json' });
 
-    if (!blob) {
+    if (!blobs || blobs.length === 0) {
       console.warn('⚠️ Blob não encontrado');
       return NextResponse.json(
-        { message: 'Nenhuma corrida encontrada. Cron job não foi executado ainda.' },
+        [],
         { status: 200 }
       );
     }
 
-    console.log(`✅ Blob encontrado: ${blob.size} bytes`);
+    const blob = blobs[0];
+    console.log(`✅ Blob encontrado: ${blob.pathname} (${blob.size} bytes)`);
+    console.log(`   URL: ${blob.url}`);
 
-    // Converter stream para string
-    const text = await blob.text();
+    // Fazer fetch do arquivo via URL pública
+    console.log('📥 Fazendo fetch do conteúdo...');
+    const response = await fetch(blob.url, {
+      cache: 'no-store',
+    });
+
+    if (!response.ok) {
+      console.error(`❌ Erro ao fetch: ${response.statusText}`);
+      return NextResponse.json([], { status: 200 });
+    }
+
+    const text = await response.text();
     const races = JSON.parse(text);
 
     console.log(`✅ ${races.length} corridas carregadas`);
@@ -42,11 +54,8 @@ export async function GET() {
   } catch (error) {
     console.error('\n❌ ERRO na API /races');
     console.error('Erro:', error instanceof Error ? error.message : String(error));
+    console.error('Stack:', error instanceof Error ? error.stack : '');
     
-    // Retorna array vazio em vez de erro, para não quebrar o front
-    return NextResponse.json(
-      [],
-      { status: 200 }
-    );
+    return NextResponse.json([], { status: 200 });
   }
 }
