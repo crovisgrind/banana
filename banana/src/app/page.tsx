@@ -1,8 +1,5 @@
 // src/app/page.tsx
 
-// FORÇA A RENDERIZAÇÃO DINÂMICA (SSR) PARA GARANTIR OS DADOS MAIS RECENTES
-export const dynamic = 'force-dynamic'; 
-
 import ClientRacesList from '@/components/ClientRacesList';
 import BananaHero from '@/components/BananaHero';
 import BananaPattern from '@/components/BananaPattern';
@@ -11,17 +8,16 @@ import { type Race } from '@/types/races';
 async function getRaces(): Promise<Race[]> {
   try {
     // Base URL confiável para SSR + produção
-    // O Next.js resolverá o fetch interno (Server Component -> API Route)
     const baseUrl =
       process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
-    // A chamada 'fetch' no Server Component usa o novo cache 'no-store'
-    const response = await fetch(`${baseUrl}/api/races`); 
+    const response = await fetch(`${baseUrl}/api/races`, {
+      cache: 'no-store',
+    });
 
     if (!response.ok) {
       console.error('❌ Erro ao buscar /api/races:', response.status);
-      // Retorna vazio em caso de erro
-      return []; 
+      return [];
     }
 
     const data = await response.json();
@@ -137,3 +133,6 @@ export default async function Home() {
     </main>
   );
 }
+
+// ✅ LINHA CORRIGIDA
+export const dynamic = 'force-dynamic';
