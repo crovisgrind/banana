@@ -11,7 +11,6 @@ export async function GET() {
     // ✅ CORREÇÃO: Usa a URL pública do Blob diretamente
     // O Vercel Blob retorna uma URL pública sempre que você usa put()
     // Você pode pegar essa URL em: Vercel Dashboard → Storage → Blob
-    // Ou simplesmente use a URL que foi salva no cron anterior
     
     const BLOB_URL = 'https://l6gigqjmh87ogcuy.public.blob.vercel-storage.com/races/races.json';
     

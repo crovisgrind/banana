@@ -7,16 +7,20 @@
     "build": "next build && node scripts/postbuild.js",
     "start": "next start",
     "generate-races:watch": "nodemon --watch src/crawlers --exec npm run generate-races",
-    "generate-races": "ts-node --project tsconfig.script.json scripts/generate-races.ts"
+    "generate-races": "tsx scripts/generate-races.ts"
   },
   "dependencies": {
     "@vercel/blob": "^2.0.0",
     "@vercel/kv": "^3.0.0",
     "cheerio": "^1.1.2",
+    "dotenv": "^17.2.3",
     "next": "^16.0.7",
-    "puppeteer": "^23.0.0",
+    "puppeteer": "^24.32.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
+  },
+  "optionalDependencies": {
+    "@sparticuz/chromium": "^143.0.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
@@ -30,6 +34,7 @@
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

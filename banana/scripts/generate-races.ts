@@ -1,190 +1,152 @@
 // scripts/generate-races.ts
-// Script para gerar arquivo JSON estático com dados dos crawlers
+// Roda LOCALMENTE com ambos os crawlers e salva no Vercel Blob
 
-import * as fs from 'fs';
+import * as dotenv from 'dotenv';
+import { crawlTvComRunning } from '../src/crawlers/tvcomrunning.js';
+import { crawlAtivo } from '../src/crawlers/ativo.js';
+import type { Race } from '../src/types/races.js';
+import * as fs from 'fs/promises';
 import * as path from 'path';
 
-// Importar AMBOS os crawlers
-import { crawlTvComRunning } from '../src/crawlers/tvcomrunning';
-import { crawlAtivo } from '../src/crawlers/ativo';
+// ✅ Carrega .env.local
+dotenv.config({ path: path.join(process.cwd(), '.env.local') });
 
 const MONTH_MAP: { [key: string]: number } = {
-    'JANEIRO': 0, 'FEVEREIRO': 1, 'MARÇO': 2, 'ABRIL': 3,
-    'MAIO': 4, 'JUNHO': 5, 'JULHO': 6, 'AGOSTO': 7,
-    'SETEMBRO': 8, 'OUTUBRO': 9, 'NOVEMBRO': 10, 'DEZEMBRO': 11,
+  'JANEIRO': 0, 'FEVEREIRO': 1, 'MARÇO': 2, 'ABRIL': 3,
+  'MAIO': 4, 'JUNHO': 5, 'JULHO': 6, 'AGOSTO': 7,
+  'SETEMBRO': 8, 'OUTUBRO': 9, 'NOVEMBRO': 10, 'DEZEMBRO': 11,
 };
 
-const MONTH_ABBR_MAP: { [key: string]: string } = {
-    'JAN': 'JANEIRO', 'FEV': 'FEVEREIRO', 'MAR': 'MARÇO', 'ABR': 'ABRIL',
-    'MAI': 'MAIO', 'JUN': 'JUNHO', 'JUL': 'JULHO', 'AGO': 'AGOSTO',
-    'SET': 'SETEMBRO', 'OUT': 'OUTUBRO', 'NOV': 'NOVEMBRO', 'DEZ': 'DEZEMBRO',
-};
+function normalizeDate(rawDate: string): string {
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  const currentYear = now.getFullYear();
 
-function normalizeRace(race: any) {
-    let rawDate = race.date;
-    if (!rawDate || typeof rawDate !== 'string') return race;
-    
-    console.log(`[NORMALIZE] Data bruta: "${rawDate}"`);
-    rawDate = rawDate.toUpperCase();
-    
-    // ✅ Converter meses abreviados
-    for (const [abbr, full] of Object.entries(MONTH_ABBR_MAP)) {
-        const regex = new RegExp(`\\b${abbr}\\b`, 'g');
-        if (rawDate.includes(abbr)) {
-            console.log(`[NORMALIZE]   Convertendo ${abbr} → ${full}`);
-        }
-        rawDate = rawDate.replace(regex, full);
+  rawDate = rawDate.toUpperCase().trim();
+
+  // Formato: "01 DE JANEIRO DE 2025"
+  const full = rawDate.match(/(\d{1,2})\s+DE\s+([A-ZÃ‡ÃƒÃÃ‰ÃÃ"Ãš]+)\s+DE\s+(\d{4})/);
+  if (full) {
+    const day = Number(full[1]);
+    const month = MONTH_MAP[full[2]];
+    const year = Number(full[3]);
+    if (month !== undefined) {
+      return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     }
-    
-    console.log(`[NORMALIZE] Data após conversão: "${rawDate}"`);
-    
-    const currentYear = new Date().getFullYear();
-    
-    let day: number | undefined;
-    let month: number | undefined;
-    let year: number | undefined;
+  }
 
-    const cleanedString = rawDate.replace(/\s+/g, ' ');
-    
-    // Tenta: "01 DE JANEIRO DE 2025"
-    const fullDateRegex = /(\d{1,2})\s+DE\s+([A-ZÇÃÁÉÍÓÚ]+)\s+DE\s+(\d{4})/;
-    const fullDateMatch = cleanedString.match(fullDateRegex);
+  // Formato: "01/01"
+  const numeric = rawDate.match(/(\d{1,2})[./](\d{1,2})/);
+  if (numeric) {
+    const day = Number(numeric[1]);
+    const month = Number(numeric[2]) - 1;
+    let year = currentYear;
 
-    if (fullDateMatch) {
-        day = parseInt(fullDateMatch[1], 10);
-        const monthName = fullDateMatch[2];
-        month = MONTH_MAP[monthName];
-        year = parseInt(fullDateMatch[3], 10);
-        console.log(`[NORMALIZE]   ✅ Formato completo: Dia=${day}, Mês=${monthName}(${month + 1}), Ano=${year}`);
-    } else {
-        // Tenta: "01 DE JANEIRO" (sem ano)
-        const shortFullRegex = /(\d{1,2})\s+DE\s+([A-ZÇÃÁÉÍÓÚ]+)$/;
-        const shortFullMatch = cleanedString.match(shortFullRegex);
-        
-        if (shortFullMatch) {
-            day = parseInt(shortFullMatch[1], 10);
-            const monthName = shortFullMatch[2];
-            month = MONTH_MAP[monthName];
-            year = undefined;
-            console.log(`[NORMALIZE]   ✅ Formato curto: Dia=${day}, Mês=${monthName}(${month + 1}), Ano=indefinido`);
-        } else {
-            // Tenta: "01/01" ou "01.01"
-            const shortDateRegex = rawDate.match(/(\d{1,2})[./](\d{1,2})/);
-            if (shortDateRegex) {
-                day = parseInt(shortDateRegex[1], 10);
-                month = parseInt(shortDateRegex[2], 10) - 1;
-                year = undefined;
-                console.log(`[NORMALIZE]   ✅ Formato numeral: Dia=${day}, Mês=${month + 1}, Ano=indefinido`);
-            }
-        }
-    }
+    const d = new Date(year, month, day);
+    if (d < now) year++;
 
-    if (day === undefined || month === undefined || isNaN(day) || isNaN(month) || month < 0 || month > 11) {
-        console.warn(`⚠️ [NORMALIZE] Erro ao normalizar: ${race.date}\n`);
-        return race;
-    }
+    return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+  }
 
-    if (year === undefined) {
-        year = currentYear;
-        console.log(`[NORMALIZE]   Usando ano atual: ${year}`);
-    }
+  return rawDate;
+}
 
-    // ✅ IMPORTANTE: Verificar se data passou
+async function generateRaces() {
+  console.log('\n🚀 ===== GERADOR DE CORRIDAS (LOCAL) =====\n');
+  const start = Date.now();
+
+  try {
+    // 1. Executa crawlers
+    console.log('📡 Executando crawlers...\n');
+    const [tvComRaces, ativoRaces] = await Promise.all([
+      crawlTvComRunning(),
+      crawlAtivo(),
+    ]);
+
+    console.log(`\n✅ TVCom: ${tvComRaces.length} eventos`);
+    console.log(`✅ Ativo: ${ativoRaces.length} eventos\n`);
+
+    // 2. Unifica
+    const all = [...tvComRaces, ...ativoRaces];
+    console.log(`📊 Total: ${all.length} eventos\n`);
+
+    // 3. Dedup
+    const unique = Array.from(new Map(all.map(r => [r.url, r])).values());
+    console.log(`🔄 Após remover duplicatas: ${unique.length} eventos\n`);
+
+    // 4. Normaliza datas
+    const normalized = unique.map(r => ({
+      ...r,
+      date: normalizeDate(r.date),
+    }));
+
+    // 5. Filtra futuras
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+
+    const future = normalized.filter(r => {
+      const d = new Date(r.date);
+      return !isNaN(d.getTime()) && d >= today;
+    });
+
+    console.log(`📅 Corridas futuras: ${future.length}\n`);
+
+    // 6. Ordena por data
+    const sorted = future.sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
+
+    // 7. Salva localmente em JSON
+    const outputDir = path.join(process.cwd(), 'public');
+    const outputPath = path.join(outputDir, 'races.json');
+
+    await fs.mkdir(outputDir, { recursive: true });
+    await fs.writeFile(outputPath, JSON.stringify(sorted, null, 2));
+
+    console.log(`💾 Arquivo salvo localmente em: ${outputPath}\n`);
+
+    // 8. Tenta salvar no Vercel Blob
+    const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
     
-    // Se data passou e é do mesmo ano, avança pro próximo ano
-    const testDate = new Date(year, month, day);
-    if (testDate < today && year === currentYear) {
-        year = year + 1;
-        console.log(`[NORMALIZE]   Ajustado para próximo ano: ${year}`);
+    if (blobToken) {
+      console.log('📤 Enviando para Vercel Blob...');
+      const { put } = await import('@vercel/blob');
+      const jsonContent = JSON.stringify(sorted, null, 2);
+      const blob = await put('races/races.json', jsonContent, {
+        access: 'public',
+        contentType: 'application/json',
+        allowOverwrite: true,
+        token: blobToken,
+      });
+
+      console.log(`✅ Blob salvo em: ${blob.url}\n`);
+    } else {
+      console.log('⚠️  BLOB_READ_WRITE_TOKEN não configurada');
+      console.log('   Arquivo salvo apenas localmente em public/races.json\n');
+      console.log('📋 Para configurar Vercel Blob:');
+      console.log('   1. Vá para: https://vercel.com/dashboard');
+      console.log('   2. Settings → Environment Variables');
+      console.log('   3. Cole seu BLOB_READ_WRITE_TOKEN\n');
     }
 
-    // ✅ CONVERTER DIRETAMENTE PARA STRING SEM Date()
-    const monthStr = String(month + 1).padStart(2, '0');
-    const dayStr = String(day).padStart(2, '0');
-    const dateOnly = `${year}-${monthStr}-${dayStr}`;
-    
-    console.log(`[NORMALIZE] ✅ Data final: ${dateOnly}\n`);
+    // 9. Log das primeiras corridas
+    console.log('📋 Primeiras 5 corridas:\n');
+    sorted.slice(0, 5).forEach((race, i) => {
+      console.log(`${i + 1}. ${race.title}`);
+      console.log(`   📍 ${race.location} (${race.state})`);
+      console.log(`   📅 ${race.date}`);
+      console.log(`   🏃 ${race.distances.join(', ') || 'N/A'}\n`);
+    });
 
-    return {
-        ...race,
-        date: dateOnly,
-    };
+    const duration = ((Date.now() - start) / 1000).toFixed(2);
+    console.log(`✅ Geração completa em ${duration}s`);
+    console.log(`📊 Total de corridas: ${sorted.length}\n`);
+
+  } catch (error) {
+    console.error('❌ ERRO:', error instanceof Error ? error.message : String(error));
+    console.error(error);
+    process.exit(1);
+  }
 }
 
-async function generateRacesJSON() {
-    console.log('\n🚀 GERANDO RACES.JSON...\n');
-    
-    try {
-        console.log('⏳ Executando crawlers em paralelo...');
-        const [tvComRaces, ativoRaces] = await Promise.all([
-            crawlTvComRunning(),
-            crawlAtivo(),
-        ]);
-        
-        console.log(`\n✅ Resultado dos Crawlers:`);
-        console.log(`   - TVCom: ${tvComRaces.length} eventos`);
-        console.log(`   - Ativo: ${ativoRaces.length} eventos`);
-        console.log(`   - Total: ${tvComRaces.length + ativoRaces.length} eventos\n`);
-        
-        // Combinar
-        const allRaces = [...tvComRaces, ...ativoRaces];
-        
-        // Remover duplicatas
-        const uniqueRaces = Array.from(
-            new Map(allRaces.map((race) => [race.url, race])).values()
-        );
-        console.log(`🔄 Após remover duplicatas: ${uniqueRaces.length} eventos\n`);
-        
-        // Normalizar datas
-        console.log(`⏳ Normalizando ${uniqueRaces.length} datas...\n`);
-        const normalizedRaces = uniqueRaces.map(normalizeRace);
-        console.log(`✅ Datas normalizadas\n`);
-        
-        // Filtrar futuras
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const futureRaces = normalizedRaces.filter((race) => {
-            const raceDate = new Date(race.date);
-            return raceDate >= today;
-        });
-        
-        console.log(`📅 Corridas futuras: ${futureRaces.length} eventos\n`);
-        
-        // Ordenar
-        futureRaces.sort((a, b) => a.date.localeCompare(b.date));
-        
-        // Salvar
-        const dataDir = path.join(process.cwd(), 'public', 'data');
-        if (!fs.existsSync(dataDir)) {
-            fs.mkdirSync(dataDir, { recursive: true });
-            console.log(`📁 Diretório criado: ${dataDir}`);
-        }
-        
-        const filePath = path.join(dataDir, 'races.json');
-        fs.writeFileSync(filePath, JSON.stringify(futureRaces, null, 2), 'utf-8');
-        
-        const fileSize = (fs.statSync(filePath).size / 1024).toFixed(2);
-        
-        console.log(`\n✅ ARQUIVO GERADO COM SUCESSO!`);
-        console.log(`📁 Localização: ${filePath}`);
-        console.log(`💾 Tamanho: ${fileSize}KB`);
-        console.log(`📊 Total: ${futureRaces.length} corridas\n`);
-        
-        if (futureRaces.length > 0) {
-            console.log('📌 Primeiras 5 corridas:');
-            futureRaces.slice(0, 5).forEach((race, i) => {
-                console.log(`   ${i + 1}. ${race.title} (${race.date}) - ${race.location}`);
-            });
-        }
-        
-        console.log('\n');
-        
-    } catch (error) {
-        console.error('❌ ERRO:', error);
-        process.exit(1);
-    }
-}
-
-generateRacesJSON();
+generateRaces();

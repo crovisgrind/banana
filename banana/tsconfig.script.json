@@ -1,18 +1,10 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "module": "esnext",
-    "target": "es2020",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node"
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "ts-node": {
-    "compilerOptions": {
-      "module": "commonjs",
-      "moduleResolution": "node"
-    },
-    "transpileOnly": true
-  }
+  "include": ["src/**/*", "scripts/**/*"]
 }

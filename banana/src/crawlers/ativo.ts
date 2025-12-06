@@ -2,8 +2,6 @@
 
 import * as cheerio from 'cheerio';
 import { type Race } from '@/types/races';
-
-// ✅ Importações
 import puppeteer from 'puppeteer';
 
 const CALENDAR_URL = "https://www.ativo.com/calendario/";
@@ -37,7 +35,6 @@ function extractState(location: string): string {
   return 'ND';
 }
 
-// ✅ MESES ABREVIADOS EM PT
 const MONTH_ABBR_MAP: { [key: string]: string } = {
   'JAN': 'JANEIRO',
   'FEV': 'FEVEREIRO',
@@ -60,34 +57,30 @@ export async function crawlAtivo(): Promise<Race[]> {
   let browser;
 
   try { 
-    // ⏳ DELAY RESPEITOSO ANTES DE FAZER REQUISIÇÃO
     console.log("[ATIVO] Aguardando 3 segundos antes de fazer requisição...");
     await delay(3000);
     
-    console.log("[ATIVO] Iniciando navegador Chromium compatível com Vercel...");
-    
+    console.log("[ATIVO] Iniciando navegador...");
     
     try {
       browser = await puppeteer.launch({
         args: [
           '--no-sandbox',
           '--disable-setuid-sandbox',
-          '--disable-gpu',
-          '--disable-dev-shm-usage',
+          '--disable-gpu'
         ],
         headless: true,
         defaultViewport: { width: 1280, height: 720 },
       });
       console.log("[ATIVO] ✅ Navegador iniciado com sucesso");
     } catch (launchError) {
-      console.error("[ATIVO] ❌ Erro ao iniciar navegador:", launchError instanceof Error ? launchError.message : String(launchError));
+      console.error("[ATIVO] ❌ Erro ao iniciar navegador:", launchError);
       return [];
     }
 
     const page = await browser.newPage();
     console.log("[ATIVO] ✅ Nova página criada");
     
-    // Define User-Agent realista
     await page.setUserAgent(
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
     );
@@ -104,11 +97,9 @@ export async function crawlAtivo(): Promise<Race[]> {
       return [];
     }
 
-    // ⏳ AGUARDA MAIS UM POUCO PARA JS CARREGAR COMPLETAMENTE
     console.log("[ATIVO] Aguardando 2 segundos para JS carregar...");
     await delay(2000);
 
-    // Espera os cards carregarem
     console.log("[ATIVO] Aguardando cards...");
     try {
       await page.waitForSelector('article.card.card-event', { timeout: 5000 });
@@ -117,12 +108,10 @@ export async function crawlAtivo(): Promise<Race[]> {
       console.warn("[ATIVO] ⚠️  Timeout aguardando cards, continuando mesmo assim...");
     }
 
-    // Extrai HTML após JS executar
     console.log("[ATIVO] Extraindo HTML da página...");
     const html = await page.content();
     console.log("[ATIVO] ✅ Conteúdo extraído");
 
-    // Parse com cheerio
     const $ = cheerio.load(html);
     const cards = $('article.card.card-event');
     console.log(`[ATIVO] Cards encontrados: ${cards.length}`);
@@ -144,7 +133,6 @@ export async function crawlAtivo(): Promise<Race[]> {
         const distancesText = $card.find('span.distances').text().trim();
         let fullUrl = $linkElement.attr('href') || '';
 
-        // Validações rigorosas
         if (!title || title === 'Imagem Evento' || title.includes('#')) return;
         if (!dayElement || isNaN(parseInt(dayElement))) return;
         if (!fullUrl || fullUrl === '#') return;
@@ -185,7 +173,6 @@ export async function crawlAtivo(): Promise<Race[]> {
     console.error("[ATIVO] ❌ Erro inesperado no Crawler:", error);
     return [];
   } finally {
-    // GARANTE que o navegador seja fechado, mesmo em caso de erro
     if (browser) {
       await browser.close();
       console.log("[ATIVO] ✅ Navegador fechado");
