@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/postbuild.js",
     "start": "next start",
     "generate-races:watch": "nodemon --watch src/crawlers --exec npm run generate-races",
     "generate-races": "ts-node --project tsconfig.script.json scripts/generate-races.ts"
@@ -14,7 +14,7 @@
     "@vercel/kv": "^3.0.0",
     "cheerio": "^1.1.2",
     "next": "^16.0.7",
-    "puppeteer": "^24.32.0",
+    "puppeteer": "^23.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
