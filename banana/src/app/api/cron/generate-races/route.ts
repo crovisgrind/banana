@@ -85,6 +85,21 @@ export async function GET(request: NextRequest) {
     console.log("\n🚀 [CRON] Iniciando coleta de corridas...");
     const start = Date.now();
 
+    // ✅ VERIFICA SE O TOKEN BLOB ESTÁ CONFIGURADO
+    const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
+    if (!blobToken) {
+      console.error("❌ [CRON] BLOB_READ_WRITE_TOKEN não configurada!");
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'BLOB_READ_WRITE_TOKEN não configurada no ambiente Vercel',
+          help: 'Configure a variável de ambiente BLOB_READ_WRITE_TOKEN em Vercel → Settings → Environment Variables'
+        },
+        { status: 500 }
+      );
+    }
+    console.log("[CRON] ✅ Token Blob encontrado");
+
     // 1. CRAWLERS (com timeout para Vercel)
     console.log("[CRON] 🔄 Executando crawlers em paralelo...");
     const [tvComRaces, ativoRaces] = await Promise.all([
@@ -129,7 +144,7 @@ export async function GET(request: NextRequest) {
       return new Date(a.date).getTime() - new Date(b.date).getTime();
     });
 
-    // 7. ✅ SALVAR NO VERCEL BLOB (com retry)
+    // 7. ✅ SALVAR NO VERCEL BLOB COM RETRY E ALLOWOVERWRITE
     let blobUrl: string | null = null;
     let retries = 3;
     
@@ -137,16 +152,21 @@ export async function GET(request: NextRequest) {
       try {
         console.log(`[CRON] 💾 Salvando no Blob (tentativa ${4 - retries}/3)...`);
         const jsonContent = JSON.stringify(sorted, null, 2);
+        
         const blob = await put('races/races.json', jsonContent, {
           access: 'public',
           contentType: 'application/json',
-          addRandomSuffix: false, // ✅ IMPORTANTE: Garante que sobrescreve sempre
+          allowOverwrite: true, // ✅ CRÍTICO: Permite sobrescrever arquivo existente
+          token: blobToken, // ✅ CRÍTICO: Passa o token explicitamente
         });
+        
         blobUrl = blob.url;
         console.log(`[CRON] ✅ Blob salvo em: ${blobUrl}`);
       } catch (blobError) {
         retries--;
-        console.error(`[CRON] ⚠️  Erro ao salvar Blob (${retries} tentativas restantes):`, blobError);
+        console.error(`[CRON] ⚠️  Erro ao salvar Blob (${retries} tentativas restantes):`, 
+          blobError instanceof Error ? blobError.message : String(blobError)
+        );
         if (retries > 0) {
           await new Promise(r => setTimeout(r, 1000)); // Aguarda 1s antes de retry
         }
