@@ -7,9 +7,12 @@ import { type Race } from '@/types/races';
 
 async function getRaces(): Promise<Race[]> {
   try {
-    // Base URL confiável para SSR + produção
-    const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    // ✅ CORRIGIDO: Usar VERCEL_URL em produção
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+
+    console.log(`📡 Buscando races de: ${baseUrl}/api/races`);
 
     const response = await fetch(`${baseUrl}/api/races`, {
       cache: 'no-store',
@@ -21,6 +24,7 @@ async function getRaces(): Promise<Race[]> {
     }
 
     const data = await response.json();
+    console.log(`✅ Carregado ${Array.isArray(data) ? data.length : 0} corridas`);
     return Array.isArray(data) ? data : [];
   } catch (error) {
     console.error('❌ Erro em getRaces():', error);
@@ -134,5 +138,4 @@ export default async function Home() {
   );
 }
 
-// ✅ LINHA CORRIGIDA
 export const dynamic = 'force-dynamic';
