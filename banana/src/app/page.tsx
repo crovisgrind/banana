@@ -18,8 +18,9 @@ async function getRaces(): Promise<Race[]> {
     const response = await fetch(BLOB_RACES_URL, {
       // Usar 'force-cache' e 'revalidate' é ideal para arquivos estáticos
       // que são atualizados periodicamente, aproveitando a CDN do Vercel.
-      cache: 'force-cache',
-      next: { revalidate: 3600 } // Revalida o cache a cada 1 hora (3600 segundos)
+      cache: 'no-store',
+      //cache: 'force-cache',
+      //next: { revalidate: 3600 } // Revalida o cache a cada 1 hora (3600 segundos)
     });
 
     if (!response.ok) {
