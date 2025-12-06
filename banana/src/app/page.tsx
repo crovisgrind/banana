@@ -5,21 +5,25 @@ import BananaHero from '@/components/BananaHero';
 import BananaPattern from '@/components/BananaPattern';
 import { type Race } from '@/types/races';
 
+// ⚠️ CORREÇÃO: URL DO BLOB PÚBLICO
+// Este URL é o destino estático do JSON gerado pelo seu script de crawlers.
+// Ele elimina a necessidade de usar a rota /api/races e o erro 401.
+const BLOB_RACES_URL = 'https://l6gigqjmh87ogcuy.public.blob.vercel-storage.com/races/races.json';
+
 async function getRaces(): Promise<Race[]> {
   try {
-    // ✅ CORRIGIDO: Usar VERCEL_URL em produção
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    // 📡 Buscando races diretamente no Blob
+    console.log(`📡 Buscando races de: ${BLOB_RACES_URL}`);
 
-    console.log(`📡 Buscando races de: ${baseUrl}/api/races`);
-
-    const response = await fetch(`${baseUrl}/api/races`, {
-      cache: 'no-store',
+    const response = await fetch(BLOB_RACES_URL, {
+      // Usar 'force-cache' e 'revalidate' é ideal para arquivos estáticos
+      // que são atualizados periodicamente, aproveitando a CDN do Vercel.
+      cache: 'force-cache',
+      next: { revalidate: 3600 } // Revalida o cache a cada 1 hora (3600 segundos)
     });
 
     if (!response.ok) {
-      console.error('❌ Erro ao buscar /api/races:', response.status);
+      console.error('❌ Erro ao buscar Blob URL:', response.status);
       return [];
     }
 
