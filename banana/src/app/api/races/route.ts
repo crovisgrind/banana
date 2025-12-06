@@ -13,6 +13,22 @@ export async function GET() {
     console.log(`⏰ Horário: ${new Date().toISOString()}`);
     console.log(`📍 Procurando por: ${BLOB_FILE_NAME}`);
 
+    // DEBUG: Verificar se as variáveis estão setadas
+    console.log('🔑 Verificando variáveis de ambiente:');
+    const hasToken = !!process.env.BLOB_READ_WRITE_TOKEN;
+    const hasKey = !!process.env.BLOB_STORE_KEY;
+    console.log(`   BLOB_READ_WRITE_TOKEN configurado: ${hasToken}`);
+    console.log(`   BLOB_STORE_KEY configurado: ${hasKey}`);
+    
+    if (!hasToken && !hasKey) {
+      console.error('❌ NENHUMA VARIÁVEL DE BLOB CONFIGURADA!');
+      console.error('Variables disponíveis:', Object.keys(process.env).filter(k => k.includes('BLOB')));
+      return NextResponse.json(
+        { error: 'Blob não configurado', variables: Object.keys(process.env).filter(k => k.includes('BLOB')) },
+        { status: 401 }
+      );
+    }
+
     // 1. Listar todos os blobs
     console.log('📦 Listando blobs...');
     const { blobs } = await list({ prefix: 'races/' });
