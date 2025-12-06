@@ -53,27 +53,19 @@ export async function crawlAtivo(): Promise<Race[]> {
     const html = await response.text();
     console.log(`[ATIVO] HTML obtido (${html.length} chars)`);
 
-    // ✅ TENTA EXTRAIR JSON EMBUTIDO NA PÁGINA
+    // ✅ TENTA EXTRAIR JSON EMBUTIDO NA PÁGINA (sem flag /s para compatibilidade)
     console.log("[ATIVO] Procurando por JSON embutido...");
     
-    // Procura por padrões comuns de JSON com dados de eventos
-    const jsonPatterns = [
-      /window\.__INITIAL_STATE__\s*=\s*(\{.*?\});/s,
-      /window\.__data__\s*=\s*(\{.*?\});/s,
-      /"events"\s*:\s*(\[.*?\])/s,
-      /eventos\s*=\s*(\[.*?\])/s,
-    ];
-
     let eventsData: any = null;
-    for (const pattern of jsonPatterns) {
-      const match = html.match(pattern);
+    // Procura por padrões comuns - usando replace para suportar multi-line
+    if (html.includes('window.__INITIAL_STATE__')) {
+      const match = html.match(/window\.__INITIAL_STATE__\s*=\s*(\{[^}]*\})/);
       if (match) {
-        console.log("[ATIVO] ✅ JSON encontrado!");
         try {
           eventsData = JSON.parse(match[1]);
-          break;
+          console.log("[ATIVO] ✅ JSON __INITIAL_STATE__ encontrado!");
         } catch (e) {
-          console.log("[ATIVO] ⚠️  JSON inválido neste padrão");
+          console.log("[ATIVO] ⚠️  JSON __INITIAL_STATE__ inválido");
         }
       }
     }
@@ -93,13 +85,17 @@ export async function crawlAtivo(): Promise<Race[]> {
         '[role="article"]',
       ];
 
-      let cards = $();
+      let cards: any = null;
       for (const selector of selectors) {
         cards = $(selector);
-        if (cards.length > 0) {
+        if (cards && cards.length > 0) {
           console.log(`[ATIVO] ✅ Cards encontrados com "${selector}": ${cards.length}`);
           break;
         }
+      }
+      
+      if (!cards) {
+        cards = $('div');
       }
 
       if (cards.length === 0) {
