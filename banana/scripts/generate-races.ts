@@ -1,15 +1,15 @@
 // scripts/generate-races.ts
 // Roda LOCALMENTE com ambos os crawlers e salva no Vercel Blob
 
-import * as dotenv from 'dotenv';
-import { crawlTvComRunning } from '../src/crawlers/tvcomrunning.js';
-import { crawlAtivo } from '../src/crawlers/ativo.js';
-import type { Race } from '../src/types/races.js';
+
+import { crawlTvComRunning } from '../src/crawlers/tvcomrunning.ts'; 
+import { crawlAtivo } from '../src/crawlers/ativo.ts'; // Se o arquivo for .ts
+import type { Race } from '../src/types/races.ts'; // Se o arquivo for .ts
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
 // ✅ Carrega .env.local
-dotenv.config({ path: path.join(process.cwd(), '.env.local') });
+require('dotenv').config({ path: path.join(process.cwd(), '.env.local') });
 
 const MONTH_MAP: { [key: string]: number } = {
   'JANEIRO': 0, 'FEVEREIRO': 1, 'MARÇO': 2, 'ABRIL': 3,

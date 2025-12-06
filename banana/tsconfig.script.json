@@ -4,7 +4,16 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    
+    // 👇 TODAS AS OPÇÕES DEVEM ESTAR AQUI DENTRO!
+    
+    "module": "NodeNext", // ✅ Corrigido
+    "moduleResolution": "NodeNext", // ✅ Corrigido
+    "esModuleInterop": true, // ✅ Corrigido
+    "allowImportingTsExtensions": true // ✅ Corrigido (Você tinha duplicado)
   },
   "include": ["src/**/*", "scripts/**/*"]
+  
+  // ❌ NADA DEVE ESTAR AQUI FORA!
 }
