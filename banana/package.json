@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node scripts/postbuild.js",
+    "build": "next build ",
     "start": "next start",
     "generate-races:watch": "nodemon --watch src/crawlers --exec npm run generate-races",
     "generate-races": "ts-node --project tsconfig.script.json scripts/generate-races.ts"
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
+    "@types/dotenv": "^6.1.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
