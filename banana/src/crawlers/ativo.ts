@@ -1,5 +1,4 @@
 // src/crawlers/ativo.ts
-import * as cheerio from 'cheerio';
 import { type Race } from '@/types/races';
 import puppeteer from 'puppeteer-core';
 import chromium from '@sparticuz/chromium';
@@ -30,24 +29,8 @@ function extractState(location: string): string {
   if (match) {
     return (match[1] || match[2]) as string;
   }
-
   return 'ND';
 }
-
-const MONTH_ABBR_MAP: { [key: string]: string } = {
-  'JAN': 'JANEIRO',
-  'FEV': 'FEVEREIRO',
-  'MAR': 'MARÇO',
-  'ABR': 'ABRIL',
-  'MAI': 'MAIO',
-  'JUN': 'JUNHO',
-  'JUL': 'JULHO',
-  'AGO': 'AGOSTO',
-  'SET': 'SETEMBRO',
-  'OUT': 'OUTUBRO',
-  'NOV': 'NOVEMBRO',
-  'DEZ': 'DEZEMBRO',
-};
 
 export async function crawlAtivo(): Promise<Race[]> {
   console.log("🚀 [ATIVO] Iniciando crawl...");
@@ -56,14 +39,11 @@ export async function crawlAtivo(): Promise<Race[]> {
   let browser;
 
   try {
-    // DELAY RESPEITOSO
-    console.log("[ATIVO] ⏳ Aguardando 2 segundos...");
+    console.log("[ATIVO] ⏳ Aguardando 2 segundos antes de conectar...");
     await delay(2000);
     
     const isVercel = !!process.env.VERCEL;
-    console.log(`[ATIVO] Environment: ${isVercel ? 'VERCEL (Serverless)' : 'LOCAL'}`);
-    
-    console.log("[ATIVO] 🌐 Iniciando navegador...");
+    console.log(`[ATIVO] Environment: ${isVercel ? 'VERCEL' : 'LOCAL'}`);
     
     let launchConfig: any = {
       headless: true,
@@ -90,6 +70,7 @@ export async function crawlAtivo(): Promise<Race[]> {
       };
     }
 
+    console.log("[ATIVO] 🌐 Iniciando navegador...");
     browser = await puppeteer.launch(launchConfig);
     console.log("[ATIVO] ✅ Navegador iniciado");
 
@@ -100,133 +81,141 @@ export async function crawlAtivo(): Promise<Race[]> {
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
     );
 
+    // ✅ Intercepta requisições para debugar
+    page.on('response', (response) => {
+      if (response.status() >= 400) {
+        console.log(`[ATIVO] ⚠️  Response ${response.status()}: ${response.url()}`);
+      }
+    });
+
     console.log("[ATIVO] 🔗 Navegando...");
     try {
       await page.goto(CALENDAR_URL, { 
         waitUntil: 'networkidle2', 
-        timeout: 60000 // AUMENTADO para 60s
+        timeout: 60000
       });
-      console.log("[ATIVO] ✅ Página carregada");
+      console.log("[ATIVO] ✅ Página inicial carregada");
     } catch (navError) {
       console.error("[ATIVO] ❌ Erro ao navegar:", navError instanceof Error ? navError.message : String(navError));
       return [];
     }
 
-    // ✅ NOVO: Aguarda múltiplos seletores possíveis
-    console.log("[ATIVO] 🔎 Aguardando eventos...");
-    try {
-      // Tenta esperar por qualquer um desses seletores
-      await Promise.race([
-        page.waitForSelector('article.card.card-event', { timeout: 15000 }).catch(() => null),
-        page.waitForSelector('[class*="card"][class*="event"]', { timeout: 15000 }).catch(() => null),
-        page.waitForSelector('div[class*="evento"]', { timeout: 15000 }).catch(() => null),
-      ]);
-      console.log("[ATIVO] ✅ Eventos detectados");
-    } catch (waitError) {
-      console.warn("[ATIVO] ⚠️  Timeout aguardando eventos, continuando mesmo assim...");
-    }
+    // ✅ AGUARDA MUITO MAIS TEMPO PARA JS RENDERIZAR
+    console.log("[ATIVO] ⏳ Aguardando 8 segundos para JS renderizar completamente...");
+    await delay(8000);
 
-    // ✅ AGUARDA MAIS PARA JS FINALIZAR
-    console.log("[ATIVO] ⏳ Aguardando 5 segundos para JS renderizar completamente...");
-    await delay(5000);
-
-    // Extrai conteúdo
-    console.log("[ATIVO] 📄 Extraindo HTML...");
-    const html = await page.content();
-    console.log("[ATIVO] ✅ HTML extraído");
-
-    // Parse com cheerio
-    const $ = cheerio.load(html);
+    // ✅ TENTA ROLAR A PÁGINA PARA DISPARAR LAZY-LOADING
+    console.log("[ATIVO] 📜 Rolando página para ativar lazy-loading...");
+    await page.evaluate(() => {
+      window.scrollBy(0, window.innerHeight);
+    });
     
-    // ✅ NOVO: Tenta múltiplos seletores
-    let cards = $('article.card.card-event');
-    console.log(`[ATIVO] 🔍 Tentativa 1 - Cards encontrados: ${cards.length}`);
+    await delay(3000);
     
-    if (cards.length === 0) {
-      cards = $('[class*="card"][class*="event"]');
-      console.log(`[ATIVO] 🔍 Tentativa 2 - Cards encontrados: ${cards.length}`);
-    }
+    await page.evaluate(() => {
+      window.scrollBy(0, window.innerHeight);
+    });
     
-    if (cards.length === 0) {
-      cards = $('div.col-xl-4, div.col-lg-4, div.col-md-6');
-      console.log(`[ATIVO] 🔍 Tentativa 3 - Cards encontrados: ${cards.length}`);
-    }
+    await delay(3000);
 
-    if (cards.length === 0) {
-      console.warn("[ATIVO] ⚠️  Nenhum card encontrado com seletores padrão");
-      // LOG do HTML para debugar
-      const htmlSnippet = html.substring(0, 2000);
-      console.log("[ATIVO] 📋 HTML Preview:", htmlSnippet);
+    // ✅ EXTRAI EVENTOS USANDO page.evaluate (executa JS no contexto da página)
+    console.log("[ATIVO] 🔍 Extraindo eventos via JavaScript...");
+    
+    const events = await page.evaluate(() => {
+      const results: any[] = [];
+      
+      // Tenta múltiplos seletores
+      let cards = document.querySelectorAll('article.card.card-event');
+      console.log(`[EVAL] article.card.card-event: ${cards.length}`);
+      
+      if (cards.length === 0) {
+        cards = document.querySelectorAll('[class*="card"][class*="event"]');
+        console.log(`[EVAL] [class*="card"][class*="event"]: ${cards.length}`);
+      }
+
+      if (cards.length === 0) {
+        cards = document.querySelectorAll('div.col-xl-4');
+        console.log(`[EVAL] div.col-xl-4: ${cards.length}`);
+      }
+
+      cards.forEach((card, idx) => {
+        try {
+          const title = card.querySelector('h3')?.textContent?.trim() || '';
+          const day = card.querySelector('[class*="day"]')?.textContent?.trim() || 
+                     card.querySelector('span.date-square-day')?.textContent?.trim() || '';
+          const month = card.querySelector('[class*="month"]')?.textContent?.trim() || 
+                       card.querySelector('span.date-square-month')?.textContent?.trim() || '';
+          const location = card.querySelector('[class*="place"], [class*="location"]')?.textContent?.trim() || 
+                          card.querySelector('span.place-input')?.textContent?.trim() || '';
+          const distances = card.querySelector('[class*="distance"], span.distances')?.textContent?.trim() || '';
+          const link = card.querySelector('a[href]')?.getAttribute('href') || '';
+
+          if (title && title !== 'Imagem Evento' && day && link) {
+            results.push({
+              title,
+              day,
+              month,
+              location,
+              distances,
+              link,
+            });
+          }
+        } catch (e) {
+          console.log(`[EVAL] Erro ao processar card ${idx}`);
+        }
+      });
+
+      console.log(`[EVAL] Total extraído: ${results.length}`);
+      return results;
+    });
+
+    console.log(`[ATIVO] ✅ ${events.length} eventos extraídos via JavaScript`);
+
+    if (events.length === 0) {
+      console.warn("[ATIVO] ⚠️  Nenhum evento encontrado. Site pode ter mudado a estrutura.");
       return [];
     }
 
-    console.log(`[ATIVO] 📊 ${cards.length} cards para processar`);
-
-    cards.each((i, element) => {
+    // ✅ PROCESSA EVENTOS
+    events.forEach((event, idx) => {
       try {
-        const $card = $(element);
-        
-        // ✅ Múltiplas tentativas de extração
-        const $linkElement = $card.find('a.card-cover, a[href*="/calendario"]').first();
-        const title = $card.find('h3.title, h3.title-fixed-height, h3, [class*="title"]').first().text().trim();
-        const dayElement = $card.find('span.date-square-day, [class*="day"]').first().text().trim();
-        const monthElement = $card.find('span.date-square-month, [class*="month"]').first().text().trim();
-        const locationRaw = $card.find('span.place-input, [class*="location"], [class*="place"]').first().text().trim();
-        const distancesText = $card.find('span.distances, [class*="distance"]').first().text().trim();
-        let fullUrl = $linkElement.attr('href') || '';
+        const { title, day, month, location, distances, link } = event;
 
-        // Validações
-        if (!title || title === 'Imagem Evento' || title.includes('#') || title.length < 3) {
-          if (i < 3) console.log(`[ATIVO] ⏭️  Card ${i} ignorado - título inválido: "${title}"`);
-          return;
-        }
-        
-        if (!dayElement || isNaN(parseInt(dayElement))) {
-          if (i < 3) console.log(`[ATIVO] ⏭️  Card ${i} ignorado - dia inválido: "${dayElement}"`);
-          return;
-        }
-        
-        if (!fullUrl || fullUrl === '#') {
-          if (i < 3) console.log(`[ATIVO] ⏭️  Card ${i} ignorado - URL inválida: "${fullUrl}"`);
+        if (!title || !day || !link) {
+          console.log(`[ATIVO] ⏭️  Evento ${idx} inválido`);
           return;
         }
 
-        // Garante URL completa
-        if (fullUrl.startsWith('/')) {
-          fullUrl = 'https://www.ativo.com' + fullUrl;
-        }
-
-        const dateRaw = `${dayElement} DE ${monthElement.toUpperCase()}`;
-        const distances = parseDistances(distancesText);
-        const state = extractState(locationRaw);
-        const location = locationRaw.replace(/\([A-Z]{2}\)/, '').replace(/[\s-][A-Z]{2}$/, '').trim();
-
+        const state = extractState(location);
         if (!state || state === 'ND') {
-          if (i < 3) console.log(`[ATIVO] ⏭️  Card ${i} ignorado - estado inválido`);
+          console.log(`[ATIVO] ⏭️  Evento ${idx} sem estado válido`);
           return;
         }
 
-        const typeTag = $card.find('span.tag, [class*="tag"]').first().text().trim().toLowerCase();
-        const type: 'road' | 'trail' = typeTag.includes('trilha') || typeTag.includes('mountain') ? 'trail' : 'road';
+        let fullUrl = link;
+        if (!fullUrl.startsWith('http')) {
+          fullUrl = 'https://www.ativo.com' + (fullUrl.startsWith('/') ? '' : '/') + fullUrl;
+        }
 
-        const id = `ativo-${title.replace(/\s/g, '_')}-${dayElement}-${monthElement}`;
+        const dateRaw = `${day} DE ${month.toUpperCase()}`;
+        const type: 'road' | 'trail' = title.toLowerCase().includes('trilha') ? 'trail' : 'road';
 
         const newRace: Race = {
-          id: id,
-          title: title,
-          location: location,
+          id: `ativo-${title.replace(/\s/g, '_')}-${day}-${month}`,
+          title,
+          location: location.replace(/\([A-Z]{2}\)/, '').replace(/[\s-][A-Z]{2}$/, '').trim(),
           date: dateRaw,
-          distances: distances,
-          type: type,
+          distances: parseDistances(distances),
+          type,
           url: fullUrl,
-          state: state,
+          state,
         };
 
-        console.log(`[ATIVO] ✅ Card ${i}: ${title} - ${state}`);
         allRaces.push(newRace);
+        console.log(`[ATIVO] ✅ ${title} - ${state}`);
 
-      } catch (cardError) {
-        console.error(`[ATIVO] ❌ Erro no card ${i}:`, cardError instanceof Error ? cardError.message : String(cardError));
+      } catch (error) {
+        console.error(`[ATIVO] ❌ Erro no evento ${idx}:`, error instanceof Error ? error.message : String(error));
       }
     });
 
@@ -241,7 +230,7 @@ export async function crawlAtivo(): Promise<Race[]> {
         await browser.close();
         console.log("[ATIVO] ✅ Navegador fechado");
       } catch (closeError) {
-        console.error("[ATIVO] ⚠️  Erro ao fechar navegador:", closeError);
+        console.error("[ATIVO] ⚠️  Erro ao fechar:", closeError);
       }
     }
     const duration = ((Date.now() - start) / 1000).toFixed(2);
