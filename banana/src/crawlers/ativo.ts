@@ -3,8 +3,8 @@
 import * as cheerio from 'cheerio';
 import { type Race } from '@/types/races';
 
-// ✅ Importações para ambiente Serverless
-import puppeteer from 'puppeteer-core';
+// ✅ Importações
+import puppeteer from 'puppeteer';
 
 const CALENDAR_URL = "https://www.ativo.com/calendario/";
 
@@ -68,9 +68,7 @@ export async function crawlAtivo(): Promise<Race[]> {
     
     
     try {
-      const isVercel = !!process.env.VERCEL;
-      
-      let launchConfig: any = {
+      browser = await puppeteer.launch({
         args: [
           '--no-sandbox',
           '--disable-setuid-sandbox',
@@ -79,41 +77,7 @@ export async function crawlAtivo(): Promise<Race[]> {
         ],
         headless: true,
         defaultViewport: { width: 1280, height: 720 },
-      };
-
-      if (isVercel) {
-        console.log("[ATIVO] Ambiente: VERCEL - Tentando usar chrome/chromium do sistema...");
-        // No Vercel, tenta os caminhos padrão onde o Chrome está instalado
-        const possiblePaths = [
-          '/usr/bin/chromium-browser',
-          '/usr/bin/chromium',
-          '/snap/bin/chromium',
-          '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-        ];
-
-        let foundPath: string | undefined;
-        for (const path of possiblePaths) {
-          try {
-            const fs = await import('fs/promises');
-            await fs.access(path);
-            foundPath = path;
-            console.log(`[ATIVO] ✅ Encontrado Chrome em: ${path}`);
-            break;
-          } catch (e) {
-            // Continua tentando próximo caminho
-          }
-        }
-
-        if (foundPath) {
-          launchConfig.executablePath = foundPath;
-        } else {
-          console.warn("[ATIVO] ⚠️  Chrome não encontrado em caminhos conhecidos, tentando sem executablePath...");
-        }
-      } else {
-        console.log("[ATIVO] Ambiente: LOCAL");
-      }
-
-      browser = await puppeteer.launch(launchConfig);
+      });
       console.log("[ATIVO] ✅ Navegador iniciado com sucesso");
     } catch (launchError) {
       console.error("[ATIVO] ❌ Erro ao iniciar navegador:", launchError instanceof Error ? launchError.message : String(launchError));
