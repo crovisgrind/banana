@@ -1,14 +1,14 @@
-// src/app/api/cron/route.ts (ou onde seu crawler está)
-import { NextResponse } from 'next/server';
-// ⚠️ REMOVIDOS: import * as fs from 'fs'; import * as path from 'path';
-import { put } from '@vercel/blob'; // 🎯 NOVO: Importa a função de escrita do Blob
+// src/app/api/cron/generate-races/route.ts
+import { NextResponse, NextRequest } from 'next/server';
+import { put } from '@vercel/blob';
 
 import { crawlTvComRunning } from '@/crawlers/tvcomrunning';
 import { crawlAtivo } from '@/crawlers/ativo';
 import { Race } from '@/types/races';
 
 export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic'; // Garante que a função não seja cacheada (boa prática)
+export const dynamic = 'force-dynamic';
+export const maxDuration = 300; // 5 minutos (máximo para Vercel)
 
 // Mapa dos meses
 const MONTH_MAP: { [key: string]: number } = {
@@ -26,12 +26,14 @@ function normalizeDate(rawDate: string): string {
   rawDate = rawDate.toUpperCase().trim();
 
   // Formato: "01 DE JANEIRO DE 2025"
-  const full = rawDate.match(/(\d{1,2})\s+DE\s+([A-ZÇÃÁÉÍÓÚ]+)\s+DE\s+(\d{4})/);
+  const full = rawDate.match(/(\d{1,2})\s+DE\s+([A-ZÃ‡ÃƒÃÃ‰ÃÃ"Ãš]+)\s+DE\s+(\d{4})/);
   if (full) {
     const day = Number(full[1]);
     const month = MONTH_MAP[full[2]];
     const year = Number(full[3]);
-    return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    if (month !== undefined) {
+      return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    }
   }
 
   // Formato: "01/01"
@@ -50,30 +52,69 @@ function normalizeDate(rawDate: string): string {
   return rawDate;
 }
 
-export async function GET() {
+// ✅ VERIFICA SE É UMA REQUISIÇÃO DE CRON VÁLIDA
+function verifyCronSecret(request: NextRequest): boolean {
+  const authHeader = request.headers.get('authorization');
+  const cronSecret = process.env.CRON_SECRET;
+
+  // Se CRON_SECRET não está configurada, aceita (útil para testes locais)
+  if (!cronSecret) {
+    console.warn("⚠️  CRON_SECRET não configurada. Aceitando todas as requisições.");
+    return true;
+  }
+
+  // Verifica Bearer token
+  if (authHeader === `Bearer ${cronSecret}`) {
+    return true;
+  }
+
+  return false;
+}
+
+export async function GET(request: NextRequest) {
+  // ✅ VERIFICA AUTENTICAÇÃO DO CRON
+  if (!verifyCronSecret(request)) {
+    console.error("❌ [CRON] Acesso não autorizado");
+    return NextResponse.json(
+      { success: false, error: 'Unauthorized' },
+      { status: 401 }
+    );
+  }
+
   try {
-    console.log("🏃 [CRON] Iniciando coleta...");
+    console.log("\n🚀 [CRON] Iniciando coleta de corridas...");
     const start = Date.now();
 
-    // 1. Crawlers
+    // 1. CRAWLERS (com timeout para Vercel)
+    console.log("[CRON] 🔄 Executando crawlers em paralelo...");
     const [tvComRaces, ativoRaces] = await Promise.all([
-      crawlTvComRunning(),
-      crawlAtivo(),
+      crawlTvComRunning().catch(err => {
+        console.error("[CRON] ❌ Erro TVCom:", err);
+        return [];
+      }),
+      crawlAtivo().catch(err => {
+        console.error("[CRON] ❌ Erro Ativo:", err);
+        return [];
+      }),
     ]);
 
-    // 2. Unificar
+    console.log(`[CRON] ✅ TVCom: ${tvComRaces.length} | Ativo: ${ativoRaces.length}`);
+
+    // 2. UNIFICAR
     const all = [...tvComRaces, ...ativoRaces];
+    console.log(`[CRON] 📊 Total antes dedup: ${all.length}`);
 
-    // 3. Dedup
+    // 3. DEDUPLICAR (por URL)
     const unique = Array.from(new Map(all.map(r => [r.url, r])).values());
+    console.log(`[CRON] 🔄 Após dedup: ${unique.length}`);
 
-    // 4. Normalizar datas
+    // 4. NORMALIZAR DATAS
     const normalized = unique.map(r => ({
       ...r,
       date: normalizeDate(r.date),
     }));
 
-    // 5. Filtrar futuras
+    // 5. FILTRAR FUTURAS
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -81,38 +122,68 @@ export async function GET() {
       const d = new Date(r.date);
       return !isNaN(d.getTime()) && d >= today;
     });
+    console.log(`[CRON] 📅 Corridas futuras: ${future.length}`);
 
-    // 6. Ordenar
+    // 6. ORDENAR POR DATA
     const sorted = future.sort((a, b) => {
       return new Date(a.date).getTime() - new Date(b.date).getTime();
     });
 
-    // 7. SALVAMENTO CORRIGIDO: Salva no Vercel Blob (Armazenamento Persistente)
-    const jsonContent = JSON.stringify(sorted, null, 2);
-    const blob = await put('races/races.json', jsonContent, { 
-        access: 'public',
-        contentType: 'application/json'
-    });
+    // 7. ✅ SALVAR NO VERCEL BLOB (com retry)
+    let blobUrl: string | null = null;
+    let retries = 3;
+    
+    while (retries > 0 && !blobUrl) {
+      try {
+        console.log(`[CRON] 💾 Salvando no Blob (tentativa ${4 - retries}/3)...`);
+        const jsonContent = JSON.stringify(sorted, null, 2);
+        const blob = await put('races/races.json', jsonContent, {
+          access: 'public',
+          contentType: 'application/json',
+          addRandomSuffix: false, // ✅ IMPORTANTE: Garante que sobrescreve sempre
+        });
+        blobUrl = blob.url;
+        console.log(`[CRON] ✅ Blob salvo em: ${blobUrl}`);
+      } catch (blobError) {
+        retries--;
+        console.error(`[CRON] ⚠️  Erro ao salvar Blob (${retries} tentativas restantes):`, blobError);
+        if (retries > 0) {
+          await new Promise(r => setTimeout(r, 1000)); // Aguarda 1s antes de retry
+        }
+      }
+    }
+
+    if (!blobUrl) {
+      throw new Error("Falha ao salvar JSON no Vercel Blob após 3 tentativas");
+    }
 
     const duration = ((Date.now() - start) / 1000).toFixed(2);
 
-    return NextResponse.json({
+    // ✅ RESPOSTA DE SUCESSO
+    const response = {
       success: true,
-      message: "Crawler executado e JSON salvo no Vercel Blob com sucesso!",
+      message: "✅ Crawler executado e JSON atualizado com sucesso!",
       stats: {
         tvcom: tvComRaces.length,
         ativo: ativoRaces.length,
         total: sorted.length,
-        savedAt: blob.url, // Agora mostra o URL do Blob
+        blobUrl: blobUrl,
         duration: `${duration}s`,
-        timestamp: new Date().toISOString(), // Adicionado para confirmação
+        timestamp: new Date().toISOString(),
       },
-    });
+    };
+
+    console.log("[CRON] 🎉 Execução concluída com sucesso");
+    return NextResponse.json(response);
 
   } catch (err) {
-    console.error("❌ [CRON] Erro:", err);
+    console.error("❌ [CRON] Erro fatal:", err);
     return NextResponse.json(
-      { success: false, error: String(err) },
+      {
+        success: false,
+        error: err instanceof Error ? err.message : String(err),
+        timestamp: new Date().toISOString(),
+      },
       { status: 500 }
     );
   }
