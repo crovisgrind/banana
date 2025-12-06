@@ -5,7 +5,6 @@ import { type Race } from '@/types/races';
 
 // ✅ Importações para ambiente Serverless
 import puppeteer from 'puppeteer-core';
-import chromium from '@sparticuz/chromium';
 
 const CALENDAR_URL = "https://www.ativo.com/calendario/";
 
@@ -67,37 +66,57 @@ export async function crawlAtivo(): Promise<Race[]> {
     
     console.log("[ATIVO] Iniciando navegador Chromium compatível com Vercel...");
     
-    // 🎯 Configuração Essencial para Vercel
-    process.env.PUPPETEER_SKIP_DOWNLOAD = 'true';
     
     try {
-      let executablePath;
-      try {
-        executablePath = await chromium.executablePath();
-      } catch (pathError) {
-        console.warn("[ATIVO] ⚠️  Não conseguiu localizar chromium.executablePath(), tentando sem...");
-        executablePath = undefined;
-      }
-
-      const launchConfig: any = {
+      const isVercel = !!process.env.VERCEL;
+      
+      let launchConfig: any = {
         args: [
-          ...chromium.args,
           '--no-sandbox',
           '--disable-setuid-sandbox',
-          '--disable-gpu'
+          '--disable-gpu',
+          '--disable-dev-shm-usage',
         ],
         headless: true,
         defaultViewport: { width: 1280, height: 720 },
       };
 
-      if (executablePath) {
-        launchConfig.executablePath = executablePath;
+      if (isVercel) {
+        console.log("[ATIVO] Ambiente: VERCEL - Tentando usar chrome/chromium do sistema...");
+        // No Vercel, tenta os caminhos padrão onde o Chrome está instalado
+        const possiblePaths = [
+          '/usr/bin/chromium-browser',
+          '/usr/bin/chromium',
+          '/snap/bin/chromium',
+          '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+        ];
+
+        let foundPath: string | undefined;
+        for (const path of possiblePaths) {
+          try {
+            const fs = await import('fs/promises');
+            await fs.access(path);
+            foundPath = path;
+            console.log(`[ATIVO] ✅ Encontrado Chrome em: ${path}`);
+            break;
+          } catch (e) {
+            // Continua tentando próximo caminho
+          }
+        }
+
+        if (foundPath) {
+          launchConfig.executablePath = foundPath;
+        } else {
+          console.warn("[ATIVO] ⚠️  Chrome não encontrado em caminhos conhecidos, tentando sem executablePath...");
+        }
+      } else {
+        console.log("[ATIVO] Ambiente: LOCAL");
       }
 
       browser = await puppeteer.launch(launchConfig);
-      console.log("[ATIVO] ✅ Navegador iniciado com sucesso (Puppeteer-core + Chromium)");
+      console.log("[ATIVO] ✅ Navegador iniciado com sucesso");
     } catch (launchError) {
-      console.error("[ATIVO] ❌ Erro ao iniciar navegador:", launchError);
+      console.error("[ATIVO] ❌ Erro ao iniciar navegador:", launchError instanceof Error ? launchError.message : String(launchError));
       return [];
     }
 
