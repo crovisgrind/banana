@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run generate-races && next build",
+    "build": "next build",
     "start": "next start",
     "generate-races:watch": "nodemon --watch src/crawlers --exec npm run generate-races",
     "generate-races": "ts-node --project tsconfig.script.json scripts/generate-races.ts"
