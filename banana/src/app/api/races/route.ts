@@ -1,42 +1,82 @@
 // src/app/api/races/route.ts
 
 import { NextResponse } from 'next/server';
-import { list } from '@vercel/blob'; // Usamos 'list' para encontrar o URL do Blob
+import { list } from '@vercel/blob';
 
-// FORÇA A NÃO-CACHE da função Serverless no CDN
-export const dynamic = 'force-dynamic'; 
+export const dynamic = 'force-dynamic';
 
-const BLOB_FILE_NAME = 'races/races.json'; 
+const BLOB_FILE_NAME = 'races/races.json';
 
 export async function GET() {
   try {
-    // 1. Busca o URL do arquivo Blob pelo nome, sem o parâmetro 'mode'.
-    // O 'list' retorna os metadados por padrão, incluindo o URL.
-    const { blobs } = await list({ prefix: BLOB_FILE_NAME });
+    console.log('\n🔍 ========== DEBUG API RACES ==========');
+    console.log(`⏰ Horário: ${new Date().toISOString()}`);
+    console.log(`📍 Procurando por: ${BLOB_FILE_NAME}`);
+
+    // 1. Listar todos os blobs
+    console.log('📦 Listando blobs...');
+    const { blobs } = await list({ prefix: 'races/' });
+    
+    console.log(`✅ Total de blobs encontrados: ${blobs.length}`);
+    blobs.forEach((blob, i) => {
+      console.log(`   ${i + 1}. ${blob.pathname} (${blob.size} bytes)`);
+    });
 
     if (blobs.length === 0) {
-        console.error(`❌ Blob ${BLOB_FILE_NAME} não encontrado. O crawler rodou?`);
-        return NextResponse.json([], { status: 200 });
+      console.error(`❌ Nenhum blob encontrado com prefixo 'races/'`);
+      console.error('❌ O cron job ainda não foi executado ou falhou');
+      return NextResponse.json([], { status: 200 });
     }
 
-    // 2. O array 'blobs' contém todos os Blobs com o prefixo. Pegamos o primeiro (e único, se for só este arquivo)
-    const blobUrl = blobs[0].url; 
+    // 2. Pegar o primeiro blob que corresponde ao padrão
+    const racesBlob = blobs.find(b => b.pathname === 'races/races.json');
     
-    // 3. Faz o fetch nativo usando o URL público
-    const response = await fetch(blobUrl);
+    if (!racesBlob) {
+      console.error(`❌ Blob 'races/races.json' não encontrado`);
+      console.error(`Blobs disponíveis: ${blobs.map(b => b.pathname).join(', ')}`);
+      return NextResponse.json([], { status: 200 });
+    }
+
+    console.log(`✅ Blob encontrado: ${racesBlob.pathname}`);
+    console.log(`   URL: ${racesBlob.url}`);
+    console.log(`   Tamanho: ${racesBlob.size} bytes`);
+
+    // 3. Fazer fetch do conteúdo
+    console.log('📥 Buscando conteúdo do blob...');
+    const response = await fetch(racesBlob.url);
 
     if (!response.ok) {
-        console.error(`❌ Erro ao buscar o Blob: ${response.statusText}`);
-        return NextResponse.json([], { status: 200 });
+      console.error(`❌ Erro ao buscar blob: ${response.statusText}`);
+      return NextResponse.json([], { status: 200 });
     }
 
-    // 4. Extrai o conteúdo
-    const dataText = await response.text(); 
+    // 4. Parse JSON
+    const dataText = await response.text();
+    console.log(`✅ Conteúdo recebido: ${dataText.length} caracteres`);
+
     const races = JSON.parse(dataText);
+    console.log(`✅ JSON parseado com sucesso: ${races.length} corridas`);
+
+    if (races.length > 0) {
+      console.log('📌 Primeiras 3 corridas:');
+      races.slice(0, 3).forEach((race: any, i: number) => {
+        console.log(`   ${i + 1}. ${race.title} (${race.date})`);
+      });
+    }
+
+    console.log('========== FIM DO DEBUG ==========\n');
 
     return NextResponse.json(races);
+
   } catch (error) {
-    console.error('⚠️ Erro ao ler dados do Vercel Blob:', error);
-    return NextResponse.json([], { status: 200 }); 
+    console.error('\n❌ ========== ERRO NA API ==========');
+    console.error('Erro:', error);
+    if (error instanceof Error) {
+      console.error('Mensagem:', error.message);
+      console.error('Stack:', error.stack);
+    }
+    console.error('========== FIM DO ERRO ==========\n');
+    
+    return NextResponse.json([], { status: 200 });
   }
 }
