@@ -6,14 +6,17 @@
       "dom.iterable",
       "esnext"
     ],
+    // 👇 ADICIONE/VERIFIQUE ESSAS TRÊS LINHAS NO ARQUIVO PRINCIPAL
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": true,
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
+    
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",

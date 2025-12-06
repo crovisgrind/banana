@@ -6,14 +6,13 @@
       "@/*": ["src/*"]
     },
     
-    // 👇 TODAS AS OPÇÕES DEVEM ESTAR AQUI DENTRO!
-    
-    "module": "NodeNext", // ✅ Corrigido
-    "moduleResolution": "NodeNext", // ✅ Corrigido
-    "esModuleInterop": true, // ✅ Corrigido
-    "allowImportingTsExtensions": true // ✅ Corrigido (Você tinha duplicado)
+    // 👇 ESSAS TRÊS CHAVES SÃO OBRIGATÓRIAS PARA RESOLVER O ERRO .ts
+    "module": "NodeNext", 
+    "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": true, 
+
+    // Já que NodeNext foi usado, é bom incluir:
+    "esModuleInterop": true
   },
   "include": ["src/**/*", "scripts/**/*"]
-  
-  // ❌ NADA DEVE ESTAR AQUI FORA!
 }
