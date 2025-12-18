@@ -2,229 +2,87 @@
 
 import { useState } from 'react';
 import { type Race } from '@/types/races';
-import { 
-  MedalIcon, 
-  BananaIcon, 
-  CalendarIcon, 
-  LocationIcon 
-} from './RaceIcons';
-import { parseLocalDate } from '@/utils/dateUtils';
-
-type DistanceFilter = 'all' | '5k' | '10k' | '21k' | '42k';
+import { Calendar, MapPin, ArrowRight, Filter } from 'lucide-react';
 
 export default function ClientRacesList({ initialRaces }: { initialRaces: Race[] }) {
-  const [search, setSearch] = useState('');
-  const [activeFilter, setActiveFilter] = useState<DistanceFilter>('all');
   const [selectedEstado, setSelectedEstado] = useState('');
+  const estadosBrasil = ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"];
 
-  const estadosBrasil = [
-    "AC","AL","AP","AM","BA","CE","DF","ES","GO","MA",
-    "MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN",
-    "RS","RO","RR","SC","SP","SE","TO"
-  ];
-
-  // -----------------------------------
-  //  🔥 ORDENAR POR DATA (mais próximas -> mais distantes)
-  // -----------------------------------
-  const sortByDate = (list: Race[]) => {
-    return [...list].sort((a, b) => {
-      return parseLocalDate(a.date).getTime() - parseLocalDate(b.date).getTime();
-    });
-  };
-
-  // -----------------------------------
-  //  🧹 Ocultar corridas que já passaram
-  // -----------------------------------
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  // Detecta distância pelo nome
-  const detectDistance = (title: string): string | null => {
-    const t = title.toLowerCase();
-    if (t.includes('5k')) return '5k';
-    if (t.includes('10k')) return '10k';
-    if (t.includes('meia') || t.includes('21k') || t.includes('21 km')) return '21k';
-    if (t.includes('maratona') || t.includes('42k') || t.includes('42 km')) return '42k';
-    return null;
-  };
-
-  // -----------------------------------
-  //  🔍 FILTRO PRINCIPAL:
-  //     busca + distância + estado + remover passadas
-  // -----------------------------------
-  const filtered = sortByDate(initialRaces).filter((race) => {
-    const raceDate = parseLocalDate(race.date);
-    raceDate.setHours(0, 0, 0, 0);
-
-    // ❌ Oculta corridas passadas
-    if (raceDate < today) return false;
-
-    const matchesSearch =
-      race.title.toLowerCase().includes(search.toLowerCase()) ||
-      race.location?.toLowerCase().includes(search.toLowerCase());
-
-    const raceDistance = detectDistance(race.title);
-    const matchesDistance =
-      activeFilter === 'all' || raceDistance === activeFilter;
-
-    const raceUF = race.state?.toUpperCase() || '';
-    const matchesEstado =
-      selectedEstado === '' || raceUF === selectedEstado;
-
-    return matchesSearch && matchesDistance && matchesEstado;
-  });
-
-  // Destaque e demais corridas
-  const featuredRace = filtered.length > 0 ? filtered[0] : null;
-  const otherRaces = filtered.slice(1);
-
-  // Cores rotativas
-  const colors = ['bg-yellow-300', 'bg-pink-300', 'bg-cyan-300', 'bg-green-300'];
-  const getColor = (i: number) => colors[i % colors.length];
-
-  // Helper para formatar data CORRETAMENTE
-  const formatRaceDate = (dateString: string) => {
-    return parseLocalDate(dateString).toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric',
-    });
-  };
+  const filteredRaces = initialRaces.filter(race => 
+    selectedEstado === '' || race.state === selectedEstado
+  );
 
   return (
-    <>
-      {/* ------------------------------ */}
-      {/* 🔥 FILTROS */}
-      {/* ------------------------------ */}
-      <div className="filter-bar flex flex-wrap gap-3 items-center mb-10">
-
-        <span className="font-montserrat font-bold text-black text-lg hidden md:inline">
-          Filtrar:
-        </span>
-
-        {/* Filtro por distância */}
-        {(['all', '5k', '10k', '21k', '42k'] as const).map((filter) => (
-          <button
-            key={filter}
-            onClick={() => setActiveFilter(filter)}
-            className={`filter-btn ${activeFilter === filter ? 'active' : ''}`}
+    <div className="w-full">
+      {/* Filtro Arredondado */}
+      <div className="flex flex-col items-center mb-12">
+        <div className="relative w-full max-w-xs">
+          <select 
+            value={selectedEstado}
+            onChange={(e) => setSelectedEstado(e.target.value)}
+            className="w-full h-12 px-6 rounded-full border-2 border-banana bg-white text-banana-text font-bold appearance-none text-center cursor-pointer shadow-sm focus:ring-2 ring-banana/20 outline-none"
           >
-            {filter === 'all' ? 'Todas' : filter.toUpperCase()}
-          </button>
-        ))}
-
-        {/* 👉 Filtro de Estado */}
-        <select
-          value={selectedEstado}
-          onChange={(e) => setSelectedEstado(e.target.value)}
-          className="border border-black px-3 py-2 font-bold rounded-md bg-white"
-        >
-          <option value="">Todos os Estados</option>
-          {estadosBrasil.map((uf) => (
-            <option key={uf} value={uf}>
-              {uf}
-            </option>
-          ))}
-        </select>
+            <option value="">Brasil (Todos)</option>
+            {estadosBrasil.map(uf => <option key={uf} value={uf}>{uf}</option>)}
+          </select>
+          <Filter className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-banana pointer-events-none" />
+        </div>
+        <p className="mt-4 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
+          {filteredRaces.length} provas encontradas
+        </p>
       </div>
 
-      {/* ------------------------------ */}
-      {/* 🥇 CARD DESTAQUE */}
-      {/* ------------------------------ */}
-      {featuredRace && (
-        <article className="card-featured mb-12 md:mb-20 animate-glow animate-shake group">
-          <div className="card-featured-content">
-            <div className="badge-next-race font-montserrat animate-pulse-badge">
-              🏁 PRÓXIMA CORRIDA
+      {/* Grid de Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredRaces.map((race) => (
+          <article 
+            key={race.url} 
+            className="group bg-white rounded-[2.5rem] border border-black/5 flex flex-col transition-all duration-300 shadow-sm hover:shadow-2xl hover:scale-105"
+          >
+            {/* Header Amarelo */}
+            <div className="bg-banana px-8 py-5 rounded-t-[2.5rem]">
+              <h2 className="font-extrabold text-banana-text text-lg leading-tight truncate">
+                {race.title}
+              </h2>
             </div>
-
-            <h2 className="title-card text-black">{featuredRace.title}</h2>
-
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 text-lg md:text-xl font-montserrat font-bold text-black">
-                <CalendarIcon className="w-6 h-6 md:w-7 md:h-7 text-black animate-pop-hover" />
-                <time>
-                  {formatRaceDate(featuredRace.date)}
-                </time>
+            
+            {/* Informações */}
+            <div className="p-8 flex flex-col gap-5">
+              <div className="flex items-center gap-3 text-banana-text/80 font-bold text-sm">
+                <Calendar className="w-5 h-5 text-banana shrink-0" strokeWidth={2.5} />
+                <span>{new Date(race.date).toLocaleDateString('pt-BR')}</span>
+              </div>
+              
+              <div className="flex items-center gap-3 text-banana-text/80 font-bold text-sm">
+                <MapPin className="w-5 h-5 text-banana shrink-0" strokeWidth={2.5} />
+                <span className="truncate">{race.location || 'Local'}, {race.state}</span>
               </div>
 
-              <div className="flex items-center gap-3 text-lg md:text-xl font-montserrat font-bold text-black">
-                <LocationIcon className="w-6 h-6 md:w-7 md:h-7 text-black animate-pop-hover" />
-                <p>{featuredRace.location || 'Local não informado'}</p>
+              {/* Tags de Distância (Cápsulas Amarelas como o Header) */}
+              <div className="flex flex-wrap gap-2 mt-2">
+                {race.distances.map((dist) => (
+                  <span 
+                    key={dist} 
+                    className="bg-banana text-banana-text text-[10px] font-extrabold px-4 py-1.5 rounded-full uppercase border border-black/5"
+                  >
+                    {dist}
+                  </span>
+                ))}
               </div>
-            </div>
 
-            {featuredRace.url && (
-              <a
-                href={featuredRace.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary mt-4 inline-block w-fit hover:scale-110 group"
+              {/* Botão de Ação */}
+              <a 
+                href={race.url} 
+                target="_blank" 
+                className="mt-4 flex items-center justify-between bg-banana-text text-white font-black text-[11px] px-6 py-4 rounded-2xl group-hover:bg-black transition-colors"
               >
-                <span className="flex items-center gap-2">
-                  <BananaIcon className="w-5 h-5 animate-bounce-hover" />
-                  INSCREVE LOGO
-                  <MedalIcon className="w-5 h-5 animate-bounce-hover" />
-                </span>
+                QUERO CORRER
+                <ArrowRight className="w-4 h-4" />
               </a>
-            )}
-          </div>
-
-          <div className="card-featured-visual">
-            <div className="text-6xl md:text-7xl">🏃‍♂️</div>
-          </div>
-        </article>
-      )}
-
-      {/* ------------------------------ */}
-      {/* 🏁 GRID DE OUTRAS CORRIDAS */}
-      {/* ------------------------------ */}
-      {otherRaces.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-          {otherRaces.map((race, i) => (
-            <article
-              key={race.title + race.date}
-              className={`${getColor(i)} card-race animate-float-mobile`}
-            >
-              <h2 className="title-card text-black mb-4">{race.title}</h2>
-
-              <div className="space-y-3 mb-6">
-                <div className="flex items-center gap-2 text-lg font-montserrat font-bold text-black">
-                  <CalendarIcon className="w-5 h-5 text-black animate-pop-hover" />
-                  <time>
-                    {formatRaceDate(race.date)}
-                  </time>
-                </div>
-
-                <div className="flex items-center gap-2 text-lg font-montserrat font-bold text-black">
-                  <LocationIcon className="w-5 h-5 text-black animate-pop-hover" />
-                  <p>{race.location || 'Local não informado'}</p>
-                </div>
-              </div>
-
-              {race.url && (
-                <a
-                  href={race.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary block text-center w-full"
-                >
-                  INSCREVE
-                </a>
-              )}
-            </article>
-          ))}
-        </div>
-      ) : (
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <p className="empty-state-text mb-4">
-            sem bananas por aqui,<br />irmão...
-          </p>
-          <p className="text-2xl font-montserrat font-bold text-gray-600">
-            tenta outra busca aí 🔍
-          </p>
-        </div>
-      )}
-    </>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
   );
 }

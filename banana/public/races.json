@@ -1,170 +1,5 @@
 [
   {
-    "id": "2ª_CORRIDA_E_CAMINHADA_CIDADE_MILAGRE_DRACENA_SP-07_DE_DEZEMBRO_DE_2025-SP",
-    "title": "2ª CORRIDA E CAMINHADA CIDADE MILAGRE DRACENA SP",
-    "location": "DRACENA",
-    "date": "2025-12-07",
-    "distances": [
-      "CORRIDA 6KM E CAMINHADA 3K"
-    ],
-    "type": "road",
-    "url": "https://tvcomrunning.com.br/2-corrida-e-caminhada-cidade-milagre-dracena-sp",
-    "state": "SP"
-  },
-  {
-    "id": "2ª_CORRIDA_SANTA_FEST-07_DE_DEZEMBRO_DE_2025-PR",
-    "title": "2ª CORRIDA SANTA FEST",
-    "location": "SANTA FÉ",
-    "date": "2025-12-07",
-    "distances": [
-      "CORRIDA 5K"
-    ],
-    "type": "road",
-    "url": "https://tvcomrunning.com.br/2-corrida-santa-fest",
-    "state": "PR"
-  },
-  {
-    "id": "SUPER_5KMAIS_PENÁPOLIS_SP-07_DE_DEZEMBRO_DE_2025-SP",
-    "title": "SUPER 5KMAIS PENÁPOLIS SP",
-    "location": "PENÁPOLIS",
-    "date": "2025-12-07",
-    "distances": [
-      "CORRIDA 5K"
-    ],
-    "type": "road",
-    "url": "https://tvcomrunning.com.br/super-5kmais-penapolis-sp",
-    "state": "SP"
-  },
-  {
-    "id": "CORRIDA_PEDESTRE_DE_KALORÉ_PR-07_DE_DEZEMBRO_DE_2025-PR",
-    "title": "CORRIDA PEDESTRE DE KALORÉ PR",
-    "location": "KALORÉ",
-    "date": "2025-12-07",
-    "distances": [
-      "CORRIDA 5 K"
-    ],
-    "type": "road",
-    "url": "https://tvcomrunning.com.br/corrida-pedestre-de-kalore-pr",
-    "state": "PR"
-  },
-  {
-    "id": "ativo-Circuito_das_Estações_2025_-_Verão_-_Teresina-7-Dez",
-    "title": "Circuito das Estações 2025 - Verão - Teresina",
-    "location": "Teresina -",
-    "date": "2025-12-07",
-    "distances": [],
-    "type": "road",
-    "url": "https://www.ativo.com/calendario/eventos/america-do-sul/br/pi/teresina/corrida-de-rua/39630/circuito-das-estacoes-2025-verao-teresina/",
-    "state": "PI"
-  },
-  {
-    "id": "ativo-Circuito_das_Estações_2025_-_Verão_-_Cuiabá-7-Dez",
-    "title": "Circuito das Estações 2025 - Verão - Cuiabá",
-    "location": "Cuiabá -",
-    "date": "2025-12-07",
-    "distances": [],
-    "type": "road",
-    "url": "https://www.ativo.com/calendario/eventos/america-do-sul/br/mt/cuiaba/corrida-de-rua/39635/circuito-das-estacoes-2025-verao-cuiaba/",
-    "state": "MT"
-  },
-  {
-    "id": "ativo-Circuito_das_Estações_2025_-_Verão_-_Vitória-7-Dez",
-    "title": "Circuito das Estações 2025 - Verão - Vitória",
-    "location": "Vitória -",
-    "date": "2025-12-07",
-    "distances": [],
-    "type": "road",
-    "url": "https://www.ativo.com/calendario/eventos/america-do-sul/br/es/vitoria/corrida-de-rua/39655/circuito-das-estacoes-2025-verao-vitoria/",
-    "state": "ES"
-  },
-  {
-    "id": "ativo-Circuito_das_Estações_2025_-_Verão_-_Goiânia-7-Dez",
-    "title": "Circuito das Estações 2025 - Verão - Goiânia",
-    "location": "Goiânia -",
-    "date": "2025-12-07",
-    "distances": [],
-    "type": "road",
-    "url": "https://www.ativo.com/calendario/eventos/america-do-sul/br/go/goiania/corrida-de-rua/39662/circuito-das-estacoes-2025-verao-goiania/",
-    "state": "GO"
-  },
-  {
-    "id": "ativo-Circuito_Banco_do_Brasil_2025_-_Fortaleza-13-Dez",
-    "title": "Circuito Banco do Brasil 2025 - Fortaleza",
-    "location": "Fortaleza -",
-    "date": "2025-12-13",
-    "distances": [],
-    "type": "road",
-    "url": "https://www.ativo.com/calendario/eventos/america-do-sul/br/ce/fortaleza/corrida-de-rua/39884/circuito-banco-do-brasil-2025-fortaleza/",
-    "state": "CE"
-  },
-  {
-    "id": "4ª_CORRIDA_E_CAMINHADA_EQUIPE_BAITAPASSO-14_DE_DEZEMBRO_DE_2025-MS",
-    "title": "4ª CORRIDA E CAMINHADA EQUIPE BAITAPASSO",
-    "location": "BATAGUASSU",
-    "date": "2025-12-14",
-    "distances": [
-      "CORRIDA 5KM E CAMINHADA 3K"
-    ],
-    "type": "road",
-    "url": "https://tvcomrunning.com.br/4-corrida-e-caminhada-equipe-baitapasso",
-    "state": "MS"
-  },
-  {
-    "id": "1ª_CORRIDA_BALNEÁRIO_EM_MOVIMENTO-14_DE_DEZEMBRO_DE_2025-SP",
-    "title": "1ª CORRIDA BALNEÁRIO EM MOVIMENTO",
-    "location": "RANCHARIA",
-    "date": "2025-12-14",
-    "distances": [
-      "CORRIDA 5K"
-    ],
-    "type": "road",
-    "url": "https://tvcomrunning.com.br/1-corrida-balneario-em-movimento",
-    "state": "SP"
-  },
-  {
-    "id": "4ª_CORRIDA_HISTÓRICA_DE_GUARARAPES_RUMO_AO_CENTENÁRIO-14_DE_DEZEMBRO_DE_2025-SP",
-    "title": "4ª CORRIDA HISTÓRICA DE GUARARAPES RUMO AO CENTENÁRIO",
-    "location": "GUARARAPES",
-    "date": "2025-12-14",
-    "distances": [
-      "CORRIDA 5 K",
-      "KIDS"
-    ],
-    "type": "road",
-    "url": "https://tvcomrunning.com.br/4-corrida-historica-de-guararapes-rumo-ao-centenario",
-    "state": "SP"
-  },
-  {
-    "id": "ativo-Circuito_das_Estações_2025_-_Verão_-_Palmas-14-Dez",
-    "title": "Circuito das Estações 2025 - Verão - Palmas",
-    "location": "Palmas -",
-    "date": "2025-12-14",
-    "distances": [],
-    "type": "road",
-    "url": "https://www.ativo.com/calendario/eventos/america-do-sul/br/to/palmas/corrida-de-rua/39704/circuito-das-estacoes-2025-verao-palmas/",
-    "state": "TO"
-  },
-  {
-    "id": "ativo-Circuito_das_Estações_2025_-_Verão_-_São_Luís-14-Dez",
-    "title": "Circuito das Estações 2025 - Verão - São Luís",
-    "location": "São Luís -",
-    "date": "2025-12-14",
-    "distances": [],
-    "type": "road",
-    "url": "https://www.ativo.com/calendario/eventos/america-do-sul/br/ma/sao-luis/corrida-de-rua/39678/circuito-das-estacoes-2025-verao-sao-luis/",
-    "state": "MA"
-  },
-  {
-    "id": "ativo-Circuito_das_Estações_2025_-_Verão_-_João_Pessoa-14-Dez",
-    "title": "Circuito das Estações 2025 - Verão - João Pessoa",
-    "location": "João Pessoa -",
-    "date": "2025-12-14",
-    "distances": [],
-    "type": "road",
-    "url": "https://www.ativo.com/calendario/eventos/america-do-sul/br/pb/joao-pessoa/corrida-de-rua/39610/circuito-das-estacoes-2025-verao-joao-pessoa/",
-    "state": "PB"
-  },
-  {
     "id": "62ª_CORRIDA_PEDESTRE_DE_PARAPUÃ_SP-20_DE_DEZEMBRO_DE_2025-SP",
     "title": "62ª CORRIDA PEDESTRE DE PARAPUÃ SP",
     "location": "PARAPUÃ",
@@ -202,16 +37,80 @@
     "state": "SP"
   },
   {
-    "id": "ativo-Circuito_das_Estações_2025_-_Verão_-_Natal-21-Dez",
-    "title": "Circuito das Estações 2025 - Verão - Natal",
-    "location": "Natal -",
+    "id": "mi-Circuito_de_Corridas_Caixa__Brasilia_2025-21-DE-DEZEMBRO",
+    "title": "Circuito de Corridas Caixa - Brasilia 2025",
+    "location": "Decathlon\nVenâncio Shopping - Asa Sul, Brasília - DF, 70333-...",
+    "state": "DF",
     "date": "2025-12-21",
     "distances": [
-      "5K- 10K"
+      "10K",
+      "5K"
     ],
     "type": "road",
-    "url": "https://www.ativo.com/calendario/eventos/america-do-sul/br/rn/natal/corrida-de-rua/39615/circuito-das-estacoes-2025-verao-natal/",
-    "state": "RN"
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=c775e294-5e51-433b-8b6e-c9e2840abf05"
+  },
+  {
+    "id": "mi-Nashville_Rock_N_Run_2025-21-DE-DEZ",
+    "title": "Nashville Rock N Run 2025",
+    "location": "ENTREGA DE KITS: Tennessee Harley-Davidson- Av. José Bonifác...",
+    "state": "ND",
+    "date": "2025-12-21",
+    "distances": [
+      "6K",
+      "15K",
+      "10K",
+      "5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=a8687634-4df8-4c14-bef1-0142b03cf9b3"
+  },
+  {
+    "id": "mi-Caveiras_na_Pedra_do_Elefante-21-DE-DEZ",
+    "title": "Caveiras na Pedra do Elefante",
+    "location": "Local a definir",
+    "state": "SP",
+    "date": "2025-12-21",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=bb4c0b0e-f6e0-4392-94a3-16307d36e798"
+  },
+  {
+    "id": "mi-IV_Corrida_dos_Mirantes_5K_Guaruja__SP_2025-21-DE-DEZEMBRO",
+    "title": "IV Corrida dos Mirantes 5K Guaruja - SP 2025",
+    "location": "Data: 20/12/2025\n         Loja Pão de Açúcar Enseada Guarujá...",
+    "state": "ND",
+    "date": "2025-12-21",
+    "distances": [
+      "5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=354e7da7-42d0-47c5-9d1a-6f78615030b0"
+  },
+  {
+    "id": "mi-Corrida_de_Natal_2025-21-DE-DEZEMBRO",
+    "title": "Corrida de Natal 2025",
+    "location": "Local a definir",
+    "state": "SP",
+    "date": "2025-12-21",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=0fa12c6a-54a7-40bd-9306-bfc937b4304e"
+  },
+  {
+    "id": "mi-Desafio_Virtual_Corrida_de_Natal_2025-22-DE-DEZEMBRO",
+    "title": "Desafio Virtual Corrida de Natal 2025",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2025-12-22",
+    "distances": [
+      "5K",
+      "10K",
+      "21K",
+      "15K",
+      "100K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=058e1a0e-96b3-445f-9d95-73ef8a6daf37"
   },
   {
     "id": "3ª_CORRIDA_DA_VIRADA_DE_IEPÊ-27_DE_DEZEMBRO_DE_2025-SP",
@@ -227,6 +126,29 @@
     "state": "SP"
   },
   {
+    "id": "mi-REVEILLON_RUN_2025-27-DE-DEZEMBRO",
+    "title": "REVEILLON RUN 2025",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2025-12-27",
+    "distances": [
+      "5K",
+      "10K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=9a657ab3-fb77-45bd-aa21-4ba9b228e054"
+  },
+  {
+    "id": "mi-Corrida_Infantil_Reveillon_Run_Kids_2025-27-DE-DEZ",
+    "title": "Corrida Infantil Reveillon Run Kids 2025",
+    "location": "Brasil",
+    "state": "ND",
+    "date": "2025-12-27",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=5120b8ec-e574-4c43-b295-a1b23d7cc177"
+  },
+  {
     "id": "5°_DEZEMBER_FEST_RUN_JAPURÁ-28_DE_DEZEMBRO_DE_2025-PR",
     "title": "5° DEZEMBER FEST RUN JAPURÁ",
     "location": "JAPURÁ",
@@ -238,6 +160,18 @@
     "type": "road",
     "url": "https://tvcomrunning.com.br/5-dezember-fest-run-japura",
     "state": "PR"
+  },
+  {
+    "id": "mi-Treinao_Especial_de_Natal_2025-28-DE-DEZ",
+    "title": "Treinao Especial de Natal 2025",
+    "location": "Local a definir",
+    "state": "SP",
+    "date": "2025-12-28",
+    "distances": [
+      "5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=9e59033b-5b0f-4530-83f6-10aa639efc30"
   },
   {
     "id": "CORRIDA_DA_VIRADA_2ª_CORRIDA_DE_IBIRAREMA_SP-31_DE_DEZEMBRO_DE_2025-SP",
@@ -252,14 +186,146 @@
     "state": "SP"
   },
   {
-    "id": "ativo-8º_Corrida_São_Bertioga_15k_e_5K-31-Dez",
-    "title": "8º Corrida São Bertioga 15k e 5K",
-    "location": "Bertioga -",
+    "id": "mi-Corrida_Da_Virada_2026__Sorocaba-31-DE-DEZ",
+    "title": "Corrida Da Virada 2026 - Sorocaba",
+    "location": "Local a definir",
+    "state": "SP",
+    "date": "2025-12-31",
+    "distances": [
+      "3K",
+      "7K",
+      "15K",
+      "30K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=f1ba6e8b-1889-4eef-afd2-fee0928a237f"
+  },
+  {
+    "id": "mi-5_Corrida_da_Virada_Acorde-31-DE-DEZ",
+    "title": "5 Corrida da Virada Acorde",
+    "location": "Escola Shalom - Rua Pref. Frederico Busch Junior, 455",
+    "state": "ND",
+    "date": "2025-12-31",
+    "distances": [
+      "5K",
+      "10K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=90b0156d-7e1f-40a0-a390-e1ad34ed26c7"
+  },
+  {
+    "id": "mi-Maratona_Virtudes-31-DE-DEZEMBRO",
+    "title": "Maratona Virtudes",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2025-12-31",
+    "distances": [
+      "5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=f33fadff-60f9-41b8-991a-80fd2580e474"
+  },
+  {
+    "id": "mi-Run_For_Africa-31-DE-DEZ",
+    "title": "Run For Africa",
+    "location": "Local a definir",
+    "state": "ND",
     "date": "2025-12-31",
     "distances": [],
     "type": "road",
-    "url": "https://www.ativo.com/calendario/eventos/america-do-sul/br/sp/bertioga/corrida-de-rua/39733/8-corrida-sao-bertioga-15k-e-5k/",
-    "state": "SP"
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=83bd286d-d4a1-4e15-a834-317307e1046e"
+  },
+  {
+    "id": "mi-CSPORTS__COMBO-31-DE-DEZ",
+    "title": "CSPORTS - COMBO",
+    "location": "Av. Tome de Souza, 130 - Praia da Enseada, Bertioga SP",
+    "state": "ND",
+    "date": "2025-12-31",
+    "distances": [
+      "21K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=35148231-a0e7-41c7-8bca-b7efe8c4f668"
+  },
+  {
+    "id": "mi-Duathlon_Cross_Cantareira__Mairipora__SP-31-DE-DEZ",
+    "title": "Duathlon Cross Cantareira - Mairipora - SP",
+    "location": "Local a definir",
+    "state": "SP",
+    "date": "2025-12-31",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=e1448819-dc1e-4475-a178-9993b74f51c7"
+  },
+  {
+    "id": "mi-10_Corrida_Legal_OAB_Sorocaba-31-DE-DEZ",
+    "title": "10 Corrida Legal OAB Sorocaba",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2025-12-31",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=42034708-bece-47b1-9a82-0c07fd84786b"
+  },
+  {
+    "id": "mi-1_Corrida_Noturna_do_Burrao-31-DE-DEZ",
+    "title": "1 Corrida Noturna do Burrao",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2025-12-31",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=b08abfb0-a886-404e-a8cb-57bfee900fd4"
+  },
+  {
+    "id": "mi-Corrida_Run4Beer__Circuito_Beba_Melhor-31-DE-DEZ",
+    "title": "Corrida Run4Beer - Circuito Beba Melhor",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2025-12-31",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=3d8658b2-1cc1-493d-b4b7-8aada1dd9cb0"
+  },
+  {
+    "id": "mi-Night_Music_Run_SP-31-DE-DEZ",
+    "title": "Night Music Run SP",
+    "location": "Local a definir",
+    "state": "SP",
+    "date": "2025-12-31",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=5e8ab487-311f-40b5-9bbc-234e6bc6c684"
+  },
+  {
+    "id": "mi-Desafio_Eco_Race_2023-31-DE-DEZ",
+    "title": "Desafio Eco Race 2023",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2025-12-31",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=27fe660c-a87c-4673-b22c-9e65fd0c7086"
+  },
+  {
+    "id": "mi-Color_Explosion_Run__Santa_Isabel_2024-31-DE-DEZ",
+    "title": "Color Explosion Run - Santa Isabel 2024",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2025-12-31",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=e98a64bf-5ebb-4d10-8c77-029d7861759f"
+  },
+  {
+    "id": "mi-8_Maratona_Comendador_Hermes-31-DE-DEZ",
+    "title": "8 Maratona Comendador Hermes",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2025-12-31",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=b0199711-2f1f-4e90-9a73-58c1dad89218"
   },
   {
     "id": "1ª_CORRIDA_OFF_ROAD_DE_VARPA-04_DE_JANEIRO_DE_2026-SP",
@@ -274,6 +340,19 @@
     "state": "SP"
   },
   {
+    "id": "mi-MASSA_BRUTA_RUN_2026-11-DE-JANEIRO",
+    "title": "MASSA BRUTA RUN 2026",
+    "location": "DATA11 de Janeiro de 2026 Rua Alpheu Grimello, 600 - Lago do...",
+    "state": "ND",
+    "date": "2026-01-11",
+    "distances": [
+      "3K",
+      "5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=7d4ca245-153f-4eaa-bec1-67dbd3ee6270"
+  },
+  {
     "id": "19ª_CORRIDA_DA_PAZ_DE_GAUCHINHA_PLANALTINA_DO_PARANÁ_PR-18_DE_JANEIRO_DE_2026-PR",
     "title": "19ª CORRIDA DA PAZ DE GAUCHINHA PLANALTINA DO PARANÁ PR",
     "location": "PLANALTINA DO PARANÁ",
@@ -284,6 +363,52 @@
     "type": "road",
     "url": "https://tvcomrunning.com.br/19-corrida-da-paz-de-gauchinha-planaltina-do-parana-pr",
     "state": "PR"
+  },
+  {
+    "id": "mi-goMI__Portal-18-DE-JAN",
+    "title": "goMI - Portal",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-01-18",
+    "distances": [
+      "5K",
+      "3K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=4fca1301-a9a4-4fe2-ac73-e21fbf5ef675"
+  },
+  {
+    "id": "mi-1_Corrida_Movimento_ASAS-18-DE-JAN",
+    "title": "1 Corrida Movimento ASAS",
+    "location": "Em frente ao local da largada",
+    "state": "ND",
+    "date": "2026-01-18",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=ac43c0c4-b428-45f7-936f-ec89821327ce"
+  },
+  {
+    "id": "mi-Corrida_Zeferina_Maria_brasileira-18-DE-JAN",
+    "title": "Corrida Zeferina Maria brasileira",
+    "location": "LOCAL A DEFINIR/SERTÃOZINHO",
+    "state": "ND",
+    "date": "2026-01-18",
+    "distances": [
+      "3K",
+      "5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=5eeaaf88-7673-4a82-995d-12f0f9ad8b1a"
+  },
+  {
+    "id": "mi-Rusticana_Beer_Run_2026-24-DE-JANEIRO",
+    "title": "Rusticana Beer Run 2026",
+    "location": "Informações\n    Data:  24 de Janeiro de 2026\n     Cervejaria...",
+    "state": "ND",
+    "date": "2026-01-24",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=13855129-7934-4841-a219-63b198b0af3b"
   },
   {
     "id": "9ª_CORRIDA_DA_FLORESTA_ETAPA_ASSIS_SP-25_DE_JANEIRO_DE_2026-SP",
@@ -310,6 +435,184 @@
     "state": "SP"
   },
   {
+    "id": "mi-19_Meia_Maratona_Intl_de_So_Paulo-25-DE-JANEIRO",
+    "title": "19ª Meia Maratona Int'l de São Paulo",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-01-25",
+    "distances": [
+      "21K",
+      "10K",
+      "5K",
+      "42M",
+      "80M",
+      "90M",
+      "50M",
+      "20M",
+      "15M",
+      "25M",
+      "30M",
+      "21.097M",
+      "10.000M",
+      "5.000M",
+      "0.5M",
+      "18K",
+      "15K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=528ec6dd-8c2f-418f-9dec-213f8320b1bb"
+  },
+  {
+    "id": "mi-3_Meia_Maratona_Internacional_do_Butanta__2026-25-DE-JANEIRO",
+    "title": "3 Meia Maratona Internacional do Butanta - 2026",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-01-25",
+    "distances": [
+      "21K",
+      "10K",
+      "5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=59bbdea6-b2a3-409e-8b99-c2cdf4d15d22"
+  },
+  {
+    "id": "mi-TRAIL_RUN_VILLA_HARMONIA_2026-25-DE-JANEIRO",
+    "title": "TRAIL RUN VILLA HARMONIA 2026",
+    "location": "R. Luís Nóbrega de Oliveira - Pinheirais, 636 - Bragança Pau...",
+    "state": "ND",
+    "date": "2026-01-25",
+    "distances": [
+      "6M",
+      "5K"
+    ],
+    "type": "trail",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=d78d91cc-61c4-4647-b562-26253e77d6e6"
+  },
+  {
+    "id": "mi-6_Summer_Run_Etapa_Sao_Paulo_2026-25-DE-JAN",
+    "title": "6 Summer Run Etapa Sao Paulo 2026",
+    "location": "Local a definir",
+    "state": "SP",
+    "date": "2026-01-25",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=79b0681a-859e-473e-b806-b25cd746f235"
+  },
+  {
+    "id": "mi-Vamos_Trilhar__Janeiro_2026__Pre_Inscricao-25-DE-JAN",
+    "title": "Vamos Trilhar - Janeiro 2026 - Pre Inscricao",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-01-25",
+    "distances": [],
+    "type": "trail",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=99f186ae-904b-4781-8bce-6a94f1b5870c"
+  },
+  {
+    "id": "mi-5_Corrida_do_Joaquinzao_EC_Taubate_SP-26-DE-JAN",
+    "title": "5 Corrida do Joaquinzao EC Taubate SP",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-01-26",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=299a2780-4ec3-41e2-ac36-6ff5fc6400a7"
+  },
+  {
+    "id": "TREINÃO_E_BATE_BAPO_-_ATLETA_OLÍMPICO_ALTOBELLI-29_DE_JANEIRO_DE_2026-SP",
+    "title": "TREINÃO E BATE BAPO - ATLETA OLÍMPICO ALTOBELLI",
+    "location": "ASSIS",
+    "date": "2026-01-29",
+    "distances": [
+      "TREINÃO"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/treinao-e-bate-bapo-atleta-olimpico-altobelli",
+    "state": "SP"
+  },
+  {
+    "id": "mi-DESAFIO_SPARTAN-30-DE-JANEIRO",
+    "title": "DESAFIO SPARTAN",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-01-30",
+    "distances": [
+      "100K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=f2d0e38b-7a57-45d0-b2d5-922d9d25783f"
+  },
+  {
+    "id": "mi-Miraculous_Run-31-DE-JANEIRO",
+    "title": "Miraculous Run",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-01-31",
+    "distances": [
+      "4.000M",
+      "2.000M",
+      "1.000M",
+      "2.100M",
+      "1.400M",
+      "4K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=49c3a103-a302-4c34-b7a6-8542500eae9b"
+  },
+  {
+    "id": "mi-Space_Color_Run-01-DE-FEVEREIRO",
+    "title": "Space Color Run",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-02-01",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=48dd00b7-ce6b-463e-9b25-edfaaea237b8"
+  },
+  {
+    "id": "mi-2_Classic_Run_So-05-DE-FEVEREIRO",
+    "title": "2ª Classic Run São",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-02-05",
+    "distances": [
+      "6K",
+      "6.000M",
+      "0.5M"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=a64e7863-3f3a-491b-9a4c-462f8317e409"
+  },
+  {
+    "id": "mi-UD_Ultra_Desafio__Passa_Quatro_2026-07-DE-FEVEREIRO",
+    "title": "UD Ultra Desafio - Passa Quatro 2026",
+    "location": "Data: Dia 07/02/2026 (Sábado) \nHorário: Das 6h às 7h30\n     ...",
+    "state": "ND",
+    "date": "2026-02-07",
+    "distances": [
+      "8K",
+      "15K",
+      "35K",
+      "55K"
+    ],
+    "type": "trail",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=8cdaa25d-417c-48ce-9a15-d18e4a1d6fa3"
+  },
+  {
+    "id": "mi-4_Edicao_Corrida_Transpyre_Cerveja-07-DE-FEV",
+    "title": "4 Edicao Corrida Transpyre Cerveja",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-02-07",
+    "distances": [
+      "3K",
+      "4K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=47371431-5adc-4edd-b990-616aae27dff3"
+  },
+  {
     "id": "CORRIDA_DO_URUCUM_1ª_CORRIDA_PEDESTRE_DE_PARANACITY_PR-08_DE_FEVEREIRO_DE_2026-PR",
     "title": "CORRIDA DO URUCUM 1ª CORRIDA PEDESTRE DE PARANACITY PR",
     "location": "PARANACITY",
@@ -320,6 +623,84 @@
     "type": "road",
     "url": "https://tvcomrunning.com.br/corrida-do-urucum-1-corrida-pedestre-de-paranacity-pr",
     "state": "PR"
+  },
+  {
+    "id": "mi-Corinthians_Run-08-DE-FEV",
+    "title": "Corinthians Run",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-02-08",
+    "distances": [
+      "3K",
+      "5K",
+      "10K",
+      "7K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=dc750428-366c-4b5d-bbed-9c1fd6248b3f"
+  },
+  {
+    "id": "mi-Corrida_Verao_2026-22-DE-FEV",
+    "title": "Corrida Verao 2026",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-02-22",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=8ae14699-e224-4b4c-9020-d35390227136"
+  },
+  {
+    "id": "mi-Circuito_Quatro_Estacoes__Combo-22-DE-FEVEREIRO",
+    "title": "Circuito Quatro Estacoes - Combo",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-02-22",
+    "distances": [
+      "50M",
+      "100M"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=b8a0e362-5ec4-4c6b-a211-3c5a29ac4e29"
+  },
+  {
+    "id": "mi-Portal_Circuito_Quatro_Estacoes-22-DE-FEV",
+    "title": "Portal Circuito Quatro Estacoes",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-02-22",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=99399252-6702-4b4c-b3f1-0aff8d1372e9"
+  },
+  {
+    "id": "mi-Vamos_Trilhar__Fevereiro_2026__Pre_Inscricao-23-DE-FEV",
+    "title": "Vamos Trilhar - Fevereiro 2026 - Pre Inscricao",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-02-23",
+    "distances": [],
+    "type": "trail",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=ed1114d0-9bfd-4c4e-810d-6694690dd177"
+  },
+  {
+    "id": "mi-Voce_disse_Pipoca-28-DE-FEV",
+    "title": "Voce disse Pipoca",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-02-28",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=dd87d8cd-6d8e-44e2-9bac-54e990726e75"
+  },
+  {
+    "id": "mi-13_Sao_Vicente_Night_Run-28-DE-FEVEREIRO",
+    "title": "13 Sao Vicente Night Run",
+    "location": "Dia 27/02 - Das 14h às 19h\n      Dia 28/02 - Das 10h às 15h\n...",
+    "state": "ND",
+    "date": "2026-02-28",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=8f42b6dd-d1ac-4896-b151-a35c421cc94e"
   },
   {
     "id": "1ª_CORRIDA_DO_MICO-01_DE_MARÇO_DE_2026-SP",
@@ -335,14 +716,277 @@
     "state": "SP"
   },
   {
-    "id": "ativo-26ª_Meia_Maratona_Internacional_da_Cidade_de_São_Paulo_-_2026-13-Abr",
-    "title": "26ª Meia Maratona Internacional da Cidade de São Paulo - 2026",
-    "location": "São Paulo -",
-    "date": "2026-04-13",
+    "id": "mi-Corrida_da_Lua_2026-07-DE-MARÇO",
+    "title": "Corrida da Lua 2026",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-03-07",
+    "distances": [
+      "6K",
+      "10K",
+      "5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=103a2ca5-741e-49f8-ae25-1abaa2e76636"
+  },
+  {
+    "id": "mi-ROTA_DO_PICO__ETAPA_ROTA_TRAIL__3_edicao-08-DE-MAR",
+    "title": "ROTA DO PICO - ETAPA ROTA TRAIL - 3 edicao",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-03-08",
+    "distances": [
+      "6K",
+      "12K",
+      "140.006K"
+    ],
+    "type": "trail",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=a6ca8ccc-deea-48df-a025-99f5fc01ef60"
+  },
+  {
+    "id": "mi-Corrida_MulherMaravilha_So_Paulo_30_Edio-08-DE-MARÇO",
+    "title": "Corrida Mulher-Maravilha São Paulo 30ª Edição",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-03-08",
+    "distances": [
+      "5K",
+      "5.000M",
+      "0.5M"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=4d95a18d-17a1-4b5a-9543-b621f33568b4"
+  },
+  {
+    "id": "mi-Neon_Run_Party_2026-14-DE-MARÇO",
+    "title": "Neon Run Party 2026",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-03-14",
+    "distances": [
+      "2K",
+      "5K",
+      "10K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=c32cf5bf-da02-4a03-8b1e-5e080d3acbb8"
+  },
+  {
+    "id": "GELONI_RUN_5K-15_DE_MARÇO_DE_2026-PR",
+    "title": "GELONI RUN 5K",
+    "location": "GUARACI",
+    "date": "2026-03-15",
+    "distances": [
+      "CORRIDA 5 K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/geloni-run-5k",
+    "state": "PR"
+  },
+  {
+    "id": "ACADEMIA_BOA_FORMA_RUN-15_DE_MARÇO_DE_2026-SP",
+    "title": "ACADEMIA BOA FORMA RUN",
+    "location": "PENÁPOLIS",
+    "date": "2026-03-15",
+    "distances": [
+      "CORRIDA 5 K"
+    ],
+    "type": "road",
+    "url": "https://tvcomrunning.com.br/academia-boa-forma-run",
+    "state": "SP"
+  },
+  {
+    "id": "mi-XXII_Corrida_Rstica_da_PMMG_em_Divinpolis-15-DE-MAR",
+    "title": "XXII Corrida Rústica da PMMG em Divinópolis",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-03-15",
     "distances": [],
     "type": "road",
-    "url": "https://www.ativo.com/calendario/eventos/america-do-sul/br/sp/sao-paulo/corrida-de-rua/40064/26-meia-maratona-internacional-da-cidade-de-sao-paulo-2026/",
-    "state": "SP"
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=8c6f68f7-f9fd-48cc-852e-b630be9abd2d"
+  },
+  {
+    "id": "mi-1_CORRIDA_PANOBIANCO_BARCELONA_RUN-15-DE-MARÇO",
+    "title": "1 CORRIDA PANOBIANCO BARCELONA RUN",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-03-15",
+    "distances": [
+      "3K",
+      "5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=8773acc3-8ee7-4310-9684-4bad3d0f680c"
+  },
+  {
+    "id": "mi-3_MEIA_MARATONA_DE_MOGI_MIRIM-15-DE-MARCO",
+    "title": "3 MEIA MARATONA DE MOGI MIRIM",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-03-15",
+    "distances": [
+      "5K",
+      "10K",
+      "21K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=6d9b02d5-50e2-4e87-96d6-688421a55d87"
+  },
+  {
+    "id": "mi-TRAIL_ONE_2026-15-DE-MARÇO",
+    "title": "TRAIL ONE 2026",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-03-15",
+    "distances": [
+      "6K",
+      "8K",
+      "16K",
+      "26K",
+      "50K"
+    ],
+    "type": "trail",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=ede70471-eaff-416e-aaef-99b90b9587df"
+  },
+  {
+    "id": "mi-IGT23K_2026-22-DE-MAR",
+    "title": "IGT23K 2026",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-03-22",
+    "distances": [
+      "23K"
+    ],
+    "type": "trail",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=75b0019c-9561-4b3a-9bae-499aee698432"
+  },
+  {
+    "id": "mi-Coisa_Run_2026-22-DE-MARÇO",
+    "title": "Coisa Run 2026",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-03-22",
+    "distances": [
+      "52M"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=0237b165-cf12-4837-990b-4ea7d3c95a87"
+  },
+  {
+    "id": "mi-Vamos_Trilhar__Marco_2026__Pre_Inscricao-27-DE-MAR",
+    "title": "Vamos Trilhar - Marco 2026 - Pre Inscricao",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-03-27",
+    "distances": [],
+    "type": "trail",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=e5cfec09-98a4-4899-85f3-5351f0930882"
+  },
+  {
+    "id": "mi-2_Corre_Corinthians-29-DE-MARÇO",
+    "title": "2 Corre Corinthians",
+    "location": "Informações Data: 29 de Março de 2026  Neo Química Arena (It...",
+    "state": "ND",
+    "date": "2026-03-29",
+    "distances": [
+      "5K",
+      "10K"
+    ],
+    "type": "trail",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=a3395289-3986-4a70-8477-b3a7f5a7b6a1"
+  },
+  {
+    "id": "mi-Corrida_MulherMaravilha_Rio_de_Janeiro_32_Edio-29-DE-MARÇO",
+    "title": "Corrida Mulher-Maravilha Rio de Janeiro 32ª Edição",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-03-29",
+    "distances": [
+      "5K",
+      "5.000M",
+      "0.5M"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=8148df91-738c-4b99-a257-0f7c4947274d"
+  },
+  {
+    "id": "mi-UD_Ultra_Desafio__Bertioga_2026-11-DE-ABRIL",
+    "title": "UD Ultra Desafio - Bertioga 2026",
+    "location": "Data: Dia 11/04/2026 (Sábado)\n          Horário: Das 6h às 7...",
+    "state": "ND",
+    "date": "2026-04-11",
+    "distances": [
+      "8K",
+      "15K",
+      "35K",
+      "55K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=3f7cea0f-f489-460c-beb0-df1cdcd1566a"
+  },
+  {
+    "id": "mi-8_Maratoninha_de_So_Paulo__Corrida_Infantil-11-DE-ABRIL",
+    "title": "8ª Maratoninha de São Paulo - Corrida Infantil",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-04-11",
+    "distances": [
+      "1.000M"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=52665212-5aa3-469e-9bba-641966fe9fc4"
+  },
+  {
+    "id": "mi-2_Desafio_Run_Personalizado-11-DE-ABR",
+    "title": "2 Desafio Run Personalizado",
+    "location": "Brasil",
+    "state": "ND",
+    "date": "2026-04-11",
+    "distances": [
+      "4K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=a5e7c868-c66c-49b0-92e4-0582d9fa5a58"
+  },
+  {
+    "id": "mi-30_Maratona_Intl_de_So_Paulo__Sao_Paulo_Intl_Marathon-12-DE-ABRIL",
+    "title": "30ª Maratona Int'l de São Paulo - Sao Paulo Int'l Marathon",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-04-12",
+    "distances": [
+      "43M",
+      "5K",
+      "42K",
+      "21K",
+      "10K",
+      "7K",
+      "42.195M",
+      "21.097M",
+      "10.000M",
+      "0.5M",
+      "18K",
+      "15K",
+      "30M"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=ce21f45b-16ed-4fae-a3ef-06a47f40ff9f"
+  },
+  {
+    "id": "mi-Corrida_General_Salgado-24-DE-ABRIL",
+    "title": "Corrida General Salgado",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-04-24",
+    "distances": [
+      "5K",
+      "10K",
+      "05K",
+      "30K",
+      "3K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=01eaedb6-140a-476f-8bb1-a47b0488d2e5"
   },
   {
     "id": "3º_TRIUNFO_FEST_RUN_SUPER_5K_TEODORO_SAMPAIO_SP-26_DE_ABRIL_DE_2026-SP",
@@ -355,6 +999,66 @@
     "type": "road",
     "url": "https://tvcomrunning.com.br/3-triunfo-fest-run-super-5k-teodoro-sampaio-sp",
     "state": "SP"
+  },
+  {
+    "id": "mi-XXIII_Meia_Maratona_de_Santo_Andre-26-DE-ABR",
+    "title": "XXIII Meia Maratona de Santo Andre",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-04-26",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=fa7ba1e4-ba0a-41c0-b1d3-f772b90d08eb"
+  },
+  {
+    "id": "mi-4_Corrida_de_Aniversario_Juventus_102_Anos-26-DE-ABRIL",
+    "title": "4 Corrida de Aniversario Juventus 102 Anos",
+    "location": "Retirada de Kit\n      24 de Abril de 2026 (Sexta-feira) - 14...",
+    "state": "ND",
+    "date": "2026-04-26",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=66d3d822-1ab1-4398-9c79-48400b95a7be"
+  },
+  {
+    "id": "mi-3_Rotary_Move_Movimento_Pela_Saude_2026-26-DE-ABR",
+    "title": "3 Rotary Move Movimento Pela Saude 2026",
+    "location": "Local a definir",
+    "state": "SP",
+    "date": "2026-04-26",
+    "distances": [
+      "3K",
+      "5K",
+      "10K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=3ecb8ef6-facb-41db-ace1-7336218f74d9"
+  },
+  {
+    "id": "mi-Corrida_3_Lagos_2026-26-DE-ABRIL",
+    "title": "Corrida 3 Lagos 2026",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-04-26",
+    "distances": [
+      "10K",
+      "5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=ca283a12-2a97-494a-bd98-540c2c857232"
+  },
+  {
+    "id": "mi-Desafio_das_Praias_21_KM__2_Etapa-04-DE-MAIO",
+    "title": "Desafio das Praias 21 KM - 2 Etapa",
+    "location": "– 12:00hs – Encerramento –  Arena da prova .",
+    "state": "ND",
+    "date": "2026-05-04",
+    "distances": [
+      "21K",
+      "10.5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=2e3c87f7-3473-4e22-b1a9-47baced13e4b"
   },
   {
     "id": "1ª_KIRIDONAS_RUNNING-09_DE_MAIO_DE_2026-SP",
@@ -370,6 +1074,80 @@
     "state": "SP"
   },
   {
+    "id": "mi-GUARANI_RACE_2026_YDJU-09-DE-MAI",
+    "title": "GUARANI RACE 2026 YDJU",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-05-09",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=73421b61-ede3-4853-b87d-13b25ab0e359"
+  },
+  {
+    "id": "mi-24_Corrida_e_Caminhada_Comexport_GRAACC-10-DE-MAIO",
+    "title": "24 Corrida e Caminhada Comexport GRAACC",
+    "location": "Assembleia Legislativa do Estado de São Paulo\n        Av. Pe...",
+    "state": "ND",
+    "date": "2026-05-10",
+    "distances": [
+      "10K",
+      "5K",
+      "3K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=e5808d6a-348c-4a19-87ac-9feaa814cb7e"
+  },
+  {
+    "id": "mi-UD_Ultra_Desafio__Morungaba_2026-16-DE-MAIO",
+    "title": "UD Ultra Desafio - Morungaba 2026",
+    "location": "À definir - Morungaba, SP",
+    "state": "ND",
+    "date": "2026-05-16",
+    "distances": [
+      "11K",
+      "25K",
+      "50K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=5e2e0a20-389d-4392-a09b-941d1847c0c4"
+  },
+  {
+    "id": "mi-9_Corrida_Vencendo_as_Cefaleias-17-DE-MAIO",
+    "title": "9 Corrida Vencendo as Cefaleias",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-05-17",
+    "distances": [
+      "5K",
+      "10K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=e38f403e-3f22-492d-a360-305ad56122d1"
+  },
+  {
+    "id": "mi-15_Corrida_e_Caminhada_Graciano_2026-17-DE-MAIO",
+    "title": "15 Corrida e Caminhada Graciano 2026",
+    "location": "Graciano Veículos Araraquara -  Av. Sete de Setembro, 1555, ...",
+    "state": "ND",
+    "date": "2026-05-17",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=df21e023-476b-43fb-bd43-fb509f2c67cf"
+  },
+  {
+    "id": "mi-Circuito_Quatro_Estacoes__Etapa_Outono-17-DE-MAIO",
+    "title": "Circuito Quatro Estacoes - Etapa Outono",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-05-17",
+    "distances": [
+      "50M",
+      "100M"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=35d35a71-9f82-4a86-b972-4814b190b093"
+  },
+  {
     "id": "1ª_CORRIDA_PEDESTRE_OAB_TEODORO_SAMPAIO-24_DE_MAIO_DE_2026-SP",
     "title": "1ª CORRIDA PEDESTRE OAB TEODORO SAMPAIO",
     "location": "TEODORO SAMPAIO",
@@ -382,14 +1160,310 @@
     "state": "SP"
   },
   {
-    "id": "ativo-Circuito_das_Estações_2025_-_Primavera_-_Curitiba-14-Set",
-    "title": "Circuito das Estações 2025 - Primavera - Curitiba",
-    "location": "Curitiba -",
-    "date": "2026-09-14",
+    "id": "mi-4_Meia_Maratona_Internacional_de_Guarulhos-24-DE-MAIO",
+    "title": "4ª Meia Maratona Internacional de Guarulhos",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-05-24",
+    "distances": [
+      "10K",
+      "5K",
+      "21K",
+      "5M",
+      "20M",
+      "12M",
+      "23M",
+      "10M",
+      "54M",
+      "7M",
+      "28M",
+      "40M",
+      "50K",
+      "11M",
+      "18M",
+      "76M",
+      "21.097M",
+      "10.000M",
+      "5.000M",
+      "0.5M",
+      "18K",
+      "15K",
+      "06M",
+      "15M"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=c3e6e458-9dc9-4bce-aa97-5fc79234e985"
+  },
+  {
+    "id": "mi-Corrida153__2025-25-DE-MAI",
+    "title": "Corrida153 - 2025",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-05-25",
     "distances": [],
     "type": "road",
-    "url": "https://www.ativo.com/calendario/eventos/america-do-sul/br/pr/curitiba/corrida-de-rua/39572/circuito-das-estacoes-2025-primavera-curitiba/",
-    "state": "PR"
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=0116b782-97e8-4ae8-b7e5-2e3438022b7a"
+  },
+  {
+    "id": "mi-Circuito_Bem_Estar_Covabra__Etapa_2_Itatiba-31-DE-MAIO",
+    "title": "Circuito Bem Estar Covabra - Etapa 2 Itatiba",
+    "location": "Brasil",
+    "state": "ND",
+    "date": "2026-05-31",
+    "distances": [
+      "10K",
+      "5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=00f6e62e-c157-4d52-9c8f-1c382115e302"
+  },
+  {
+    "id": "mi-Portal_Circuito_Bem_Estar_Covabra-31-DE-MAI",
+    "title": "Portal Circuito Bem Estar Covabra",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-05-31",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=3f739833-f0c0-4222-913f-0785a52b7473"
+  },
+  {
+    "id": "mi-Meia_de_Santos_2026-14-DE-JUN",
+    "title": "Meia de Santos 2026",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-06-14",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=5ccea025-076c-41ad-8164-0f661df0c4f8"
+  },
+  {
+    "id": "mi-Sharks_Xtreme-14-DE-JULHO",
+    "title": "Sharks Xtreme",
+    "location": "Terra na Veia Bike Park em Maracanaú-CE",
+    "state": "ND",
+    "date": "2026-07-14",
+    "distances": [
+      "12K",
+      "3K",
+      "8K"
+    ],
+    "type": "trail",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=9f195c4e-4c82-437b-af82-4794133f21b5"
+  },
+  {
+    "id": "mi-FutRun_2026_Boleto_e_Pix-19-DE-JUL",
+    "title": "FutRun 2026 Boleto e Pix",
+    "location": "Local a definir",
+    "state": "SP",
+    "date": "2026-07-19",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=850a9bc3-80d7-403a-845d-0438f36bb3e2"
+  },
+  {
+    "id": "mi-Corrida_Das_Aguas_6K-20-DE-JUL",
+    "title": "Corrida Das Aguas 6K",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-07-20",
+    "distances": [
+      "6K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=4b4aa065-7ffc-4128-ad10-cd2acce2cfbe"
+  },
+  {
+    "id": "mi-6_CORRIDA_DO_VERDE__PARQUE_BURLE_MARX-27-DE-JULHO",
+    "title": "6 CORRIDA DO VERDE - PARQUE BURLE MARX",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-07-27",
+    "distances": [
+      "5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=e06e1e0c-0182-472e-80f8-61a29ba7b345"
+  },
+  {
+    "id": "mi-EU_SO_CORRO_PELA_BANANA-30-DE-JULHO",
+    "title": "EU SO CORRO PELA BANANA",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-07-30",
+    "distances": [
+      "05K",
+      "10K",
+      "21K",
+      "42K",
+      "100K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=d683e45f-d800-4ea0-8b0a-c74a02807054"
+  },
+  {
+    "id": "mi-2_Maratona_Virtudes-31-DE-JUL",
+    "title": "2 Maratona Virtudes",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-07-31",
+    "distances": [
+      "3K",
+      "5K",
+      "10K",
+      "21K",
+      "42K",
+      "100K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=bb701334-fa31-4134-87b9-2fd0e8941366"
+  },
+  {
+    "id": "mi-2_Meia_Maratona_de_Resende__RJ-02-DE-AGO",
+    "title": "2 Meia Maratona de Resende - RJ",
+    "location": "Local a definir",
+    "state": "RJ",
+    "date": "2026-08-02",
+    "distances": [
+      "10K",
+      "21K"
+    ],
+    "type": "trail",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=d6cb146a-ea96-4a63-9cc0-f0eda092c752"
+  },
+  {
+    "id": "mi-Circuito_Quatro_Estacoes__Etapa_Inverno-2-DE-AGOSTO",
+    "title": "Circuito Quatro Estacoes - Etapa Inverno",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-08-02",
+    "distances": [
+      "50M",
+      "100M"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=0dca185a-2188-40ab-aa0e-33a016d9539e"
+  },
+  {
+    "id": "mi-Desafio_das_Praias_21_KM__3_Etapa-05-DE-AGOSTO",
+    "title": "Desafio das Praias 21 KM - 3 Etapa",
+    "location": "– 12:00hs – Encerramento –  Arena da prova .",
+    "state": "ND",
+    "date": "2026-08-05",
+    "distances": [
+      "21K",
+      "10.5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=1a10b78d-3d22-491f-88b4-7b717bdbd173"
+  },
+  {
+    "id": "mi-28_Meia_Maratona_Intl_do_Rio__Rio_Half_Marathon-14-DE-AGOSTO",
+    "title": "28ª Meia Maratona Int'l do Rio - Rio Half Marathon",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-08-14",
+    "distances": [
+      "21K",
+      "10K",
+      "5K",
+      "41M",
+      "21.097M",
+      "5.000M",
+      "1.609M",
+      "10.000M",
+      "0.5M",
+      "18K",
+      "15K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=bd58aaba-c35a-412f-9120-7d03bee873a6"
+  },
+  {
+    "id": "mi-Circuito_Bem_Estar_Covabra__Etapa_3_Indaiatuba-23-DE-AGOSTO",
+    "title": "Circuito Bem Estar Covabra - Etapa 3 Indaiatuba",
+    "location": "Brasil",
+    "state": "ND",
+    "date": "2026-08-23",
+    "distances": [
+      "10K",
+      "5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=ca4a8436-f9d0-4089-a77a-6beb3ab2fbe5"
+  },
+  {
+    "id": "mi-Ultramaratona_de_Campinas_2026-29-DE-AGOSTO",
+    "title": "Ultramaratona de Campinas 2026",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-08-29",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=0b7b4cd1-ccc6-4082-b903-1e632baead9a"
+  },
+  {
+    "id": "mi-19_Corrida_Juventus-30-DE-AGOSTO",
+    "title": "19 Corrida Juventus",
+    "location": "Retirada de kit\n    28 de Agosto de 2026 (Sexta-feira) - 14h...",
+    "state": "ND",
+    "date": "2026-08-30",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=79378e2e-70ba-4691-9f49-23c6df032e6e"
+  },
+  {
+    "id": "mi-13_Maratona_em_Movimento_Goiania_GO-30-DE-AGOSTO",
+    "title": "13 Maratona em Movimento Goiania- GO",
+    "location": "Local a definir",
+    "state": "GO",
+    "date": "2026-08-30",
+    "distances": [
+      "5K",
+      "10K",
+      "21K",
+      "42K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=8f5ce428-c0c0-4722-98e7-983a0f4bfa71"
+  },
+  {
+    "id": "mi-13_Ultradesafio_Sana__Macae_Rj_2026-05-DE-SETEMBRO",
+    "title": "13 Ultradesafio Sana - Macae Rj 2026",
+    "location": "Sana – Macaé, RJ",
+    "state": "ND",
+    "date": "2026-09-05",
+    "distances": [
+      "80K",
+      "10K"
+    ],
+    "type": "trail",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=7434a7d0-b55f-4725-9a82-677e82cd62e1"
+  },
+  {
+    "id": "mi-UAI_Ultramaratona_Intl_dos_Anjos_2026-14-DE-SET",
+    "title": "UAI Ultramaratona Intl dos Anjos 2026",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-09-14",
+    "distances": [
+      "25K",
+      "55K",
+      "100K",
+      "140K"
+    ],
+    "type": "trail",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=752a9ce5-7d0a-46c8-8107-8a36bafe74fe"
+  },
+  {
+    "id": "mi-Corrida_Rustica_na_Estancia_Alto_da_Serra-21-DE-SET",
+    "title": "Corrida Rustica na Estancia Alto da Serra",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-09-21",
+    "distances": [],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=79e3c082-265e-45a8-9624-2113b4f23685"
   },
   {
     "id": "4ª_CORRIDA_DA_FLORESTA_ETAPA_TEODORO_SAMPAIO_2026-11_DE_OUTUBRO_DE_2026-SP",
@@ -404,13 +1478,180 @@
     "state": "SP"
   },
   {
-    "id": "ativo-Circuito_Aqua_2026_-_Fuga_das_Ilhas-30-Nov",
-    "title": "Circuito Aqua 2026 - Fuga das Ilhas",
-    "location": "São Sebastião -",
-    "date": "2026-11-30",
+    "id": "mi-GUARANI_RACE_2026_PITA-24-DE-OUT",
+    "title": "GUARANI RACE 2026 PITA",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-10-24",
     "distances": [],
     "type": "road",
-    "url": "https://www.ativo.com/calendario/eventos/america-do-sul/br/sp/sao-sebastiao/travessia/40069/circuito-aqua-2026-fuga-das-ilhas/",
-    "state": "SP"
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=bd65dc00-8d0c-4943-b4d5-813799471dc7"
+  },
+  {
+    "id": "mi-Desafio_das_Praias_21_KM__4_Etapa-02-DE-NOVEMBRO",
+    "title": "Desafio das Praias 21 KM - 4 Etapa",
+    "location": "– 12:00hs – Encerramento –  Arena da prova .",
+    "state": "ND",
+    "date": "2026-11-02",
+    "distances": [
+      "21K",
+      "10.5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=8aa92975-4067-4537-aabc-64f209de4ba6"
+  },
+  {
+    "id": "mi-Divas_e_Eles_Night_Run-15-DE-NOV",
+    "title": "Divas e Eles Night Run",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-11-15",
+    "distances": [
+      "5K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=d4838cf8-0b6d-4208-adfc-190b2ae1ce44"
+  },
+  {
+    "id": "mi-4_SUPER_K_BURITI_SHOPPING_GUARA-22-DE-NOVEMBRO",
+    "title": "4 SUPER K BURITI SHOPPING GUARA",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-11-22",
+    "distances": [
+      "2K",
+      "5K",
+      "10K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=2eb432fa-e028-41ea-ac74-bd59276c5e7d"
+  },
+  {
+    "id": "mi-Circuito_Quatro_Estacoes__Etapa_Primavera-22-DE-NOVEMBRO",
+    "title": "Circuito Quatro Estacoes - Etapa Primavera",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-11-22",
+    "distances": [
+      "50M",
+      "100M"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=af83bf6f-1d84-472e-8f52-75fec461e112"
+  },
+  {
+    "id": "mi-27_Volta_Intl_da_Pampulha-6-DE-DEZEMBRO",
+    "title": "27ª Volta Int'l da Pampulha",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-12-06",
+    "distances": [
+      "18K",
+      "15M",
+      "30M",
+      "2M",
+      "5M",
+      "4M",
+      "24M",
+      "12M",
+      "3M",
+      "36M",
+      "18M",
+      "18.077M",
+      "18.079M",
+      "0.5M",
+      "15K",
+      "10K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=f3952707-88d1-4d98-aa33-8d31f0c393d1"
+  },
+  {
+    "id": "mi-AQUARELA_RUN_FEST-07-DE-DEZ",
+    "title": "AQUARELA RUN FEST",
+    "location": "Local a definir",
+    "state": "SP",
+    "date": "2026-12-07",
+    "distances": [
+      "7K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=e472b269-8735-4f69-8f4a-2e20306f1e91"
+  },
+  {
+    "id": "mi-5K_Animal_Sao_Bernardo_do_Campo-07-DE-DEZEMBRO",
+    "title": "5K Animal Sao Bernardo do Campo",
+    "location": "Retirada de Kit\nData: 06 de Dezembro de 2025 (Sábado)\n em br...",
+    "state": "ND",
+    "date": "2026-12-07",
+    "distances": [
+      "5K",
+      "2K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=ff625203-28ca-4e40-96c2-068f8253dc1c"
+  },
+  {
+    "id": "mi-1_Desafio_Yeshua_Run-08-DE-DEZ",
+    "title": "1 Desafio Yeshua Run",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-12-08",
+    "distances": [
+      "3K",
+      "5K",
+      "10K",
+      "21K",
+      "42K",
+      "100K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=b8172be8-7e27-46e4-b52c-feddacb4fa49"
+  },
+  {
+    "id": "mi-1_Desafio_Gladiador_Run-08-DE-DEZ",
+    "title": "1 Desafio Gladiador Run",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-12-08",
+    "distances": [
+      "3K",
+      "5K",
+      "10K",
+      "21K",
+      "42K",
+      "100K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=419c8ff9-36e4-4c05-9888-e76edecc6990"
+  },
+  {
+    "id": "mi-1_DESAFIO_ELEMENTOS-08-DE-DEZ",
+    "title": "1 DESAFIO ELEMENTOS",
+    "location": "Local a definir",
+    "state": "ND",
+    "date": "2026-12-08",
+    "distances": [
+      "3K",
+      "5K",
+      "10K",
+      "21K",
+      "42K",
+      "100K"
+    ],
+    "type": "trail",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=4e1012f1-311e-4b19-b412-aef05718a9ff"
+  },
+  {
+    "id": "mi-Treinao_com_a_Bruna_Ianhez-14-DE-DEZEMBRO",
+    "title": "Treinao com a Bruna Ianhez",
+    "location": "Praça Arautos da Paz - Lagoa do Taquaral - Campinas/SP",
+    "state": "ND",
+    "date": "2026-12-14",
+    "distances": [
+      "6K"
+    ],
+    "type": "road",
+    "url": "https://minhasinscricoes.com.br/pt-br/ClickEventos/Redirecionar?origem=1&keycode=7508a4ba-f5be-45ad-ab0b-f075a720a546"
   }
 ]

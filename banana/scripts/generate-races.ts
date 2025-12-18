@@ -5,6 +5,7 @@
 import { crawlTvComRunning } from '../src/crawlers/tvcomrunning.ts'; 
 import { crawlAtivo } from '../src/crawlers/ativo.ts'; 
 import type { Race } from '../src/types/races.ts';
+import { getMinhasInscricoesRaces } from '../src/crawlers/o2corre.ts';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
@@ -99,16 +100,17 @@ async function generateRaces() {
   try {
     // 1. Executa crawlers
     console.log('📡 Executando crawlers...\n');
-    const [tvComRaces, ativoRaces] = await Promise.all([
+    const [tvComRaces, ativoRaces, o2correRaces] = await Promise.all([
       crawlTvComRunning(),
       crawlAtivo(),
+      getMinhasInscricoesRaces(),
     ]);
 
     console.log(`\n✅ TVCom: ${tvComRaces.length} eventos`);
     console.log(`✅ Ativo: ${ativoRaces.length} eventos\n`);
 
     // 2. Unifica
-    const all = [...tvComRaces, ...ativoRaces];
+    const all = [...tvComRaces, ...ativoRaces, ...o2correRaces];
     console.log(`📊 Total: ${all.length} eventos\n`);
 
     // 3. Dedup
